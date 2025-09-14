@@ -8,16 +8,11 @@ function App() {
 
   // Pre-compile shaders on app start
   useEffect(() => {
-    // Small delay to ensure Three.js is ready
-    const timer = setTimeout(() => {
-      try {
-        precompileShaders();
-      } catch (error) {
-        console.error('Shader precompilation failed:', error);
-      }
-    }, 100);
-    
-    return () => clearTimeout(timer);
+    try {
+      precompileShaders();
+    } catch (error) {
+      console.error('Shader precompilation failed:', error);
+    }
   }, []);
 
   const handleSplashComplete = () => {
