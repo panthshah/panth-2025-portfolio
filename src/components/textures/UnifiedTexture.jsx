@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -56,9 +56,11 @@ const TextureMesh = ({ config }) => {
   
   useFrame((state) => {
     const { clock, mouse, gl } = state;
-    if (mesh.current) {
+    if (mesh.current && mesh.current.material) {
+      // Update uniforms every frame for smooth animation
+      const time = clock.getElapsedTime();
       mesh.current.material.uniforms.u_mouse.value = [mouse.x / 2 + 0.5, mouse.y / 2 + 0.5];
-      mesh.current.material.uniforms.u_time.value = clock.getElapsedTime();
+      mesh.current.material.uniforms.u_time.value = time;
       let c = gl.domElement.getBoundingClientRect();
       mesh.current.material.uniforms.u_resolution.value = [c.width, c.height];
     }
@@ -202,13 +204,20 @@ const TextureMesh = ({ config }) => {
         }
       `,
       wireframe: false,
-      wireframeLinewidth: 0,
       dithering: false,
-      flatShading: true,
-      doubleSided: true,
+      side: THREE.DoubleSide,
       glslVersion: "100"
     });
   }, [config]);
+
+  // Cleanup material on unmount
+  useEffect(() => {
+    return () => {
+      if (material) {
+        material.dispose();
+      }
+    };
+  }, [material]);
 
   return (
     <mesh
@@ -217,7 +226,7 @@ const TextureMesh = ({ config }) => {
       scale={50}
       rotation={[0, 0, 0]}
     >
-      <planeGeometry args={[1, 1, 1024, 1024]} />
+      <planeGeometry args={[1, 1, 64, 64]} />
       <primitive object={material} />
     </mesh>
   );
@@ -234,13 +243,14 @@ const UnifiedTexture = ({ themeName }) => {
   return (
     <Canvas
       gl={{
-        preserveDrawingBuffer: true,
+        preserveDrawingBuffer: false,
         premultipliedAlpha: false,
         alpha: true,
         transparent: true,
         antialias: false,
         precision: "mediump",
-        powerPreference: "high-performance"
+        powerPreference: "high-performance",
+        failIfMajorPerformanceCaveat: false
       }}
       camera={{
         fov: 75,
@@ -249,6 +259,8 @@ const UnifiedTexture = ({ themeName }) => {
         position: [0, 0, 24]
       }}
       style={{ height: "100%", width: "100%" }}
+      frameloop="always"
+      dpr={[0.5, 1]}
     >
       <TextureMesh config={config} />
     </Canvas>
