@@ -1,0 +1,121 @@
+/* Theme Selection Styles */
+.theme-selection-container {
+  min-height: 100vh;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 170px;
+}
+
+.theme-selection-title {
+  font-family: 'Inclusive Sans', system-ui, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.theme-container {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.theme-circle {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-circle.middle {
+  width: 225px;
+  height: 225px;
+  border-radius: 50%;
+  margin-bottom: 12px;
+}
+
+.theme-circle.regular {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 12px;
+}
+
+.theme-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.theme-shader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: multiply;
+  opacity: 0.8;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.theme-noise {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: contrast(150%) brightness(1100%);
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+}
+
+.theme-label {
+  font-family: 'Inclusive Sans', system-ui, sans-serif;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+}
+
+.theme-label.middle {
+  font-weight: 600;
+}
+
+.theme-label.regular {
+  font-weight: 400;
+}
+
+.continue-button {
+  margin-top: 64px;
+  width: 212px;
+  height: 58px;
+  border-radius: 32px;
+  border: none;
+  font-size: 1.2rem;
+  color: #42455a;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Inclusive Sans', system-ui, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animation transitions */
+.theme-gradient,
+.theme-shader,
+.theme-noise {
+  transition: all 0.3s ease-in-out;
+}
