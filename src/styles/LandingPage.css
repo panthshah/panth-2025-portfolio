@@ -1,0 +1,852 @@
+/* Landing Page Layout */
+.landing-page {
+  min-height: 100vh;
+  background-color: #F7F7F4;
+}
+
+/* ===== NAVIGATION BAR ===== */
+.navbar {
+  background-color: #FFFAF2;
+  padding: 0 16px 0 120px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.navbar-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+  padding: 8px 0;
+}
+
+/* Logo/Name Button */
+.navbar-logo {
+  flex-shrink: 0;
+}
+
+.logo-text {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background-color: transparent;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  height: 36px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.logo-text:hover {
+  opacity: 0.85;
+}
+
+/* Navigation Menu - Rounded Button Style */
+.navbar-menu {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.navbar-item {
+  margin: 0;
+}
+
+/* Rounded Tab Buttons */
+.navbar-tab {
+  font-family: 'Samsung One', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  background-color: transparent;
+  border: 1.5px solid transparent;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Hide icons for non-chat buttons */
+.navbar-tab:not(.chat-button) .tab-icon {
+  display: none;
+}
+
+.tab-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tab-label {
+  line-height: 1;
+  padding-top: 1px;
+}
+
+/* Inactive tab hover */
+.navbar-tab:hover:not(.active) {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Active tab - rounded button with border */
+.navbar-tab.active {
+  border-color: transparent;
+  font-weight: 400;
+}
+
+/* Special styling for Chat button */
+.navbar-tab.chat-button {
+  border-radius: 24px;
+  border: none;
+  font-weight: 400;
+}
+
+.navbar-tab.chat-button.active {
+  border: none;
+  font-weight: 400;
+}
+
+/* ===== HERO SECTION ===== */
+.hero-section {
+  padding-top: 10px;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+}
+
+.hero-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px 120px 24px 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 64px;
+}
+
+/* Left Side - Content */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 729px;
+}
+
+.hero-headline {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 48px;
+  letter-spacing: -0.02em;
+  color: #000000;
+  margin: 0 0 24px 0;
+  width: 729px;
+  height: 96px;
+}
+
+.hero-description {
+  font-family: 'Samsung One', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.67;
+  color: #333333;
+  margin: 0 0 32px 0;
+  width: 704px;
+  height: 60px;
+}
+
+.hero-current {
+  font-family: 'Samsung One', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.33;
+  color: #333333;
+  margin: 0 0 32px 0;
+  width: 704px;
+  height: 24px;
+}
+
+.hero-link {
+  color: #FF6B35;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.hero-link:hover {
+  opacity: 0.8;
+}
+
+/* Hero Buttons */
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+}
+
+.btn-primary,
+.btn-secondary {
+  font-family: 'Samsung One', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background-color: #FFEED4;
+  border: 1.5px solid transparent;
+  color: #000000;
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+}
+
+.btn-primary.btn-about-me:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 1.5px solid #000000;
+  color: #000000;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* Right Side - 3D Phone */
+.hero-visual {
+  width: 380px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hero-visual canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== PROJECTS SECTION ===== */
+.projects-section {
+  margin-top: 0px;
+  padding: 0 120px 0px 120px;
+}
+
+.projects-container {
+  background-color: #F2F1EE;
+  border-radius: 24px;
+  padding: 64px 32px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.project-card {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  width: 1194px;
+  height: 475.5px;
+  margin: 0 auto;
+}
+
+.project-content {
+  width: 417px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.project-title {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #000000;
+  margin: 0 0 10px 0;
+  width: 100%;
+}
+
+.project-description {
+  font-family: 'Samsung One', system-ui, sans-serif;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.67;
+  color: #333333;
+  margin: 0 0 12px 0;
+}
+
+.project-link {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.project-link:hover {
+  opacity: 0.7;
+}
+
+.project-image {
+  flex-shrink: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 634px;
+  height: 475.5px;
+  background-color: #fff;
+}
+
+.project-image img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* ===== TESTIMONIALS SECTION ===== */
+.testimonials-section {
+  padding: 200px 120px 80px 120px;
+}
+
+.testimonials-container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.testimonials-title {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #000000;
+  margin: 0 0 48px 0;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 378px);
+  grid-template-rows: repeat(2, 359px);
+  gap: 24px;
+  justify-content: center;
+}
+
+.testimonial-card {
+  background-color: #F2F1EE;
+  border-radius: 6px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonial-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.testimonial-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  flex-shrink: 0;
+}
+
+.testimonial-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.testimonial-name {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #000000;
+  margin: 0;
+}
+
+.testimonial-position {
+  font-family: 'Samsung One', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #171612;
+  margin: 0;
+}
+
+.testimonial-content {
+  font-family: 'Samsung One', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.67;
+  color: #333333;
+  margin: 0;
+}
+
+/* ===== FOOTER SECTION ===== */
+.footer-section {
+  padding: 80px 120px 100px 120px;
+}
+
+.footer-container {
+  background-color: #F2F1EE;
+  border-radius: 24px;
+  padding: 80px 32px;
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: 500px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Floating Elements Container */
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Floating Emoji Animation */
+.floating-emoji {
+  position: absolute;
+  bottom: -120px;
+  animation: zigzagRise 8s linear infinite;
+  opacity: 0;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+/* Smooth Zig-Zag Rise: 4s continuous float + 1s pause = 8s total (13 emojis * 0.3s = 3.9s stagger) */
+@keyframes zigzagRise {
+  /* Start at bottom */
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  
+  /* Fade in quickly */
+  2% {
+    opacity: 1;
+  }
+  
+  /* Continuous smooth zig-zag motion upward - NO STOPS */
+  8% {
+    transform: translateY(-8vh) translateX(22px);
+    opacity: 1;
+  }
+  
+  14% {
+    transform: translateY(-18vh) translateX(-18px);
+    opacity: 1;
+  }
+  
+  20% {
+    transform: translateY(-30vh) translateX(25px);
+    opacity: 1;
+  }
+  
+  26% {
+    transform: translateY(-44vh) translateX(-12px);
+    opacity: 1;
+  }
+  
+  32% {
+    transform: translateY(-60vh) translateX(20px);
+    opacity: 1;
+  }
+  
+  38% {
+    transform: translateY(-76vh) translateX(-15px);
+    opacity: 1;
+  }
+  
+  /* Start fading out near top */
+  44% {
+    transform: translateY(-90vh) translateX(8px);
+    opacity: 0.6;
+  }
+  
+  /* Fully faded out at top (4s = 50% of 8s) */
+  50% {
+    transform: translateY(-110vh) translateX(0);
+    opacity: 0;
+  }
+  
+  /* Stay invisible - 1s pause after all emojis finish (~7s mark) */
+  100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+}
+
+/* Footer Content */
+.footer-content {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-title {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 80px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #000000;
+  margin: 0 0 24px 0;
+  text-transform: lowercase;
+}
+
+.footer-subtitle {
+  font-family: 'Samsung One', system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #4A4A4A;
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .navbar {
+    padding: 0 32px 0 60px;
+  }
+
+  .hero-container {
+    flex-direction: column;
+    gap: 60px;
+    padding: 60px 60px;
+    align-items: flex-start;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-headline {
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-description,
+  .hero-current {
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-visual {
+    width: 100px;
+    height: 100px;
+  }
+
+  .projects-section {
+    padding: 0 60px 64px 60px;
+  }
+
+  .project-card {
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+    height: auto;
+    align-items: center;
+  }
+
+  .project-content {
+    width: 100%;
+    max-width: 417px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .project-image {
+    width: 100%;
+    height: auto;
+    max-width: 600px;
+  }
+
+  .project-image img {
+    height: auto;
+  }
+
+  .project-title {
+    font-size: 22px;
+  }
+
+  .testimonials-section {
+    padding: 48px 60px 64px 60px;
+  }
+
+  .testimonials-title {
+    font-size: 32px;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 20px;
+  }
+
+  .testimonial-card {
+    height: auto;
+  }
+
+  .footer-section {
+    padding: 60px 60px 80px 60px;
+  }
+
+  .footer-container {
+    padding: 60px 32px;
+    min-height: 400px;
+  }
+
+  .footer-title {
+    font-size: 64px;
+  }
+
+  .footer-subtitle {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 1.5rem;
+  }
+
+  .navbar-container {
+    height: 64px;
+  }
+
+  .navbar-menu {
+    gap: 6px;
+  }
+
+  .navbar-tab {
+    font-size: 13px;
+    padding: 6px 12px;
+    height: 32px;
+  }
+
+  .logo-text {
+    width: auto;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  .hero-section {
+    padding-top: 64px;
+  }
+
+  .hero-container {
+    padding: 40px 24px;
+    gap: 40px;
+    flex-direction: column;
+  }
+
+  .hero-headline {
+    font-size: 28px;
+    line-height: 38px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .hero-description,
+  .hero-current {
+    font-size: 16px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 24px;
+  }
+
+  .hero-visual {
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+
+  .projects-section {
+    margin-top: 60px;
+    padding: 0 24px 60px 24px;
+  }
+
+  .projects-container {
+    padding: 40px 24px;
+  }
+
+  .project-card {
+    width: 100%;
+    height: auto;
+    align-items: center;
+  }
+
+  .project-content {
+    width: 100%;
+    max-width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .project-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
+
+  .project-image img {
+    height: auto;
+  }
+
+  .project-title {
+    font-size: 20px;
+  }
+
+  .project-description {
+    font-size: 14px;
+  }
+
+  .project-link {
+    font-size: 14px;
+  }
+
+  .testimonials-section {
+    padding: 40px 24px 60px 24px;
+  }
+
+  .testimonials-title {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .testimonial-card {
+    padding: 20px;
+  }
+
+  .testimonial-name {
+    font-size: 14px;
+  }
+
+  .testimonial-position {
+    font-size: 12px;
+  }
+
+  .testimonial-content {
+    font-size: 14px;
+  }
+
+  .footer-section {
+    padding: 40px 24px 60px 24px;
+  }
+
+  .footer-container {
+    padding: 50px 24px;
+    min-height: 350px;
+  }
+
+  .footer-title {
+    font-size: 48px;
+  }
+
+  .footer-subtitle {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-menu {
+    gap: 4px;
+  }
+
+  .navbar-tab {
+    font-size: 12px;
+    padding: 6px 10px;
+    gap: 4px;
+  }
+
+  .tab-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .tab-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+

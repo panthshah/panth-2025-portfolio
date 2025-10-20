@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import NoiseTexture from './textures/NoiseTexture';
 import UnifiedTexture, { TEXTURE_CONFIGS } from './textures/UnifiedTexture';
 import '../styles/ThemeSelection.css';
 
-const ThemeSelection = ({ onThemeSelect }) => {
+const ThemeSelection = ({ onThemeSelect, selectedTheme: initialTheme }) => {
   // Enhanced noise texture generator function
   const generateNoiseTexture = (baseColor, intensity = 0.3) => {
     const encodedSvg = encodeURIComponent(`
@@ -73,8 +73,28 @@ const ThemeSelection = ({ onThemeSelect }) => {
     }
   ];
 
-  const [selectedTheme, setSelectedTheme] = useState('Blush Petal');
-  const [selectedThemeData, setSelectedThemeData] = useState(themes[2]);
+  const getInitialTheme = () => {
+    if (initialTheme) {
+      const themeIndex = themes.findIndex(t => t.name === initialTheme.name);
+      return themeIndex !== -1 ? { name: initialTheme.name, data: themes[themeIndex] } : { name: 'Peachy Orange', data: themes[0] };
+    }
+    return { name: 'Peachy Orange', data: themes[0] };
+  };
+
+  const initial = getInitialTheme();
+  const [selectedTheme, setSelectedTheme] = useState(initial.name);
+  const [selectedThemeData, setSelectedThemeData] = useState(initial.data);
+
+  // Update theme when navigating back with a selected theme
+  useEffect(() => {
+    if (initialTheme) {
+      const themeIndex = themes.findIndex(t => t.name === initialTheme.name);
+      if (themeIndex !== -1) {
+        setSelectedTheme(initialTheme.name);
+        setSelectedThemeData(themes[themeIndex]);
+      }
+    }
+  }, [initialTheme]);
 
   const playClickSound = () => {
     const mouseclick = new Audio();
@@ -97,11 +117,10 @@ const ThemeSelection = ({ onThemeSelect }) => {
     });
   };
 
-  const handleThemeSelect = (theme) => {
+  const handleThemeClick = (theme) => {
     playClickSound();
     setSelectedTheme(theme.name);
     setSelectedThemeData(theme);
-    onThemeSelect(theme);
   };
 
   const getDisplayTheme = (theme, index) => {
@@ -140,7 +159,7 @@ const ThemeSelection = ({ onThemeSelect }) => {
           return (
             <motion.div
               key={`${index}-${displayTheme.name}`}
-              onClick={() => handleThemeSelect(displayTheme)}
+              onClick={() => handleThemeClick(displayTheme)}
               className="theme-item"
             >
               <motion.div 
@@ -215,7 +234,7 @@ const ThemeSelection = ({ onThemeSelect }) => {
         }}
         onClick={() => {
           playClickSound();
-          console.log('Continue with theme:', selectedThemeData);
+          onThemeSelect(selectedThemeData);
         }}
       >
         Continue

@@ -9,9 +9,9 @@
 }
 
 .theme-selection-title {
-  font-family: 'Inclusive Sans', system-ui, sans-serif;
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
   color: #000000;
   margin-bottom: 60px;
   text-align: center;
@@ -83,14 +83,15 @@
 }
 
 .theme-label {
-  font-family: 'Inclusive Sans', system-ui, sans-serif;
+  font-family: 'Samsung One', system-ui, sans-serif;
   font-size: 14px;
   color: #333;
   text-align: center;
+  font-weight: 400;
 }
 
 .theme-label.middle {
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .theme-label.regular {

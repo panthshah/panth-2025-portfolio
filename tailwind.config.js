@@ -9,6 +9,8 @@ export default {
       fontFamily: {
         'sans': ['Inter', 'system-ui', 'sans-serif'],
         'inclusive': ['Inclusive Sans', 'system-ui', 'sans-serif'],
+        'samsung-sharp': ['Samsung Sharp Sans', 'system-ui', 'sans-serif'],
+        'samsung-one': ['Samsung One', 'system-ui', 'sans-serif'],
       },
       colors: {
         'browser-bg': '#f5f5f5',
