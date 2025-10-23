@@ -198,31 +198,29 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
       </section>
 
       {/* Projects Section */}
-      {false && (
-        <section className="projects-section">
-          <div className="projects-container">
-            {/* Project 1 - Samsung */}
-            <div className="project-card">
-              <div className="project-content">
-                <h2 className="project-title">Samsung Electronics America</h2>
-                <p className="project-description">
-                  Led UX design for the "Buy More, Save More" feature on Samsung's platform to boost annual sales by $1M through improved visibility and engagement.
-                </p>
-                <a href="#" className="project-link">
-                  Read Case study
-                  <ArrowUpRight size={16} weight="regular" />
-                </a>
-              </div>
-              <div className="project-image">
-                <img 
-                  src={project1Image}
-                  alt="Samsung Electronics America project"
-                />
-              </div>
+      <section className="projects-section">
+        <div className="projects-container">
+          {/* Project 1 - Samsung */}
+          <div className="project-card">
+            <div className="project-content">
+              <h2 className="project-title">Samsung Electronics America</h2>
+              <p className="project-description">
+                Led UX design for the "Buy More, Save More" feature on Samsung's platform to boost annual sales by $1M through improved visibility and engagement.
+              </p>
+              <a href="#" className="project-link">
+                Read Case study
+                <ArrowUpRight size={16} weight="regular" />
+              </a>
+            </div>
+            <div className="project-image">
+              <img 
+                src={project1Image}
+                alt="Samsung Electronics America project"
+              />
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Testimonials Section */}
       {false && (
