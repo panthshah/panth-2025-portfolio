@@ -355,235 +355,90 @@
   image-rendering: crisp-edges;
 }
 
-/* ===== TESTIMONIALS SECTION ===== */
-.testimonials-section {
-  padding: 200px 120px 80px 120px;
-}
-
-.testimonials-container {
-  max-width: 1440px;
-  margin: 0 auto;
-}
-
-.testimonials-title {
-  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: #000000;
-  margin: 0 0 48px 0;
-}
-
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 378px);
-  grid-template-rows: repeat(2, 359px);
-  gap: 24px;
-  justify-content: center;
-}
-
-.testimonial-card {
-  background-color: #F2F1EE;
-  border-radius: 6px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-}
-
-.testimonial-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.testimonial-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background-color: #D9D9D9;
-  flex-shrink: 0;
-}
-
-.testimonial-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.testimonial-name {
-  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: #000000;
-  margin: 0;
-}
-
-.testimonial-position {
-  font-family: 'Samsung One', system-ui, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: #171612;
-  margin: 0;
-}
-
-.testimonial-content {
-  font-family: 'Samsung One', system-ui, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.67;
-  color: #333333;
-  margin: 0;
-}
-
-/* ===== FOOTER SECTION ===== */
-.footer-section {
-  padding: 80px 120px 100px 120px;
-}
-
-.footer-container {
-  background-color: #F2F1EE;
-  border-radius: 24px;
-  padding: 80px 32px;
-  max-width: 1440px;
-  margin: 0 auto;
-  min-height: 500px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Floating Elements Container */
-.floating-elements {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-}
-
-/* Floating Emoji Animation */
-.floating-emoji {
-  position: absolute;
-  bottom: -120px;
-  animation: zigzagRise 8s linear infinite;
-  opacity: 0;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
-}
-
-/* Smooth Zig-Zag Rise: 4s continuous float + 1s pause = 8s total (13 emojis * 0.3s = 3.9s stagger) */
-@keyframes zigzagRise {
-  /* Start at bottom */
-  0% {
-    transform: translateY(0) translateX(0);
-    opacity: 0;
-  }
-  
-  /* Fade in quickly */
-  2% {
-    opacity: 1;
-  }
-  
-  /* Continuous smooth zig-zag motion upward - NO STOPS */
-  8% {
-    transform: translateY(-8vh) translateX(22px);
-    opacity: 1;
-  }
-  
-  14% {
-    transform: translateY(-18vh) translateX(-18px);
-    opacity: 1;
-  }
-  
-  20% {
-    transform: translateY(-30vh) translateX(25px);
-    opacity: 1;
-  }
-  
-  26% {
-    transform: translateY(-44vh) translateX(-12px);
-    opacity: 1;
-  }
-  
-  32% {
-    transform: translateY(-60vh) translateX(20px);
-    opacity: 1;
-  }
-  
-  38% {
-    transform: translateY(-76vh) translateX(-15px);
-    opacity: 1;
-  }
-  
-  /* Start fading out near top */
-  44% {
-    transform: translateY(-90vh) translateX(8px);
-    opacity: 0.6;
-  }
-  
-  /* Fully faded out at top (4s = 50% of 8s) */
-  50% {
-    transform: translateY(-110vh) translateX(0);
-    opacity: 0;
-  }
-  
-  /* Stay invisible - 1s pause after all emojis finish (~7s mark) */
-  100% {
-    transform: translateY(0) translateX(0);
-    opacity: 0;
-  }
-}
-
-/* Footer Content */
-.footer-content {
-  text-align: center;
-  position: relative;
-  z-index: 2;
-}
-
-.footer-title {
-  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
-  font-size: 80px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: #000000;
-  margin: 0 0 24px 0;
-  text-transform: lowercase;
-}
-
-.footer-subtitle {
-  font-family: 'Samsung One', system-ui, sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 1.6;
-  color: #4A4A4A;
-  margin: 0;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
+/* ============================================
+   COMMENTED OUT SECTIONS
+   Testimonials, and Footer CSS
+   ============================================ */
 
 /* Responsive Design */
-@media (max-width: 1200px) {
-  .navbar {
-    padding: 0 32px 0 60px;
+
+/* For screens 1200px to 1400px - Scale down phone, keep side-by-side */
+@media (max-width: 1399px) and (min-width: 1200px) {
+  .navbar-container{
+    padding: 8px 64px;
+  }
+  .hero-container {
+    padding: 120px 64px;
+  }
+  
+  .hero-visual {
+    width: 300px;
+    height: 320px;
+  }
+
+  .projects-section {
+    padding: 0 64px;
+  }
+
+  .projects-container {
+    max-width: 1200px;
+    padding: 32px 64px;
+  }
+}
+
+/* For screens 1024px to 1200px - Tablet, keep side-by-side but smaller */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .navbar-container {
+    padding: 8px 48px;
+  }
+  
+  .hero-container {
+    max-width: 100%;
+    padding: 80px 48px;
+    gap: clamp(24px, 2vw, 40px);
+  }
+  
+  .hero-visual {
+    width: 250px;
+    height: 270px;
+  }
+
+  .projects-section {
+    padding: 0 48px;
+  }
+
+  .projects-container {
+  
+    padding: 32px 48px;
+  }
+
+  .project-card {
+    flex-direction: row;
+    gap: 32px;
+  }
+
+  .project-content {
+    width: auto;
+    min-width: 350px;
+  }
+}
+
+/* For screens 768px to 1024px - Large tablet, stack vertically */
+@media (max-width: 1199px) and (min-width: 768px) {
+  .navbar-container{
+    padding: 8px 48px;
   }
 
   .hero-container {
     flex-direction: column;
-    gap: 60px;
-    padding: 60px 60px;
-    align-items: flex-start;
+    gap: 120px;
+    padding: 120px 64px;
+    align-items: center;
   }
 
   .hero-content {
     max-width: 100%;
+    text-align: center;
   }
 
   .hero-headline {
@@ -597,256 +452,275 @@
     height: auto;
   }
 
+  .hero-buttons {
+    justify-content: center;
+  }
+
   .hero-visual {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 220px;
   }
 
   .projects-section {
-    padding: 0 60px 64px 60px;
+    padding: 60px 48px;
+  }
+
+  .projects-container {
+    height: auto;
+    padding: 48px 32px;
   }
 
   .project-card {
     flex-direction: column;
-    gap: 40px;
-    width: 100%;
-    height: auto;
-    align-items: center;
+    gap: 64px;
   }
 
   .project-content {
     width: 100%;
-    max-width: 417px;
-    align-items: center;
     text-align: center;
-  }
-
-  .project-image {
-    width: 100%;
-    height: auto;
-    max-width: 600px;
-  }
-
-  .project-image img {
-    height: auto;
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    align-items: center;
   }
 
   .project-title {
-    font-size: 22px;
+    font-size: 24px;
   }
 
-  .testimonials-section {
-    padding: 48px 60px 64px 60px;
+  .project-description {
+    font-size: 16px;
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
   }
 
-  .testimonials-title {
-    font-size: 32px;
+  .project-image {
+    width: 70%;
   }
-
-  .testimonials-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto;
-    gap: 20px;
-  }
-
-  .testimonial-card {
-    height: auto;
-  }
-
-  .footer-section {
-    padding: 60px 60px 80px 60px;
-  }
-
-  .footer-container {
-    padding: 60px 32px;
-    min-height: 400px;
-  }
-
-  .footer-title {
-    font-size: 64px;
-  }
-
-  .footer-subtitle {
-    font-size: 18px;
+  .project-link{
+    justify-content: center;
   }
 }
 
-@media (max-width: 768px) {
-  .navbar {
-    padding: 0 1.5rem;
-  }
-
+@media (max-width: 768px) and (min-width: 481px) {
+  /* Tablets: 481px to 768px */
   .navbar-container {
-    height: 64px;
+    padding: 8px 32px;
   }
 
   .navbar-menu {
-    gap: 6px;
+    gap: 8px;
   }
 
   .navbar-tab {
     font-size: 13px;
     padding: 6px 12px;
-    height: 32px;
+    gap: 4px;
   }
 
   .logo-text {
-    width: auto;
-    padding: 0 12px;
-    font-size: 14px;
-  }
-
-  .hero-section {
-    padding-top: 64px;
+    font-size: 13px;
+    padding: 6px 10px;
   }
 
   .hero-container {
-    padding: 40px 24px;
-    gap: 40px;
     flex-direction: column;
+    gap: 120px;
+    padding: 120px 64px;
+    align-items: center;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    text-align: center;
   }
 
   .hero-headline {
-    font-size: 28px;
-    line-height: 38px;
     width: 100%;
     height: auto;
-    margin-bottom: 20px;
+    font-size: 24px;
+    line-height: 32px;
   }
 
   .hero-description,
   .hero-current {
-    font-size: 16px;
     width: 100%;
     height: auto;
-    margin-bottom: 24px;
-  }
-
-  .hero-visual {
-    width: 200px;
-    height: 200px;
+    font-size: 16px;
+    line-height: 24px;
   }
 
   .hero-buttons {
-    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
-  .btn-primary,
-  .btn-secondary {
-    width: 100%;
+  .hero-visual {
+    width: 160px;
+    height: 180px;
   }
 
   .projects-section {
-    margin-top: 60px;
-    padding: 0 24px 60px 24px;
+    padding: 40px 32px;
   }
 
   .projects-container {
-    padding: 40px 24px;
+    height: auto;
+    padding: 32px 24px;
   }
 
   .project-card {
-    width: 100%;
-    height: auto;
-    align-items: center;
+    flex-direction: column;
+    gap: 24px;
   }
 
   .project-content {
     width: 100%;
-    max-width: 100%;
-    align-items: center;
     text-align: center;
-  }
-
-  .project-image {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-  }
-
-  .project-image img {
-    height: auto;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .project-title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .project-description {
     font-size: 14px;
   }
 
-  .project-link {
-    font-size: 14px;
-  }
-
-  .testimonials-section {
-    padding: 40px 24px 60px 24px;
-  }
-
-  .testimonials-title {
-    font-size: 28px;
-    margin-bottom: 32px;
-  }
-
-  .testimonials-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .testimonial-card {
-    padding: 20px;
-  }
-
-  .testimonial-name {
-    font-size: 14px;
-  }
-
-  .testimonial-position {
-    font-size: 12px;
-  }
-
-  .testimonial-content {
-    font-size: 14px;
-  }
-
-  .footer-section {
-    padding: 40px 24px 60px 24px;
-  }
-
-  .footer-container {
-    padding: 50px 24px;
-    min-height: 350px;
-  }
-
-  .footer-title {
-    font-size: 48px;
-  }
-
-  .footer-subtitle {
-    font-size: 16px;
+  .project-image {
+    width: 60%;
+    max-height: 250px;
   }
 }
 
 @media (max-width: 480px) {
-  .navbar-menu {
-    gap: 4px;
+  /* Mobile: Below 480px */
+  .navbar {
+    height: auto;
+    padding: 0;
   }
 
-  .navbar-tab {
+  .navbar-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    height: auto;
+  }
+
+  .navbar-logo {
+    width: auto;
+    margin-bottom: 0;
+  }
+
+  .navbar-logo .logo-text {
     font-size: 12px;
-    padding: 6px 10px;
-    gap: 4px;
+    padding: 6px 8px;
   }
 
-  .tab-icon {
-    width: 14px;
-    height: 14px;
+  .navbar-menu {
+    display: none;
   }
 
-  .tab-icon svg {
-    width: 14px;
-    height: 14px;
+  .hamburger-menu {
+    display: flex;
+  }
+
+  .mobile-menu-drawer {
+    display: block;
+  }
+
+  .hero-container {
+    flex-direction: column;
+    gap: 150px;
+    padding: 120px 24px;
+    align-items: center;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .hero-headline {
+    width: 100%;
+    height: auto;
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .hero-description,
+  .hero-current {
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .hero-visual {
+    width: 140px;
+    height: 160px;
+  }
+
+  .projects-section {
+    padding: 32px 16px;
+  }
+
+  .projects-container {
+    height: auto;
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .project-card {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .project-content {
+    width: 70%;
+    text-align: center;
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .project-title {
+    font-size: 16px;
+  }
+
+  .project-description {
+    font-size: 12px;
+  }
+
+  .project-link {
+    font-size: 12px;
+    margin-top: 8px;
+  }
+
+  .project-image {
+    width: 100%;
+    max-height: 200px;
   }
 }
 
