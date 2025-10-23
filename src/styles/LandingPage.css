@@ -7,7 +7,6 @@
 /* ===== NAVIGATION BAR ===== */
 .navbar {
   background-color: #FFFAF2;
-  padding: 0 16px 0 120px;
   position: fixed;
   top: 0;
   left: 0;
@@ -16,13 +15,13 @@
 }
 
 .navbar-container {
-  max-width: 1440px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 48px;
-  padding: 8px 0;
+  padding: 8px 120px;
 }
 
 /* Logo/Name Button */
@@ -129,18 +128,105 @@
   font-weight: 400;
 }
 
-/* ===== HERO SECTION ===== */
-.hero-section {
-  padding-top: 10px;
-  min-height: calc(100vh - 80px);
-  display: flex;
+/* ===== HAMBURGER MENU ===== */
+.hamburger-menu {
+  display: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #000000;
+  transition: all 0.2s ease;
   align-items: center;
+  justify-content: center;
 }
 
+.hamburger-menu:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Mobile Menu Drawer */
+.mobile-menu-drawer {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #FFFAF2;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 12px 0;
+  animation: slideDown 0.3s ease;
+  z-index: 999;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-menu-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+}
+
+.mobile-menu-item {
+  margin: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.mobile-menu-item:last-child {
+  border-bottom: none;
+}
+
+.mobile-menu-tab {
+  width: 100%;
+  font-family: 'Samsung One', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #000000;
+  background-color: transparent;
+  border: none;
+  padding: 14px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  line-height: 1;
+  text-align: left;
+}
+
+.mobile-menu-tab:hover:not(.active) {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.mobile-menu-tab.active {
+  font-weight: 500;
+  background-color: rgba(255, 173, 61, 0.15);
+}
+
+/* ===== HERO SECTION ===== */
+/* .hero-section {
+  display: flex;
+  align-items: center;
+} */
+
 .hero-container {
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 24px 120px 24px 120px;
+  padding: 120px 120px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -256,6 +342,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transform: scale(0.8);
 }
 
 .hero-visual canvas {
@@ -364,32 +451,35 @@
 
 /* For screens 1200px to 1400px - Scale down phone, keep side-by-side */
 @media (max-width: 1399px) and (min-width: 1200px) {
+
   .navbar-container{
-    padding: 8px 64px;
+    padding: 8px 24px 8px 100px;
   }
   .hero-container {
-    padding: 120px 64px;
+    padding: 120px 24px 120px 100px;
   }
+
   
   .hero-visual {
     width: 300px;
     height: 320px;
+    transform: scale(0.7);
   }
 
-  .projects-section {
+  /* .projects-section {
     padding: 0 64px;
   }
 
   .projects-container {
     max-width: 1200px;
     padding: 32px 64px;
-  }
+  } */
 }
 
 /* For screens 1024px to 1200px - Tablet, keep side-by-side but smaller */
 @media (max-width: 1199px) and (min-width: 1024px) {
   .navbar-container {
-    padding: 8px 48px;
+    padding: 8px 64px;
   }
   
   .hero-container {
@@ -397,10 +487,15 @@
     padding: 80px 48px;
     gap: clamp(24px, 2vw, 40px);
   }
+
+  .hero-content{
+    max-width: 700px;
+  }
   
   .hero-visual {
     width: 250px;
     height: 270px;
+    transform: scale(0.8);
   }
 
   .projects-section {
@@ -459,6 +554,7 @@
   .hero-visual {
     width: 200px;
     height: 220px;
+    transform: scale(0.75);
   }
 
   .projects-section {
@@ -560,6 +656,7 @@
   .hero-visual {
     width: 160px;
     height: 180px;
+    transform: scale(0.7);
   }
 
   .projects-section {
@@ -604,6 +701,7 @@
   .navbar {
     height: auto;
     padding: 0;
+    position: relative;
   }
 
   .navbar-container {
@@ -630,10 +728,22 @@
 
   .hamburger-menu {
     display: flex;
+    background-color: transparent;
+    border: 1.5px solid transparent;
+    padding: 8px 8px;
+    border-radius: 8px;
+  }
+
+  .hamburger-menu:hover {
+    background-color: rgba(0, 0, 0, 0.05);
   }
 
   .mobile-menu-drawer {
     display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
   }
 
   .hero-container {
@@ -679,6 +789,7 @@
   .hero-visual {
     width: 140px;
     height: 160px;
+    transform: scale(0.6);
   }
 
   .projects-section {

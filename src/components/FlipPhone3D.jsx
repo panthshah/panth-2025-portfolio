@@ -329,7 +329,6 @@ const FlipPhone3D = () => {
       alignItems: 'center',
       justifyContent: 'center',
       background: 'transparent',
-      transform: 'scale(0.8)',
       transformOrigin: 'center center'
     }}>
       {/* Phone Mockup Container */}

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { User, GameController, File, ChatCircle, ArrowUpRight, Copy, Heart, Smiley } from '@phosphor-icons/react';
+import { User, GameController, File, ChatCircle, ArrowUpRight, Copy, Heart, Smiley, List, X } from '@phosphor-icons/react';
 import FlipPhone3D from './FlipPhone3D';
 import project1Image from '../assets/776shots_so.png';
 import '../styles/LandingPage.css';
@@ -39,6 +39,7 @@ const THEME_COLORS = {
 
 const LandingPage = ({ theme, onNavigateToTheme }) => {
   const [activeTab, setActiveTab] = useState('chat');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const themeColors = useMemo(() => {
     const themeName = theme?.name || 'Peachy Orange';
@@ -50,6 +51,11 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
     if (onNavigateToTheme) {
       onNavigateToTheme();
     }
+  };
+
+  const handleTabClick = (tabId) => {
+    setActiveTab(tabId);
+    setMobileMenuOpen(false);
   };
 
   const navItems = [
@@ -98,7 +104,45 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
               );
             })}
           </ul>
+
+          {/* Hamburger Menu Button */}
+          <button 
+            className="hamburger-menu"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            style={{ backgroundColor: themeColors.navPills }}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X size={24} weight="bold" />
+            ) : (
+              <List size={24} weight="bold" />
+            )}
+          </button>
         </div>
+
+        {/* Mobile Menu Drawer */}
+        {mobileMenuOpen && (
+          <div className="mobile-menu-drawer" style={{ backgroundColor: themeColors.navBg }}>
+            <ul className="mobile-menu-list">
+              {navItems.map((item) => {
+                const Icon = item.Icon;
+                const isActive = item.id === 'chat' ? true : activeTab === item.id;
+                return (
+                  <li key={item.id} className="mobile-menu-item">
+                    <button
+                      className={`mobile-menu-tab ${isActive ? 'active' : ''}`}
+                      onClick={() => handleTabClick(item.id)}
+                      style={isActive ? { backgroundColor: themeColors.navPills } : {}}
+                    >
+                      <Icon size={18} weight="regular" />
+                      <span>{item.label}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
