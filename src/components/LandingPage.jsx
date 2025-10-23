@@ -223,99 +223,97 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
       </section>
 
       {/* Testimonials Section */}
-      {false && (
-        <section className="testimonials-section">
-          <div className="testimonials-container">
-            <h2 className="testimonials-title">Testimonials</h2>
-            
-            <div className="testimonials-grid">
-              {/* Testimonial Card 1 */}
-              <div className="testimonial-card">
-                <div className="testimonial-header">
-                  <div className="testimonial-avatar"></div>
-                  <div className="testimonial-info">
-                    <h3 className="testimonial-name">Zeenat Vastrad</h3>
-                    <p className="testimonial-position">Head of Product Design at Samsung</p>
-                  </div>
+      <section className="testimonials-section">
+        <div className="testimonials-container">
+          <h2 className="testimonials-title">Testimonials</h2>
+          
+          <div className="testimonials-grid">
+            {/* Testimonial Card 1 */}
+            <div className="testimonial-card">
+              <div className="testimonial-header">
+                <div className="testimonial-avatar"></div>
+                <div className="testimonial-info">
+                  <h3 className="testimonial-name">Zeenat Vastrad</h3>
+                  <p className="testimonial-position">Head of Product Design at Samsung</p>
                 </div>
-                <p className="testimonial-content">
-                  Panth is a fantastic designer who enjoys exploring.
-                </p>
               </div>
+              <p className="testimonial-content">
+                Panth is a fantastic designer who enjoys exploring.
+              </p>
+            </div>
 
-              {/* Testimonial Card 2 */}
-              <div className="testimonial-card">
-                <div className="testimonial-header">
-                  <div className="testimonial-avatar"></div>
-                  <div className="testimonial-info">
-                    <h3 className="testimonial-name">Zeenat Vastrad</h3>
-                    <p className="testimonial-position">Head of Product Design at Samsung</p>
-                  </div>
+            {/* Testimonial Card 2 */}
+            <div className="testimonial-card">
+              <div className="testimonial-header">
+                <div className="testimonial-avatar"></div>
+                <div className="testimonial-info">
+                  <h3 className="testimonial-name">Zeenat Vastrad</h3>
+                  <p className="testimonial-position">Head of Product Design at Samsung</p>
                 </div>
-                <p className="testimonial-content">
-                  Panth is a fantastic designer who enjoys exploring.
-                </p>
               </div>
+              <p className="testimonial-content">
+                Panth is a fantastic designer who enjoys exploring.
+              </p>
+            </div>
 
-              {/* Testimonial Card 3 */}
-              <div className="testimonial-card">
-                <div className="testimonial-header">
-                  <div className="testimonial-avatar"></div>
-                  <div className="testimonial-info">
-                    <h3 className="testimonial-name">Zeenat Vastrad</h3>
-                    <p className="testimonial-position">Head of Product Design at Samsung</p>
-                  </div>
+            {/* Testimonial Card 3 */}
+            <div className="testimonial-card">
+              <div className="testimonial-header">
+                <div className="testimonial-avatar"></div>
+                <div className="testimonial-info">
+                  <h3 className="testimonial-name">Zeenat Vastrad</h3>
+                  <p className="testimonial-position">Head of Product Design at Samsung</p>
                 </div>
-                <p className="testimonial-content">
-                  Panth is a fantastic designer who enjoys exploring.
-                </p>
               </div>
+              <p className="testimonial-content">
+                Panth is a fantastic designer who enjoys exploring.
+              </p>
+            </div>
 
-              {/* Testimonial Card 4 */}
-              <div className="testimonial-card">
-                <div className="testimonial-header">
-                  <div className="testimonial-avatar"></div>
-                  <div className="testimonial-info">
-                    <h3 className="testimonial-name">Zeenat Vastrad</h3>
-                    <p className="testimonial-position">Head of Product Design at Samsung</p>
-                  </div>
+            {/* Testimonial Card 4 */}
+            <div className="testimonial-card">
+              <div className="testimonial-header">
+                <div className="testimonial-avatar"></div>
+                <div className="testimonial-info">
+                  <h3 className="testimonial-name">Zeenat Vastrad</h3>
+                  <p className="testimonial-position">Head of Product Design at Samsung</p>
                 </div>
-                <p className="testimonial-content">
-                  Panth is a fantastic designer who enjoys exploring.
-                </p>
               </div>
+              <p className="testimonial-content">
+                Panth is a fantastic designer who enjoys exploring.
+              </p>
+            </div>
 
-              {/* Testimonial Card 5 */}
-              <div className="testimonial-card">
-                <div className="testimonial-header">
-                  <div className="testimonial-avatar"></div>
-                  <div className="testimonial-info">
-                    <h3 className="testimonial-name">Zeenat Vastrad</h3>
-                    <p className="testimonial-position">Head of Product Design at Samsung</p>
-                  </div>
+            {/* Testimonial Card 5 */}
+            <div className="testimonial-card">
+              <div className="testimonial-header">
+                <div className="testimonial-avatar"></div>
+                <div className="testimonial-info">
+                  <h3 className="testimonial-name">Zeenat Vastrad</h3>
+                  <p className="testimonial-position">Head of Product Design at Samsung</p>
                 </div>
-                <p className="testimonial-content">
-                  Panth is a fantastic designer who enjoys exploring.
-                </p>
               </div>
+              <p className="testimonial-content">
+                Panth is a fantastic designer who enjoys exploring.
+              </p>
+            </div>
 
-              {/* Testimonial Card 6 */}
-              <div className="testimonial-card">
-                <div className="testimonial-header">
-                  <div className="testimonial-avatar"></div>
-                  <div className="testimonial-info">
-                    <h3 className="testimonial-name">Zeenat Vastrad</h3>
-                    <p className="testimonial-position">Head of Product Design at Samsung</p>
-                  </div>
+            {/* Testimonial Card 6 */}
+            <div className="testimonial-card">
+              <div className="testimonial-header">
+                <div className="testimonial-avatar"></div>
+                <div className="testimonial-info">
+                  <h3 className="testimonial-name">Zeenat Vastrad</h3>
+                  <p className="testimonial-position">Head of Product Design at Samsung</p>
                 </div>
-                <p className="testimonial-content">
-                  Panth is a fantastic designer who enjoys exploring.
-                </p>
               </div>
+              <p className="testimonial-content">
+                Panth is a fantastic designer who enjoys exploring.
+              </p>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Footer Section */}
       {false && (
