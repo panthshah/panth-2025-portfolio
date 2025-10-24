@@ -316,92 +316,90 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
       </section>
 
       {/* Footer Section */}
-      {false && (
-        <footer className="footer-section">
-          <div className="footer-container">
-            {/* Floating Animation Elements */}
-            <div className="floating-elements">
-              {/* LEFT SIDE EMOJIS - 5 emojis on left of "all done!" */}
-              {[...Array(5)].map((_, i) => {
-                const isSmiley = Math.random() > 0.5;
-                const delay = i * 0.3;
-                const leftPosition = 5 + Math.random() * 30; // 5-35%
-                
-                return (
-                  <div
-                    key={`left-${i}`}
-                    className="floating-emoji"
-                    style={{
-                      left: `${leftPosition}%`,
-                      animationDelay: `${delay}s`,
-                      color: themeColors.companyName
-                    }}
-                  >
-                    {isSmiley ? (
-                      <Smiley size={55 + Math.random() * 20} weight="regular" />
-                    ) : (
-                      <Heart size={22 + Math.random() * 12} weight="fill" />
-                    )}
-                  </div>
-                );
-              })}
+      <footer className="footer-section">
+        <div className="footer-container">
+          {/* Floating Animation Elements */}
+          <div className="floating-elements">
+            {/* LEFT SIDE EMOJIS - 5 emojis on left of "all done!" */}
+            {[...Array(5)].map((_, i) => {
+              const isSmiley = Math.random() > 0.5;
+              const delay = i * 0.3;
+              const leftPosition = 5 + Math.random() * 30; // 5-35%
               
-              {/* CENTER HEARTS - 3 small hearts in middle */}
-              {[...Array(3)].map((_, i) => {
-                const delay = (i + 2) * 0.3;
-                const leftPosition = 45 + Math.random() * 10; // 45-55%
-                
-                return (
-                  <div
-                    key={`center-${i}`}
-                    className="floating-emoji"
-                    style={{
-                      left: `${leftPosition}%`,
-                      animationDelay: `${delay}s`,
-                      color: themeColors.companyName
-                    }}
-                  >
-                    <Heart size={18 + Math.random() * 8} weight="fill" />
-                  </div>
-                );
-              })}
+              return (
+                <div
+                  key={`left-${i}`}
+                  className="floating-emoji"
+                  style={{
+                    left: `${leftPosition}%`,
+                    animationDelay: `${delay}s`,
+                    color: themeColors.companyName
+                  }}
+                >
+                  {isSmiley ? (
+                    <Smiley size={55 + Math.random() * 20} weight="regular" />
+                  ) : (
+                    <Heart size={22 + Math.random() * 12} weight="fill" />
+                  )}
+                </div>
+              );
+            })}
+            
+            {/* CENTER HEARTS - 3 small hearts in middle */}
+            {[...Array(3)].map((_, i) => {
+              const delay = (i + 2) * 0.3;
+              const leftPosition = 45 + Math.random() * 10; // 45-55%
               
-              {/* RIGHT SIDE EMOJIS - 5 emojis on right of "all done!" */}
-              {[...Array(5)].map((_, i) => {
-                const isSmiley = Math.random() > 0.5;
-                const delay = (i + 3) * 0.3;
-                const leftPosition = 65 + Math.random() * 30; // 65-95%
-                
-                return (
-                  <div
-                    key={`right-${i}`}
-                    className="floating-emoji"
-                    style={{
-                      left: `${leftPosition}%`,
-                      animationDelay: `${delay}s`,
-                      color: themeColors.companyName
-                    }}
-                  >
-                    {isSmiley ? (
-                      <Smiley size={55 + Math.random() * 20} weight="regular" />
-                    ) : (
-                      <Heart size={22 + Math.random() * 12} weight="fill" />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Footer Content */}
-            <div className="footer-content">
-              <h2 className="footer-title">all done!</h2>
-              <p className="footer-subtitle">
-                We're just verifying a few details and will reach out if we need anything else.
-              </p>
-            </div>
+              return (
+                <div
+                  key={`center-${i}`}
+                  className="floating-emoji"
+                  style={{
+                    left: `${leftPosition}%`,
+                    animationDelay: `${delay}s`,
+                    color: themeColors.companyName
+                  }}
+                >
+                  <Heart size={18 + Math.random() * 8} weight="fill" />
+                </div>
+              );
+            })}
+            
+            {/* RIGHT SIDE EMOJIS - 5 emojis on right of "all done!" */}
+            {[...Array(5)].map((_, i) => {
+              const isSmiley = Math.random() > 0.5;
+              const delay = (i + 3) * 0.3;
+              const leftPosition = 65 + Math.random() * 30; // 65-95%
+              
+              return (
+                <div
+                  key={`right-${i}`}
+                  className="floating-emoji"
+                  style={{
+                    left: `${leftPosition}%`,
+                    animationDelay: `${delay}s`,
+                    color: themeColors.companyName
+                  }}
+                >
+                  {isSmiley ? (
+                    <Smiley size={55 + Math.random() * 20} weight="regular" />
+                  ) : (
+                    <Heart size={22 + Math.random() * 12} weight="fill" />
+                  )}
+                </div>
+              );
+            })}
           </div>
-        </footer>
-      )}
+
+          {/* Footer Content */}
+          <div className="footer-content">
+            <h2 className="footer-title">all done!</h2>
+            <p className="footer-subtitle">
+              We're just verifying a few details and will reach out if we need anything else.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
