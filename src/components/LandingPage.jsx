@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { User, GameController, File, ChatCircle, ArrowUpRight, Copy, Heart, Smiley, List, X } from '@phosphor-icons/react';
 import FlipPhone3D from './FlipPhone3D';
+import ChatSidebar from './ChatSidebar';
 import project1Image from '../assets/776shots_so.png';
 import '../styles/LandingPage.css';
 
@@ -40,6 +41,7 @@ const THEME_COLORS = {
 const LandingPage = ({ theme, onNavigateToTheme }) => {
   const [activeTab, setActiveTab] = useState('chat');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const themeColors = useMemo(() => {
     const themeName = theme?.name || 'Peachy Orange';
@@ -94,7 +96,7 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
                 <li key={item.id} className="navbar-item">
                   <button
                     className={`navbar-tab ${isActive ? 'active' : ''} ${isChatButton ? 'chat-button' : ''}`}
-                    onClick={() => setActiveTab(item.id)}
+                    onClick={() => isChatButton ? setIsChatOpen(true) : setActiveTab(item.id)}
                     style={isActive ? { backgroundColor: themeColors.navPills } : {}}
                   >
                     <Icon size={16} weight="regular" className="tab-icon" />
@@ -127,11 +129,19 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
               {navItems.map((item) => {
                 const Icon = item.Icon;
                 const isActive = item.id === 'chat' ? true : activeTab === item.id;
+                const isChatButton = item.id === 'chat';
                 return (
                   <li key={item.id} className="mobile-menu-item">
                     <button
                       className={`mobile-menu-tab ${isActive ? 'active' : ''}`}
-                      onClick={() => handleTabClick(item.id)}
+                      onClick={() => {
+                        if (isChatButton) {
+                          setIsChatOpen(true);
+                          setMobileMenuOpen(false);
+                        } else {
+                          handleTabClick(item.id);
+                        }
+                      }}
                       style={isActive ? { backgroundColor: themeColors.navPills } : {}}
                     >
                       <Icon size={18} weight="regular" />
@@ -400,6 +410,13 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
           </div>
         </div>
       </footer>
+
+      {/* Chat Sidebar */}
+      <ChatSidebar 
+        isOpen={isChatOpen} 
+        onClose={() => setIsChatOpen(false)} 
+        themeColors={themeColors}
+      />
     </div>
   );
 };
