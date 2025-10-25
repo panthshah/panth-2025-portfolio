@@ -1,16 +1,12 @@
 // Serverless function for Vercel deployment
-// Load dotenv only for local development (not on Vercel)
-let dotenvLoaded = false;
-if (!process.env.VERCEL) {
-  try {
-    // Dynamically import dotenv to avoid issues in production
-    const dotenv = require('dotenv');
-    dotenv.config({ path: '.env.local' });
-    dotenv.config({ path: '.env.development.local' });
-    dotenvLoaded = true;
-  } catch (error) {
-    // dotenv not available or files don't exist, use environment variables directly
-  }
+// Try to load dotenv for local development
+// Vercel will override with its own environment variables in production
+try {
+  const dotenv = require('dotenv');
+  dotenv.config({ path: '.env.local' });
+  dotenv.config({ path: '.env.development.local' });
+} catch (error) {
+  // dotenv not available (that's fine in production)
 }
 
 export default async function handler(req, res) {
