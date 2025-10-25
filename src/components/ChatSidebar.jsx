@@ -143,6 +143,18 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
       });
 
       const data = await res.json();
+      
+      // Check if the response was successful
+      if (!res.ok) {
+        console.error('API Error:', data);
+        setHistory([...history, { 
+          user: userMessage, 
+          bot: data.reply || 'Sorry, I couldn\'t connect to the AI. Please try again.' 
+        }]);
+        setIsLoading(false);
+        return;
+      }
+
       const botReply = data.reply || 'Sorry, I couldn\'t generate a response.';
       const replyWithEmphasis = emphasizeMetrics(botReply);
       
