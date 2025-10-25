@@ -255,8 +255,8 @@
   letter-spacing: -0.02em;
   color: #000000;
   margin: 0 0 24px 0;
-  width: 729px;
-  height: 96px;
+  max-width: 729px;
+  width: 100%;
 }
 
 .hero-description {
@@ -266,8 +266,8 @@
   line-height: 1.67;
   color: #333333;
   margin: 0 0 32px 0;
-  width: 704px;
-  height: 60px;
+  max-width: 704px;
+  width: 100%;
 }
 
 .hero-current {
@@ -277,8 +277,8 @@
   line-height: 1.33;
   color: #333333;
   margin: 0 0 32px 0;
-  width: 704px;
-  height: 24px;
+  max-width: 704px;
+  width: 100%;
 }
 
 .hero-link {
@@ -360,7 +360,7 @@
 /* ===== PROJECTS SECTION ===== */
 .projects-section {
   margin-top: 0px;
-  padding: 0 120px 0px 120px;
+  padding: 0 120px 80px 120px;
 }
 
 .projects-container {
@@ -451,7 +451,7 @@
 
 /* ===== TESTIMONIALS SECTION ===== */
 .testimonials-section {
-  padding: 80px 120px;
+  padding: 80px 120px 120px 120px;
   background-color: #F7F7F4;
 }
 
@@ -671,7 +671,7 @@
   }
 
   .footer-section {
-    padding: 0 100px 100px 100px;
+    padding: 80px 100px 100px 100px;
   }
 
   .footer-container {
@@ -692,23 +692,29 @@
 /* For screens 1024px to 1200px - Tablet, keep side-by-side but smaller */
 @media (max-width: 1199px) and (min-width: 1024px) {
   .navbar-container {
-    padding: 8px 64px;
+    padding: 8px 48px;
   }
   
   .hero-container {
-    max-width: 100%;
-    padding: 80px 48px;
-    gap: clamp(24px, 2vw, 40px);
+    padding: 120px 48px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
-  .hero-content{
-    max-width: 700px;
+  .hero-headline{
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .hero-description{
+    font-size: 16px;
+    line-height: 24px;
   }
   
   .hero-visual {
-    width: 250px;
-    height: 270px;
-    transform: scale(0.8);
+    transform: scale(0.7);
+    flex-shrink: 0;
   }
 
   .projects-section {
@@ -716,22 +722,17 @@
   }
 
   .projects-container {
-  
     padding: 32px 48px;
   }
 
   .project-card {
     flex-direction: row;
     gap: 32px;
-  }
-
-  .project-content {
-    width: auto;
-    min-width: 350px;
+    justify-content: space-between;
   }
 
   .testimonials-section {
-    padding: 60px 48px;
+    padding: 120px 48px 60px 48px;
   }
 
   .testimonials-grid {
@@ -741,12 +742,11 @@
 
   .testimonial-card {
     padding: 24px;
-    width: auto;
     height: auto;
   }
 
   .footer-section {
-    padding: 0 48px 80px 48px;
+    padding: 80px 48px;
   }
 
   .footer-container {
@@ -764,7 +764,7 @@
 }
 
 /* For screens 768px to 1024px - Large tablet, stack vertically */
-@media (max-width: 1199px) and (min-width: 768px) {
+@media (max-width: 1024px) and (min-width: 768px) {
   .navbar-container{
     padding: 8px 48px;
   }
@@ -864,7 +864,7 @@
   }
 
   .footer-section {
-    padding: 0 48px 64px 48px;
+    padding: 60px 48px 64px 48px;
   }
 
   .footer-container {
@@ -1014,7 +1014,7 @@
   }
 
   .footer-section {
-    padding: 0 32px 60px 32px;
+    padding: 60px 32px 60px 32px;
   }
 
   .footer-container {
@@ -1206,7 +1206,7 @@
   }
 
   .footer-section {
-    padding: 0 24px 48px 24px;
+    padding: 60px 24px 48px 24px;
   }
 
   .footer-container {
