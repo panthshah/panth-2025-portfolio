@@ -1,4 +1,13 @@
 // Serverless function for Vercel deployment
+import { config } from 'dotenv';
+
+// Load environment variables for local development
+// In production, Vercel handles this automatically
+if (process.env.NODE_ENV !== 'production') {
+  config({ path: '.env.local' });
+  config({ path: '.env.development.local' });
+}
+
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -15,11 +24,15 @@ export default async function handler(req, res) {
 
   try {
     const { message, history, suggestionsOnly } = req.body;
-    console.log('Request body:', req.body);
 
     const apiKey = process.env.OPENAI_API_KEY;
-    console.log('API key exists:', !!apiKey);
-    console.log('API key length:', apiKey?.length);
+    
+    if (!apiKey) {
+      console.error('OpenAI API key not found in environment variables');
+      return res.status(500).json({ 
+        reply: "Sorry, the chatbot is not configured properly. Please contact the site owner." 
+      });
+    }
 
     // If only suggestions are requested, return lightweight JSON suggestions
     if (suggestionsOnly) {
@@ -265,11 +278,7 @@ INSTRUCTIONS:
       }),
     });
 
-    console.log('Response status:', response.status);
-    console.log('Response statusText:', response.statusText);
-
     const data = await response.json();
-    console.log('Response data:', data);
     
     // Check for API errors
     if (!response.ok) {
