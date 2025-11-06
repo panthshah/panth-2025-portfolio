@@ -12,6 +12,12 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
   const [suggestions, setSuggestions] = useState([]);
   const [topic, setTopic] = useState('home');
   
+  // Flow state tracking
+  const [clickedAboutMeChip, setClickedAboutMeChip] = useState(null);
+  const [clickedSkillChip, setClickedSkillChip] = useState(null);
+  const [clickedCompany, setClickedCompany] = useState(null);
+  const [clickedCompanyDetail, setClickedCompanyDetail] = useState(null);
+  
   const inputRef = useRef(null);
   const messagesEndRef = useRef(null);
   const sidebarRef = useRef(null);
@@ -63,36 +69,105 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
   }
 
   // Get suggestions based on topic
-  function getSuggestionsForTopic(topicKey) {
+  function getSuggestionsForTopic(topicKey, clickedChip = null) {
     switch (topicKey) {
-      case 'foundermatch':
-        return [
-          'Matching system design',
-          'Research insights that informed it',
-          'Launch metrics and outcomes',
-          'What I would improve next'
+      // ========== About Me Flow ==========
+      case 'about-me-followup':
+        const allAboutMeChips = [
+          'How did Panth end up being a designer?',
+          'Where is Panth from?',
+          'What are my hobbies (what I do apart from design)?',
+          'Where do I work?'
         ];
-      case 'design-system':
-        return [
-          'Component scope & tokens',
-          'Accessibility work in the system',
-          'Impact on dev speed & quality',
-          'Show docs or examples'
+        
+        if (clickedChip) {
+          return [
+            ...allAboutMeChips.filter(chip => chip !== clickedChip),
+            'More Options'
+          ];
+        }
+        
+        return allAboutMeChips;
+      
+      // ========== Skills Flow ==========
+      case 'skills-followup':
+        const allSkillChips = [
+          'Design',
+          'Research',
+          'How do I use AI in my design workflow',
+          'Technical Skills & Tech Stack'
         ];
-      case 'accessibility':
+        
+        if (clickedChip) {
+          return [
+            ...allSkillChips.filter(chip => chip !== clickedChip),
+            'More Options'
+          ];
+        }
+        
+        return [...allSkillChips, 'More Options'];
+      
+      // ========== Experience Flow ==========
+      case 'experience-companies':
         return [
-          'Audit scope and tools used',
-          'Key issues found and fixes',
-          'WCAG areas improved',
-          'Examples from the audits'
+          'FounderMatch',
+          'FounderWay',
+          'Northeastern University',
+          'More Options'
         ];
-      case 'student-hub':
-        return [
-          'News & Events redesign',
-          '"My Interests" feature details',
-          'Research insights',
-          'Results and learnings'
+      
+      case 'foundermatch-details':
+        const allFounderMatchDetails = [
+          'Problem Statement',
+          'Design and Research',
+          'Solutions',
+          'Impact'
         ];
+        
+        if (clickedChip) {
+          return [
+            ...allFounderMatchDetails.filter(chip => chip !== clickedChip),
+            'More Options'
+          ];
+        }
+        
+        return [...allFounderMatchDetails, 'More Options'];
+      
+      case 'founderway-details':
+        const allFounderWayDetails = [
+          'Problem Statement',
+          'Design and Research',
+          'Solutions',
+          'Impact'
+        ];
+        
+        if (clickedChip) {
+          return [
+            ...allFounderWayDetails.filter(chip => chip !== clickedChip),
+            'More Options'
+          ];
+        }
+        
+        return [...allFounderWayDetails, 'More Options'];
+      
+      case 'northeastern-details':
+        const allNortheasternDetails = [
+          'Problem Statement',
+          'Design and Research',
+          'Solutions',
+          'Impact'
+        ];
+        
+        if (clickedChip) {
+          return [
+            ...allNortheasternDetails.filter(chip => chip !== clickedChip),
+            'More Options'
+          ];
+        }
+        
+        return [...allNortheasternDetails, 'More Options'];
+      
+      // ========== Home (Default) ==========
       default:
         return [
           'About Me',
@@ -103,6 +178,7 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
         ];
     }
   }
+
 
   // Emphasize metrics in response
   const emphasizeMetrics = (inputText) => {
@@ -133,6 +209,7 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
     setIsLoading(true);
 
     try {
+      // Call the API
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -161,10 +238,8 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
       const newHistory = [...history, { user: userMessage, bot: replyWithEmphasis }];
       setHistory(newHistory);
 
-      // Detect topic and update suggestions
-      const detected = detectTopic(`${userMessage} ${replyWithEmphasis}`);
-      setTopic(detected);
-      setSuggestions(getSuggestionsForTopic(detected));
+      // Update chips AFTER response is received
+      updateChipsBasedOnMessage(userMessage);
     } catch (error) {
       console.error('Error:', error);
       setHistory([...history, { 
@@ -175,8 +250,122 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
       setIsLoading(false);
     }
   }
+  
+  // Helper function to update chips based on the message
+  function updateChipsBasedOnMessage(userMessage) {
+    // ========== About Me Flow ==========
+    if (userMessage === 'About Me') {
+      setTopic('about-me-followup');
+      setClickedAboutMeChip(null);
+      setSuggestions(getSuggestionsForTopic('about-me-followup'));
+      return;
+    }
+    
+    const aboutMeFollowUpChips = [
+      'How did Panth end up being a designer?',
+      'Where is Panth from?',
+      'What are my hobbies (what I do apart from design)?',
+      'Where do I work?'
+    ];
+    
+    if (aboutMeFollowUpChips.includes(userMessage)) {
+      setClickedAboutMeChip(userMessage);
+      setSuggestions(getSuggestionsForTopic('about-me-followup', userMessage));
+      return;
+    }
+    
+    // ========== Skills Flow ==========
+    if (userMessage === 'Skills') {
+      setTopic('skills-followup');
+      setClickedSkillChip(null);
+      setSuggestions(getSuggestionsForTopic('skills-followup'));
+      return;
+    }
+    
+    const skillChips = [
+      'Design',
+      'Research',
+      'How do I use AI in my design workflow',
+      'Technical Skills & Tech Stack'
+    ];
+    
+    if (skillChips.includes(userMessage)) {
+      setClickedSkillChip(userMessage);
+      setSuggestions(getSuggestionsForTopic('skills-followup', userMessage));
+      return;
+    }
+    
+    // ========== Experience Flow ==========
+    if (userMessage === 'Experience') {
+      setTopic('experience-companies');
+      setClickedCompany(null);
+      setClickedCompanyDetail(null);
+      setSuggestions(getSuggestionsForTopic('experience-companies'));
+      return;
+    }
+    
+    // Handle company selection
+    if (userMessage === 'FounderMatch') {
+      setTopic('foundermatch-details');
+      setClickedCompany('FounderMatch');
+      setClickedCompanyDetail(null);
+      setSuggestions(getSuggestionsForTopic('foundermatch-details'));
+      return;
+    }
+    
+    if (userMessage === 'FounderWay') {
+      setTopic('founderway-details');
+      setClickedCompany('FounderWay');
+      setClickedCompanyDetail(null);
+      setSuggestions(getSuggestionsForTopic('founderway-details'));
+      return;
+    }
+    
+    if (userMessage === 'Northeastern University') {
+      setTopic('northeastern-details');
+      setClickedCompany('Northeastern University');
+      setClickedCompanyDetail(null);
+      setSuggestions(getSuggestionsForTopic('northeastern-details'));
+      return;
+    }
+    
+    // Handle company detail chips
+    const companyDetailChips = [
+      'Problem Statement',
+      'Design and Research',
+      'Solutions',
+      'Impact'
+    ];
+    
+    if (companyDetailChips.includes(userMessage)) {
+      setClickedCompanyDetail(userMessage);
+      
+      // Determine which company's details to show
+      if (topic === 'foundermatch-details') {
+        setSuggestions(getSuggestionsForTopic('foundermatch-details', userMessage));
+      } else if (topic === 'founderway-details') {
+        setSuggestions(getSuggestionsForTopic('founderway-details', userMessage));
+      } else if (topic === 'northeastern-details') {
+        setSuggestions(getSuggestionsForTopic('northeastern-details', userMessage));
+      }
+      return;
+    }
+  }
 
   function handleSuggestionClick(text) {
+    // Handle "More Options" chip - return to home without sending message
+    if (text === 'More Options') {
+      setTopic('home');
+      setClickedAboutMeChip(null);
+      setClickedSkillChip(null);
+      setClickedCompany(null);
+      setClickedCompanyDetail(null);
+      setSuggestions(getSuggestionsForTopic('home'));
+      return;
+    }
+    
+    // For all other chips, just send the message
+    // Chip updates will happen in sendMessage() AFTER response is received
     setMessage(text);
     setTimeout(() => sendMessage(), 0);
   }
@@ -193,6 +382,10 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
     setMessage('');
     setSuggestions(getSuggestionsForTopic('home'));
     setTopic('home');
+    setClickedAboutMeChip(null);
+    setClickedSkillChip(null);
+    setClickedCompany(null);
+    setClickedCompanyDetail(null);
   };
 
   // Sidebar drag handlers
