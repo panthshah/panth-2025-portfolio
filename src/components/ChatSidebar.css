@@ -111,7 +111,7 @@
 }
 
 .chat-empty-title {
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: #000000;
@@ -147,7 +147,7 @@
 }
 
 .chat-message {
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   padding: 8px 14px;
@@ -265,7 +265,7 @@
 
 .chat-chip {
   flex-shrink: 0;
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: #000000;
@@ -320,7 +320,7 @@
 
 .chat-input {
   flex: 1;
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 14px;
   font-weight: 400;
   background-color: #f7f7f7;

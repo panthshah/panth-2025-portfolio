@@ -85,7 +85,7 @@
 }
 
 .theme-label {
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 14px;
   color: #333;
   text-align: center;

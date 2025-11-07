@@ -36,15 +36,14 @@
   font-display: swap;
 }
 
-/* Samsung One 600 - Not available, will use 700 or 400 as fallback */
-/* @font-face {
+@font-face {
   font-family: 'Samsung One';
   src: url('/fonts/SamsungOne-600.woff2') format('woff2'),
        url('/fonts/SamsungOne-600.woff') format('woff');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
-} */
+}
 
 @font-face {
   font-family: 'Samsung One';

@@ -68,7 +68,7 @@
 
 /* Rounded Tab Buttons */
 .navbar-tab {
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: #000000;
@@ -198,7 +198,7 @@
 
 .mobile-menu-tab {
   width: 100%;
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 15px;
   font-weight: 400;
   color: #000000;
@@ -260,7 +260,7 @@
 }
 
 .hero-description {
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.67;
@@ -271,7 +271,7 @@
 }
 
 .hero-current {
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.33;
@@ -301,7 +301,7 @@
 
 .btn-primary,
 .btn-secondary {
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 14px;
   font-weight: 500;
   height: 40px;
@@ -400,7 +400,7 @@
 }
 
 .project-description {
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   width: 100%;
   font-size: 16px;
   font-weight: 400;
@@ -517,7 +517,7 @@
 }
 
 .testimonial-position {
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 14px;
   font-weight: 400;
   color: #666666;
@@ -525,7 +525,7 @@
 }
 
 .testimonial-content {
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.6;
@@ -616,7 +616,7 @@
 }
 
 .footer-subtitle {
-  font-family: 'Samsung One', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.6;
