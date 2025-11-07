@@ -1,9 +1,26 @@
 import { useState, useMemo } from 'react';
-import { User, GameController, File, ChatCircle, ArrowUpRight, Copy, Heart, Smiley, List, X } from '@phosphor-icons/react';
+import { User, GameController, File, ArrowUpRight, Copy, Heart, Smiley, List, X } from '@phosphor-icons/react';
 import FlipPhone3D from './FlipPhone3D';
 import ChatSidebar from './ChatSidebar';
 import project1Image from '../assets/776shots_so.png';
+import geminiIcon from '../assets/gemini 1.svg';
+import zeenatAvatar from '../assets/Testimonial/Zeenat.jpeg';
+import joshAvatar from '../assets/Testimonial/Josh.jpeg';
+import saloniAvatar from '../assets/Testimonial/saloni.jpeg';
+import shefaliAvatar from '../assets/Testimonial/shefali.jpeg';
+import kyleAvatar from '../assets/Testimonial/kyle.jpeg';
+import pradeepAvatar from '../assets/Testimonial/pradeep.jpeg';
 import '../styles/LandingPage.css';
+
+// Custom Gemini Icon Component
+const GeminiIcon = ({ size = 20, className }) => (
+  <img 
+    src={geminiIcon} 
+    alt="Gemini" 
+    style={{ width: '20px', height: '18px' }} 
+    className={className}
+  />
+);
 
 const THEME_COLORS = {
   'Peachy Orange': {
@@ -64,7 +81,7 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
     { id: 'about', label: 'About', Icon: User },
     { id: 'playground', label: 'Playground', Icon: GameController },
     { id: 'resume', label: 'Resume', Icon: File },
-    { id: 'chat', label: 'Chat', Icon: ChatCircle }
+    { id: 'chat', label: 'Chat', Icon: GeminiIcon }
   ];
 
   return (
@@ -241,7 +258,9 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
             {/* Testimonial Card 1 */}
             <div className="testimonial-card">
               <div className="testimonial-header">
-                <div className="testimonial-avatar"></div>
+                <div className="testimonial-avatar">
+                  <img src={zeenatAvatar} alt="Zeenat Vastrad" />
+                </div>
                 <div className="testimonial-info">
                   <h3 className="testimonial-name">Zeenat Vastrad</h3>
                   <p className="testimonial-position">Head of Product Design at Samsung</p>
@@ -255,10 +274,12 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
             {/* Testimonial Card 2 */}
             <div className="testimonial-card">
               <div className="testimonial-header">
-                <div className="testimonial-avatar"></div>
+                <div className="testimonial-avatar">
+                  <img src={joshAvatar} alt="Josh Turner" />
+                </div>
                 <div className="testimonial-info">
-                  <h3 className="testimonial-name">Zeenat Vastrad</h3>
-                  <p className="testimonial-position">Head of Product Design at Samsung</p>
+                  <h3 className="testimonial-name">Josh Turner</h3>
+                  <p className="testimonial-position">Senior Product Designer at Samsung</p>
                 </div>
               </div>
               <p className="testimonial-content">
@@ -269,10 +290,12 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
             {/* Testimonial Card 3 */}
             <div className="testimonial-card">
               <div className="testimonial-header">
-                <div className="testimonial-avatar"></div>
+                <div className="testimonial-avatar">
+                  <img src={saloniAvatar} alt="Saloni Gosalia" />
+                </div>
                 <div className="testimonial-info">
-                  <h3 className="testimonial-name">Zeenat Vastrad</h3>
-                  <p className="testimonial-position">Head of Product Design at Samsung</p>
+                  <h3 className="testimonial-name">Saloni Gosalia</h3>
+                  <p className="testimonial-position">Senior Designer at Samsung</p>
                 </div>
               </div>
               <p className="testimonial-content">
@@ -283,10 +306,12 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
             {/* Testimonial Card 4 */}
             <div className="testimonial-card">
               <div className="testimonial-header">
-                <div className="testimonial-avatar"></div>
+                <div className="testimonial-avatar">
+                  <img src={shefaliAvatar} alt="Shefali Kotnala" />
+                </div>
                 <div className="testimonial-info">
-                  <h3 className="testimonial-name">Zeenat Vastrad</h3>
-                  <p className="testimonial-position">Head of Product Design at Samsung</p>
+                  <h3 className="testimonial-name">Shefali Kotnala</h3>
+                  <p className="testimonial-position">Senior Product Manager at SEA</p>
                 </div>
               </div>
               <p className="testimonial-content">
@@ -297,10 +322,12 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
             {/* Testimonial Card 5 */}
             <div className="testimonial-card">
               <div className="testimonial-header">
-                <div className="testimonial-avatar"></div>
+                <div className="testimonial-avatar">
+                  <img src={kyleAvatar} alt="Kyle Reguero" />
+                </div>
                 <div className="testimonial-info">
-                  <h3 className="testimonial-name">Zeenat Vastrad</h3>
-                  <p className="testimonial-position">Head of Product Design at Samsung</p>
+                  <h3 className="testimonial-name">Kyle Reguero</h3>
+                  <p className="testimonial-position">Lead Product Designer at Samsung</p>
                 </div>
               </div>
               <p className="testimonial-content">
@@ -311,10 +338,12 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
             {/* Testimonial Card 6 */}
             <div className="testimonial-card">
               <div className="testimonial-header">
-                <div className="testimonial-avatar"></div>
+                <div className="testimonial-avatar">
+                  <img src={pradeepAvatar} alt="Pradeep Panwar" />
+                </div>
                 <div className="testimonial-info">
-                  <h3 className="testimonial-name">Zeenat Vastrad</h3>
-                  <p className="testimonial-position">Head of Product Design at Samsung</p>
+                  <h3 className="testimonial-name">Pradeep Panwar</h3>
+                  <p className="testimonial-position">Director of Engineering at Samsung</p>
                 </div>
               </div>
               <p className="testimonial-content">
@@ -403,9 +432,9 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
 
           {/* Footer Content */}
           <div className="footer-content">
-            <h2 className="footer-title">all done!</h2>
+            <h2 className="footer-title">Thank you for visiting!</h2>
             <p className="footer-subtitle">
-              We're just verifying a few details and will reach out if we need anything else.
+              Created with MagicPath + Figma + Paper + Cursor.
             </p>
           </div>
         </div>
