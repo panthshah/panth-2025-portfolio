@@ -1,7 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { User, GameController, File, ArrowUpRight, Copy, Heart, Smiley, List, X } from '@phosphor-icons/react';
 import FlipPhone3D from './FlipPhone3D';
 import ChatSidebar from './ChatSidebar';
+import ThemeCustomizerModal from './ThemeCustomizerModal';
 import project1Image from '../assets/776shots_so.png';
 import geminiIcon from '../assets/gemini 1.svg';
 import zeenatAvatar from '../assets/Testimonial/Zeenat.jpeg';
@@ -10,6 +11,10 @@ import saloniAvatar from '../assets/Testimonial/saloni.jpeg';
 import shefaliAvatar from '../assets/Testimonial/shefali.jpeg';
 import kyleAvatar from '../assets/Testimonial/kyle.jpeg';
 import pradeepAvatar from '../assets/Testimonial/pradeep.jpeg';
+import cursorCat from '../assets/custom cursor/cursor-cat.png';
+import cursorFox from '../assets/custom cursor/cursor cat-1.png';
+import cursorCreature from '../assets/custom cursor/cursor-demogorgon.png';
+import cursorDog from '../assets/custom cursor/cursor-doggo.png';
 import '../styles/LandingPage.css';
 
 // Custom Gemini Icon Component
@@ -55,20 +60,86 @@ const THEME_COLORS = {
   }
 };
 
-const LandingPage = ({ theme, onNavigateToTheme }) => {
+const LandingPage = ({ theme, onNavigateToTheme, onThemeChange }) => {
   const [activeTab, setActiveTab] = useState('chat');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
 
   const themeColors = useMemo(() => {
     const themeName = theme?.name || 'Peachy Orange';
     return THEME_COLORS[themeName] || THEME_COLORS['Peachy Orange'];
   }, [theme]);
 
+  // Load saved cursor on mount
+  useEffect(() => {
+    const savedCursor = localStorage.getItem('selectedCursor');
+    if (savedCursor && savedCursor !== 'default') {
+      const cursorMap = {
+        'cat': cursorCat,
+        'fox': cursorFox,
+        'creature': cursorCreature,
+        'dog': cursorDog
+      };
+      
+      const cursorImage = cursorMap[savedCursor];
+      if (cursorImage) {
+        // Create an image element to load and convert to canvas
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = 32;
+          canvas.height = 32;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, 32, 32);
+          const dataUrl = canvas.toDataURL();
+          document.body.style.cursor = `url('${dataUrl}') 16 16, auto`;
+        };
+        img.src = cursorImage;
+      }
+    }
+  }, []);
+
   const handleLogoClick = () => {
-    console.log('Logo clicked, navigating to theme selection');
-    if (onNavigateToTheme) {
-      onNavigateToTheme();
+    console.log('Logo clicked, opening customizer');
+    setIsCustomizerOpen(true);
+  };
+
+  const handleSaveCustomizer = (newTheme, newCursor) => {
+    console.log('Saving theme and cursor:', newTheme, newCursor);
+    
+    // Apply cursor globally using image cursor
+    const cursorMap = {
+      'cat': cursorCat,
+      'fox': cursorFox,
+      'creature': cursorCreature,
+      'dog': cursorDog
+    };
+    
+    if (newCursor && newCursor !== 'default' && cursorMap[newCursor]) {
+      const cursorImage = cursorMap[newCursor];
+      
+      // Create an image element to load and convert to canvas
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, 32, 32);
+        const dataUrl = canvas.toDataURL();
+        document.body.style.cursor = `url('${dataUrl}') 16 16, auto`;
+      };
+      img.src = cursorImage;
+    } else {
+      document.body.style.cursor = 'default';
+    }
+    
+    // Update theme WITHOUT navigating (stay on landing page)
+    if (onThemeChange && newTheme) {
+      onThemeChange(newTheme);
     }
   };
 
@@ -445,6 +516,14 @@ const LandingPage = ({ theme, onNavigateToTheme }) => {
         isOpen={isChatOpen} 
         onClose={() => setIsChatOpen(false)} 
         themeColors={themeColors}
+      />
+
+      {/* Theme Customizer Modal */}
+      <ThemeCustomizerModal
+        isOpen={isCustomizerOpen}
+        onClose={() => setIsCustomizerOpen(false)}
+        currentTheme={theme}
+        onSave={handleSaveCustomizer}
       />
     </div>
   );

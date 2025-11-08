@@ -31,11 +31,16 @@ function App() {
     setCurrentPage('theme');
   };
 
+  // Update theme without navigating (for modal)
+  const handleThemeChange = (theme) => {
+    setSelectedTheme(theme);
+  };
+
   return (
     <div className="App">
       {currentPage === 'splash' && <SplashScreen onComplete={handleSplashComplete} />}
       {currentPage === 'theme' && <ThemeSelection onThemeSelect={handleThemeSelect} selectedTheme={selectedTheme} />}
-      {currentPage === 'landing' && <LandingPage theme={selectedTheme} onNavigateToTheme={handleNavigateToTheme} />}
+      {currentPage === 'landing' && <LandingPage theme={selectedTheme} onNavigateToTheme={handleNavigateToTheme} onThemeChange={handleThemeChange} />}
       {currentPage === 'phone' && <FlipPhone3D />}
     </div>
   )
