@@ -3,6 +3,8 @@ import bgImage from '../../assets/bg.png';
 import GalleryWidget from './GalleryWidget';
 import WeatherApp from './WeatherApp';
 import CalculatorApp from './CalculatorApp';
+import NotesWidget from './NotesWidget';
+import NotesApp from './NotesApp';
 
 const FlipPhone3D = () => {
   const [weather, setWeather] = useState({
@@ -17,6 +19,7 @@ const FlipPhone3D = () => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [notesRefresh, setNotesRefresh] = useState(0);
 
   useEffect(() => {
     // Update time every minute
@@ -484,6 +487,12 @@ const FlipPhone3D = () => {
                     fontFamily: 'Satoshi, -apple-system, sans-serif'
                   }}>Calculator</div>
                 </div>
+
+                {/* Notes Widget */}
+                <NotesWidget 
+                  key={notesRefresh}
+                  onClick={() => setActiveApp('notes')} 
+                />
               </div>
             </div>
           </div>
@@ -577,6 +586,14 @@ const FlipPhone3D = () => {
         {activeApp === 'calculator' && (
           <CalculatorApp 
             onClose={() => setActiveApp('home')}
+          />
+        )}
+
+        {/* Notes App - Full Screen */}
+        {activeApp === 'notes' && (
+          <NotesApp 
+            onClose={() => setActiveApp('home')}
+            onNoteSaved={() => setNotesRefresh(prev => prev + 1)}
           />
         )}
 
