@@ -5,6 +5,7 @@ import ChatSidebar from './ChatSidebar';
 import ThemeCustomizerModal from './ThemeCustomizerModal';
 import project1Image from '../assets/776shots_so.png';
 import geminiIcon from '../assets/gemini 1.svg';
+import magicStickIcon from '../assets/Magic Stick.png';
 import zeenatAvatar from '../assets/Testimonial/Zeenat.jpeg';
 import joshAvatar from '../assets/Testimonial/Josh.jpeg';
 import saloniAvatar from '../assets/Testimonial/saloni.jpeg';
@@ -101,8 +102,7 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange }) => {
     }
   }, []);
 
-  const handleLogoClick = () => {
-    console.log('Logo clicked, opening customizer');
+  const handleCustomizeClick = () => {
     setIsCustomizerOpen(true);
   };
 
@@ -168,7 +168,6 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange }) => {
                 backgroundColor: themeColors.navPills,
                 color: '#000000'
               }}
-              onClick={handleLogoClick}
             >
               Panth Shah
             </button>
@@ -517,6 +516,44 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange }) => {
         onClose={() => setIsChatOpen(false)} 
         themeColors={themeColors}
       />
+
+      {/* Sticky Customize Button */}
+      <button
+        onClick={handleCustomizeClick}
+        style={{
+          position: 'fixed',
+          bottom: '24px',
+          right: '24px',
+          backgroundColor: themeColors.navBg,
+          border: 'none',
+          borderRadius: '24px',
+          padding: '12px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          zIndex: 1000
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-2px)';
+          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+        }}
+      >
+        <img 
+          src={magicStickIcon} 
+          alt="Customize" 
+          style={{ 
+            width: '20px', 
+            height: '20px',
+            objectFit: 'contain'
+          }} 
+        />
+      </button>
 
       {/* Theme Customizer Modal */}
       <ThemeCustomizerModal
