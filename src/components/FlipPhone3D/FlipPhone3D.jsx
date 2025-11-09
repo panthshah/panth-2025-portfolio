@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import bgImage from '../../assets/bg.png';
+import dayViewBg from '../../assets/Day View.png';
+import nightViewBg from '../../assets/Night View.png';
+import rainyBg from '../../assets/Raining.png';
 import GalleryWidget from './GalleryWidget';
 import WeatherApp from './WeatherApp';
 import CalculatorApp from './CalculatorApp';
@@ -7,11 +10,18 @@ import NotesWidget from './NotesWidget';
 import NotesApp from './NotesApp';
 
 const FlipPhone3D = () => {
+  // Helper function to check if it's currently day based on local time
+  const isCurrentlyDay = () => {
+    const hour = new Date().getHours();
+    return hour >= 6 && hour < 18; // Day is between 6 AM and 6 PM
+  };
+
   const [weather, setWeather] = useState({
     temp: 72,
     condition: 'Partly Cloudy',
-    icon: '⛅',
+    icon: isCurrentlyDay() ? '⛅' : '☁️',
   });
+  const [weatherBackground, setWeatherBackground] = useState(isCurrentlyDay() ? dayViewBg : nightViewBg);
   const [location, setLocation] = useState('Loading...');
   const [activeApp, setActiveApp] = useState('home');
   const [time, setTime] = useState(new Date());
@@ -20,6 +30,16 @@ const FlipPhone3D = () => {
   const [touchEnd, setTouchEnd] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [notesRefresh, setNotesRefresh] = useState(0);
+
+  // Function to determine weather background
+  const getWeatherBackground = (condition, isDay) => {
+    const rainyConditions = ['Rain', 'Drizzle', 'Thunderstorm', 'rain', 'drizzle', 'thunderstorm'];
+    const isRainy = rainyConditions.some(word => condition.includes(word));
+    
+    if (isRainy) return rainyBg;
+    if (!isDay) return nightViewBg;
+    return dayViewBg;
+  };
 
   useEffect(() => {
     // Update time every minute
@@ -47,26 +67,64 @@ const FlipPhone3D = () => {
             
             const temp = Math.round(weatherData.current_weather.temperature);
             const weatherCode = weatherData.current_weather.weathercode;
+            const isDay = weatherData.current_weather.is_day === 1;
             
-            const weatherMap = {
-              0: { condition: 'Clear', icon: '☀️' },
-              1: { condition: 'Mainly Clear', icon: '🌤️' },
-              2: { condition: 'Partly Cloudy', icon: '⛅' },
-              3: { condition: 'Overcast', icon: '☁️' },
-              45: { condition: 'Foggy', icon: '🌫️' },
-              48: { condition: 'Foggy', icon: '🌫️' },
-              51: { condition: 'Light Drizzle', icon: '🌦️' },
-              61: { condition: 'Light Rain', icon: '🌧️' },
-              80: { condition: 'Rain Showers', icon: '🌧️' },
-              95: { condition: 'Thunderstorm', icon: '⛈️' },
+            // Weather mapping with day/night variants
+            const getWeatherInfo = (code, isDay) => {
+              const weatherMap = {
+                0: { 
+                  condition: isDay ? 'Clear' : 'Clear Night', 
+                  icon: isDay ? '☀️' : '🌙' 
+                },
+                1: { 
+                  condition: isDay ? 'Mainly Clear' : 'Mostly Clear', 
+                  icon: isDay ? '🌤️' : '🌙' 
+                },
+                2: { 
+                  condition: 'Partly Cloudy', 
+                  icon: isDay ? '⛅' : '☁️' 
+                },
+                3: { 
+                  condition: 'Overcast', 
+                  icon: '☁️' 
+                },
+                45: { 
+                  condition: 'Foggy', 
+                  icon: '🌫️' 
+                },
+                48: { 
+                  condition: 'Foggy', 
+                  icon: '🌫️' 
+                },
+                51: { 
+                  condition: 'Light Drizzle', 
+                  icon: '🌦️' 
+                },
+                61: { 
+                  condition: 'Light Rain', 
+                  icon: '🌧️' 
+                },
+                80: { 
+                  condition: 'Rain Showers', 
+                  icon: '🌧️' 
+                },
+                95: { 
+                  condition: 'Thunderstorm', 
+                  icon: '⛈️' 
+                },
+              };
+              return weatherMap[code] || { condition: 'Partly Cloudy', icon: isDay ? '⛅' : '☁️' };
             };
 
-            const weatherInfo = weatherMap[weatherCode] || weatherMap[2];
+            const weatherInfo = getWeatherInfo(weatherCode, isDay);
             
             setWeather({
               temp,
               ...weatherInfo,
             });
+            
+            // Set weather background based on condition
+            setWeatherBackground(getWeatherBackground(weatherInfo.condition, isDay));
           } catch (error) {
             console.error('Weather fetch error:', error);
             setLocation('San Francisco, US');
@@ -313,7 +371,9 @@ const FlipPhone3D = () => {
                 <div 
                 onClick={() => setActiveApp('weather')}
                 style={{
-                  background: 'rgba(255,255,255,0.95)',
+                  backgroundImage: `url(${weatherBackground})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
                   borderRadius: '16px',
                   padding: '10px',
                   boxShadow: '0 3px 10px rgba(0,0,0,0.1)',
@@ -323,9 +383,9 @@ const FlipPhone3D = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'relative',
-                  backdropFilter: 'blur(10px)',
                   width: '100%',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  overflow: 'hidden'
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
                 onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
@@ -336,19 +396,20 @@ const FlipPhone3D = () => {
                     top: '8px',
                     right: '10px',
                     fontSize: '24px',
-                    opacity: 0.9
+                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
                   }}>
                     {weather.icon}
                   </div>
 
                   {/* Temperature */}
                   <div style={{
-                    fontSize: '28px',
+                    fontSize: '18px',
                     fontWeight: '700',
-                    color: '#2a2a2e',
+                    color: '#fff',
                     fontFamily: 'Satoshi, -apple-system, sans-serif',
-                    marginBottom: '4px',
-                    letterSpacing: '-1px'
+                    marginBottom: '16px',
+                    letterSpacing: '-1px',
+                    textShadow: '0 2px 8px rgba(0,0,0,0.5)'
                   }}>
                     {weather.temp}°
                   </div>
@@ -356,10 +417,11 @@ const FlipPhone3D = () => {
                   {/* Condition */}
                   <div style={{
                     fontSize: '12px',
-                    color: '#666',
+                    color: '#fff',
                     fontFamily: 'Satoshi, -apple-system, sans-serif',
                     fontWeight: '600',
-                    marginBottom: '4px'
+                    marginBottom: '6px',
+                    textShadow: '0 1px 4px rgba(0,0,0,0.5)'
                   }}>
                     {weather.condition}
                   </div>
@@ -367,9 +429,10 @@ const FlipPhone3D = () => {
                   {/* Location */}
                   <div style={{
                     fontSize: '11px',
-                    color: '#999',
+                    color: '#fff',
                     fontFamily: 'Satoshi, -apple-system, sans-serif',
-                    fontWeight: '600'
+                    fontWeight: '600',
+                    textShadow: '0 1px 4px rgba(0,0,0,0.5)'
                   }}>
                     {location}
                   </div>
