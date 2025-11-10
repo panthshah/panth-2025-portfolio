@@ -264,7 +264,7 @@ const NotesApp = ({ onClose, onNoteSaved }) => {
                       setNoteText(e.target.value);
                     }
                   }}
-                  placeholder="Leave a meesage... ✨"
+                  placeholder="Leave a message... ✨"
                   style={{
                     width: '100%',
                     minHeight: '120px',

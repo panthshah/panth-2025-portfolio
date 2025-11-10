@@ -2,10 +2,9 @@ import { useState, useMemo, useEffect } from 'react';
 import { User, GameController, File, ArrowUpRight, Copy, Heart, Smiley, List, X } from '@phosphor-icons/react';
 import FlipPhone3D from './FlipPhone3D';
 import ChatSidebar from './ChatSidebar';
-import ThemeCustomizerModal from './ThemeCustomizerModal';
+import CustomizeButton from './CustomizeButton';
 import project1Image from '../assets/776shots_so.png';
 import geminiIcon from '../assets/gemini 1.svg';
-import magicStickIcon from '../assets/Magic Stick.png';
 import zeenatAvatar from '../assets/Testimonial/Zeenat.jpeg';
 import joshAvatar from '../assets/Testimonial/Josh.jpeg';
 import saloniAvatar from '../assets/Testimonial/saloni.jpeg';
@@ -61,11 +60,10 @@ const THEME_COLORS = {
   }
 };
 
-const LandingPage = ({ theme, onNavigateToTheme, onThemeChange }) => {
+const LandingPage = ({ theme, onNavigateToTheme, onThemeChange, onNavigateToAbout }) => {
   const [activeTab, setActiveTab] = useState('chat');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
 
   const themeColors = useMemo(() => {
     const themeName = theme?.name || 'Peachy Orange';
@@ -101,47 +99,6 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange }) => {
       }
     }
   }, []);
-
-  const handleCustomizeClick = () => {
-    setIsCustomizerOpen(true);
-  };
-
-  const handleSaveCustomizer = (newTheme, newCursor) => {
-    console.log('Saving theme and cursor:', newTheme, newCursor);
-    
-    // Apply cursor globally using image cursor
-    const cursorMap = {
-      'cat': cursorCat,
-      'fox': cursorFox,
-      'creature': cursorCreature,
-      'dog': cursorDog
-    };
-    
-    if (newCursor && newCursor !== 'default' && cursorMap[newCursor]) {
-      const cursorImage = cursorMap[newCursor];
-      
-      // Create an image element to load and convert to canvas
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = 32;
-        canvas.height = 32;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, 32, 32);
-        const dataUrl = canvas.toDataURL();
-        document.body.style.cursor = `url('${dataUrl}') 16 16, auto`;
-      };
-      img.src = cursorImage;
-    } else {
-      document.body.style.cursor = 'default';
-    }
-    
-    // Update theme WITHOUT navigating (stay on landing page)
-    if (onThemeChange && newTheme) {
-      onThemeChange(newTheme);
-    }
-  };
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
@@ -179,11 +136,20 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange }) => {
               const Icon = item.Icon;
               const isActive = item.id === 'chat' ? true : activeTab === item.id;
               const isChatButton = item.id === 'chat';
+              const isAboutButton = item.id === 'about';
               return (
                 <li key={item.id} className="navbar-item">
                   <button
                     className={`navbar-tab ${isActive ? 'active' : ''} ${isChatButton ? 'chat-button' : ''}`}
-                    onClick={() => isChatButton ? setIsChatOpen(true) : setActiveTab(item.id)}
+                    onClick={() => {
+                      if (isChatButton) {
+                        setIsChatOpen(true);
+                      } else if (isAboutButton) {
+                        onNavigateToAbout();
+                      } else {
+                        setActiveTab(item.id);
+                      }
+                    }}
                     style={isActive ? { backgroundColor: themeColors.navPills } : {}}
                   >
                     <Icon size={16} weight="regular" className="tab-icon" />
@@ -217,6 +183,7 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange }) => {
                 const Icon = item.Icon;
                 const isActive = item.id === 'chat' ? true : activeTab === item.id;
                 const isChatButton = item.id === 'chat';
+                const isAboutButton = item.id === 'about';
                 return (
                   <li key={item.id} className="mobile-menu-item">
                     <button
@@ -224,6 +191,9 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange }) => {
                       onClick={() => {
                         if (isChatButton) {
                           setIsChatOpen(true);
+                          setMobileMenuOpen(false);
+                        } else if (isAboutButton) {
+                          onNavigateToAbout();
                           setMobileMenuOpen(false);
                         } else {
                           handleTabClick(item.id);
@@ -271,6 +241,7 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange }) => {
             <div className="hero-buttons">
               <button 
                 className="btn-primary btn-about-me"
+                onClick={onNavigateToAbout}
                 style={{
                   backgroundColor: 'transparent',
                   border: `1.5px solid ${themeColors.aboutMeStroke}`,
@@ -517,51 +488,8 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange }) => {
         themeColors={themeColors}
       />
 
-      {/* Sticky Customize Button */}
-      <button
-        onClick={handleCustomizeClick}
-        style={{
-          position: 'fixed',
-          bottom: '24px',
-          right: '24px',
-          backgroundColor: themeColors.navBg,
-          border: 'none',
-          borderRadius: '24px',
-          padding: '12px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          transition: 'all 0.3s ease',
-          zIndex: 1000
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-2px)';
-          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-        }}
-      >
-        <img 
-          src={magicStickIcon} 
-          alt="Customize" 
-          style={{ 
-            width: '20px', 
-            height: '20px',
-            objectFit: 'contain'
-          }} 
-        />
-      </button>
-
-      {/* Theme Customizer Modal */}
-      <ThemeCustomizerModal
-        isOpen={isCustomizerOpen}
-        onClose={() => setIsCustomizerOpen(false)}
-        currentTheme={theme}
-        onSave={handleSaveCustomizer}
-      />
+      {/* Reusable Customize Button Component */}
+      <CustomizeButton theme={theme} onThemeChange={onThemeChange} />
     </div>
   );
 };

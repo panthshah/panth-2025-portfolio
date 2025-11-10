@@ -40,8 +40,8 @@ const ThemeCustomizerModal = ({ isOpen, onClose, currentTheme, onSave }) => {
     // Save cursor to localStorage
     localStorage.setItem('selectedCursor', selectedCursor);
     
-    // Call onSave with theme and cursor
-    onSave(selectedTheme, selectedCursor);
+    // Call onSave with theme NAME and cursor (not the full theme object)
+    onSave(selectedTheme?.name || selectedTheme, selectedCursor);
     
     // Close modal
     onClose();
