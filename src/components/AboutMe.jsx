@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { User, GameController, File, List, X } from '@phosphor-icons/react';
+import Navbar from './Navbar';
 import CustomizeButton from './CustomizeButton';
 import ChatSidebar from './ChatSidebar';
 import aboutMe1 from '../assets/AboutMe /About Me 1.png';
@@ -58,7 +58,6 @@ const THEME_COLORS = {
 };
 
 const AboutMe = ({ theme, onBack, onThemeChange }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const themeColors = useMemo(() => {
@@ -66,107 +65,19 @@ const AboutMe = ({ theme, onBack, onThemeChange }) => {
     return THEME_COLORS[themeName] || THEME_COLORS['Peachy Orange'];
   }, [theme]);
 
-  const navItems = [
-    { id: 'about', label: 'About', Icon: User },
-    { id: 'playground', label: 'Playground', Icon: GameController },
-    { id: 'resume', label: 'Resume', Icon: File },
-    { id: 'chat', label: 'Chat', Icon: GeminiIcon }
-  ];
-
   return (
     <div className="about-me-page">
       {/* Navigation Bar */}
-      <nav className="navbar" style={{ backgroundColor: themeColors.navBg }}>
-        <div className="navbar-container">
-          {/* Logo/Name */}
-          <div className="navbar-logo">
-            <button 
-              className="logo-text" 
-              style={{ 
-                backgroundColor: themeColors.navPills,
-                color: '#000000'
-              }}
-              onClick={onBack}
-            >
-              Panth Shah
-            </button>
-          </div>
-
-          {/* Navigation Tabs */}
-          <ul className="navbar-menu">
-            {navItems.map((item) => {
-              const Icon = item.Icon;
-              const isActive = item.id === 'about';
-              const isChatButton = item.id === 'chat';
-              return (
-                <li key={item.id} className="navbar-item">
-                  <button
-                    className={`navbar-tab ${isActive ? 'active' : ''} ${isChatButton ? 'chat-button' : ''}`}
-                    onClick={() => {
-                      if (isChatButton) {
-                        setIsChatOpen(true);
-                      } else if (item.id === 'about') {
-                        // Already on about page
-                      } else {
-                        onBack();
-                      }
-                    }}
-                    style={(isActive || isChatButton) ? { backgroundColor: themeColors.navPills } : {}}
-                  >
-                    <Icon size={16} weight="regular" className="tab-icon" />
-                    <span className="tab-label">{item.label}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* Hamburger Menu Button */}
-          <button 
-            className="hamburger-menu"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ backgroundColor: themeColors.navPills }}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <X size={24} weight="bold" />
-            ) : (
-              <List size={24} weight="bold" />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Menu Drawer */}
-        {mobileMenuOpen && (
-          <div className="mobile-menu-drawer" style={{ backgroundColor: themeColors.navBg }}>
-            <ul className="mobile-menu-list">
-              {navItems.filter(item => item.id !== 'chat').map((item) => {
-                const Icon = item.Icon;
-                const isActive = item.id === 'about';
-                return (
-                  <li key={item.id} className="mobile-menu-item">
-                    <button
-                      className={`mobile-menu-tab ${isActive ? 'active' : ''}`}
-                      onClick={() => {
-                        if (item.id === 'about') {
-                          setMobileMenuOpen(false);
-                        } else {
-                          onBack();
-                          setMobileMenuOpen(false);
-                        }
-                      }}
-                      style={isActive ? { backgroundColor: themeColors.navPills } : {}}
-                    >
-                      <Icon size={18} weight="regular" />
-                      <span>{item.label}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        )}
-      </nav>
+      <Navbar 
+        theme={theme}
+        currentPage="about"
+        activeTab="about"
+        onTabClick={onBack}
+        onChatOpen={() => setIsChatOpen(true)}
+        onNavigateToAbout={() => {}}
+        onLogoClick={onBack}
+        GeminiIcon={GeminiIcon}
+      />
 
       {/* Bento Grid Container */}
       <div className="about-me-container">

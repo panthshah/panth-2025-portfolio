@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
-import { User, GameController, File, ArrowUpRight, Copy, Heart, Smiley, List, X } from '@phosphor-icons/react';
+import { ArrowUpRight, Copy, Heart, Smiley } from '@phosphor-icons/react';
+import Navbar from './Navbar';
 import FlipPhone3D from './FlipPhone3D';
 import ChatSidebar from './ChatSidebar';
 import CustomizeButton from './CustomizeButton';
@@ -62,7 +63,6 @@ const THEME_COLORS = {
 
 const LandingPage = ({ theme, onNavigateToTheme, onThemeChange, onNavigateToAbout }) => {
   const [activeTab, setActiveTab] = useState('chat');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const themeColors = useMemo(() => {
@@ -102,111 +102,21 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange, onNavigateToAbou
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
-    setMobileMenuOpen(false);
   };
-
-  const navItems = [
-    { id: 'about', label: 'About', Icon: User },
-    { id: 'playground', label: 'Playground', Icon: GameController },
-    { id: 'resume', label: 'Resume', Icon: File },
-    { id: 'chat', label: 'Chat', Icon: GeminiIcon }
-  ];
 
   return (
     <div className="landing-page">
       {/* Navigation Bar */}
-      <nav className="navbar" style={{ backgroundColor: themeColors.navBg }}>
-        <div className="navbar-container">
-          {/* Logo/Name */}
-          <div className="navbar-logo">
-            <button 
-              className="logo-text" 
-              style={{ 
-                backgroundColor: themeColors.navPills,
-                color: '#000000'
-              }}
-            >
-              Panth Shah
-            </button>
-          </div>
-
-          {/* Navigation Tabs */}
-          <ul className="navbar-menu">
-            {navItems.map((item) => {
-              const Icon = item.Icon;
-              const isActive = item.id === 'chat' ? true : activeTab === item.id;
-              const isChatButton = item.id === 'chat';
-              const isAboutButton = item.id === 'about';
-              return (
-                <li key={item.id} className="navbar-item">
-                  <button
-                    className={`navbar-tab ${isActive ? 'active' : ''} ${isChatButton ? 'chat-button' : ''}`}
-                    onClick={() => {
-                      if (isChatButton) {
-                        setIsChatOpen(true);
-                      } else if (isAboutButton) {
-                        onNavigateToAbout();
-                      } else {
-                        setActiveTab(item.id);
-                      }
-                    }}
-                    style={isActive ? { backgroundColor: themeColors.navPills } : {}}
-                  >
-                    <Icon size={16} weight="regular" className="tab-icon" />
-                    <span className="tab-label">{item.label}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* Hamburger Menu Button */}
-          <button 
-            className="hamburger-menu"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ backgroundColor: themeColors.navPills }}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <X size={24} weight="bold" />
-            ) : (
-              <List size={24} weight="bold" />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Menu Drawer */}
-        {mobileMenuOpen && (
-          <div className="mobile-menu-drawer" style={{ backgroundColor: themeColors.navBg }}>
-            <ul className="mobile-menu-list">
-              {navItems.filter(item => item.id !== 'chat').map((item) => {
-                const Icon = item.Icon;
-                const isActive = activeTab === item.id;
-                const isAboutButton = item.id === 'about';
-                return (
-                  <li key={item.id} className="mobile-menu-item">
-                    <button
-                      className={`mobile-menu-tab ${isActive ? 'active' : ''}`}
-                      onClick={() => {
-                        if (isAboutButton) {
-                          onNavigateToAbout();
-                          setMobileMenuOpen(false);
-                        } else {
-                          handleTabClick(item.id);
-                        }
-                      }}
-                      style={isActive ? { backgroundColor: themeColors.navPills } : {}}
-                    >
-                      <Icon size={18} weight="regular" />
-                      <span>{item.label}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        )}
-      </nav>
+      <Navbar 
+        theme={theme}
+        currentPage="landing"
+        activeTab={activeTab}
+        onTabClick={handleTabClick}
+        onChatOpen={() => setIsChatOpen(true)}
+        onNavigateToAbout={onNavigateToAbout}
+        onLogoClick={() => {}}
+        GeminiIcon={GeminiIcon}
+      />
 
       {/* Hero Section */}
       <section className="hero-section">
