@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { User, GameController, File, List, X } from '@phosphor-icons/react';
 import CustomizeButton from './CustomizeButton';
+import ChatSidebar from './ChatSidebar';
 import aboutMe1 from '../assets/AboutMe /About Me 1.png';
 import aboutMe2 from '../assets/AboutMe /About Me 2.png';
 import aboutMe3 from '../assets/AboutMe /About Me 3.png';
@@ -32,25 +33,25 @@ const THEME_COLORS = {
   },
   'Lavender Dream': {
     navBg: '#FBF1F9',
-    navPills: '#F4D9EF',
-    companyName: '#D291BC',
-    aboutMeStroke: '#D291BC'
+    navPills: '#F8D2FC',
+    companyName: '#865D95',
+    aboutMeStroke: '#865D95'
   },
   'Blush Petal': {
-    navBg: '#FFF0F5',
-    navPills: '#FFD9E8',
+    navBg: '#F9DAED',
+    navPills: '#FDF0F8',
     companyName: '#FB97D4',
     aboutMeStroke: '#FB97D4'
   },
   'Sky': {
-    navBg: '#F0F8FF',
-    navPills: '#D4E9FF',
+    navBg: '#BEE3FF',
+    navPills: '#D8F1FF',
     companyName: '#1A7FD6',
     aboutMeStroke: '#1A7FD6'
   },
   'Pastel Red': {
-    navBg: '#FFF5F7',
-    navPills: '#FFE0E8',
+    navBg: '#FFDADF',
+    navPills: '#FFF6F8',
     companyName: '#FF7084',
     aboutMeStroke: '#FF7084'
   }
@@ -58,6 +59,7 @@ const THEME_COLORS = {
 
 const AboutMe = ({ theme, onBack, onThemeChange }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const themeColors = useMemo(() => {
     const themeName = theme?.name || 'Peachy Orange';
@@ -101,7 +103,9 @@ const AboutMe = ({ theme, onBack, onThemeChange }) => {
                   <button
                     className={`navbar-tab ${isActive ? 'active' : ''} ${isChatButton ? 'chat-button' : ''}`}
                     onClick={() => {
-                      if (item.id === 'about') {
+                      if (isChatButton) {
+                        setIsChatOpen(true);
+                      } else if (item.id === 'about') {
                         // Already on about page
                       } else {
                         onBack();
@@ -136,7 +140,7 @@ const AboutMe = ({ theme, onBack, onThemeChange }) => {
         {mobileMenuOpen && (
           <div className="mobile-menu-drawer" style={{ backgroundColor: themeColors.navBg }}>
             <ul className="mobile-menu-list">
-              {navItems.map((item) => {
+              {navItems.filter(item => item.id !== 'chat').map((item) => {
                 const Icon = item.Icon;
                 const isActive = item.id === 'about';
                 return (
@@ -202,6 +206,13 @@ const AboutMe = ({ theme, onBack, onThemeChange }) => {
           </div>
         </div>
       </div>
+
+      {/* Chat Sidebar */}
+      <ChatSidebar 
+        isOpen={isChatOpen} 
+        onClose={() => setIsChatOpen(false)} 
+        themeColors={themeColors}
+      />
 
       {/* Reusable Customize Button Component */}
       <CustomizeButton theme={theme} onThemeChange={onThemeChange} />

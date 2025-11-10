@@ -101,25 +101,25 @@ const CustomizeButton = ({ theme, onThemeChange }) => {
       },
       'Lavender Dream': {
         navBg: '#FBF1F9',
-        navPills: '#F4D9EF',
-        companyName: '#D291BC',
-        aboutMeStroke: '#D291BC'
+        navPills: '#F8D2FC',
+        companyName: '#865D95',
+        aboutMeStroke: '#865D95'
       },
       'Blush Petal': {
-        navBg: '#FFF0F5',
-        navPills: '#FFD9E8',
+        navBg: '#F9DAED',
+        navPills: '#FDF0F8',
         companyName: '#FB97D4',
         aboutMeStroke: '#FB97D4'
       },
       'Sky': {
-        navBg: '#F0F8FF',
-        navPills: '#D4E9FF',
+        navBg: '#BEE3FF',
+        navPills: '#D8F1FF',
         companyName: '#1A7FD6',
         aboutMeStroke: '#1A7FD6'
       },
       'Pastel Red': {
-        navBg: '#FFF5F7',
-        navPills: '#FFE0E8',
+        navBg: '#FFDADF',
+        navPills: '#FFF6F8',
         companyName: '#FF7084',
         aboutMeStroke: '#FF7084'
       }

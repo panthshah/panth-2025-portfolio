@@ -179,20 +179,16 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange, onNavigateToAbou
         {mobileMenuOpen && (
           <div className="mobile-menu-drawer" style={{ backgroundColor: themeColors.navBg }}>
             <ul className="mobile-menu-list">
-              {navItems.map((item) => {
+              {navItems.filter(item => item.id !== 'chat').map((item) => {
                 const Icon = item.Icon;
-                const isActive = item.id === 'chat' ? true : activeTab === item.id;
-                const isChatButton = item.id === 'chat';
+                const isActive = activeTab === item.id;
                 const isAboutButton = item.id === 'about';
                 return (
                   <li key={item.id} className="mobile-menu-item">
                     <button
                       className={`mobile-menu-tab ${isActive ? 'active' : ''}`}
                       onClick={() => {
-                        if (isChatButton) {
-                          setIsChatOpen(true);
-                          setMobileMenuOpen(false);
-                        } else if (isAboutButton) {
+                        if (isAboutButton) {
                           onNavigateToAbout();
                           setMobileMenuOpen(false);
                         } else {
