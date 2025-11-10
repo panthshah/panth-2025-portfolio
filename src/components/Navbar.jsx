@@ -81,13 +81,16 @@ const Navbar = ({
             const isChatButton = item.id === 'chat';
             const isAboutButton = item.id === 'about';
             
-            // Determine if tab is active
+            // Determine if tab is active (not for chat button)
             let isActive = false;
             if (currentPage === 'about' && isAboutButton) {
               isActive = true;
-            } else if (currentPage === 'landing') {
-              isActive = isChatButton ? true : activeTab === item.id;
+            } else if (currentPage === 'landing' && !isChatButton) {
+              isActive = activeTab === item.id;
             }
+
+            // Chat button always has background, other buttons only when active
+            const hasBackground = isChatButton || isActive;
 
             return (
               <li key={item.id} className="navbar-item">
@@ -102,7 +105,7 @@ const Navbar = ({
                       handleTabClick(item.id);
                     }
                   }}
-                  style={isActive ? { backgroundColor: themeColors.navPills } : {}}
+                  style={hasBackground ? { backgroundColor: themeColors.navPills } : {}}
                 >
                   <Icon size={16} weight="regular" className="tab-icon" />
                   <span className="tab-label">{item.label}</span>
