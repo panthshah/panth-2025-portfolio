@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowUpRight, Copy, Heart, Smiley } from '@phosphor-icons/react';
 import Navbar from './Navbar';
 import FlipPhone3D from './FlipPhone3D';
@@ -61,7 +62,8 @@ const THEME_COLORS = {
   }
 };
 
-const LandingPage = ({ theme, onNavigateToTheme, onThemeChange, onNavigateToAbout }) => {
+const LandingPage = ({ theme, onThemeChange }) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('chat');
   const [isChatOpen, setIsChatOpen] = useState(false);
 
@@ -113,7 +115,6 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange, onNavigateToAbou
         activeTab={activeTab}
         onTabClick={handleTabClick}
         onChatOpen={() => setIsChatOpen(true)}
-        onNavigateToAbout={onNavigateToAbout}
         onLogoClick={() => {}}
         GeminiIcon={GeminiIcon}
       />
@@ -147,7 +148,7 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange, onNavigateToAbou
             <div className="hero-buttons">
               <button 
                 className="btn-primary btn-about-me"
-                onClick={onNavigateToAbout}
+                onClick={() => navigate('/about')}
                 style={{
                   backgroundColor: 'transparent',
                   border: `1.5px solid ${themeColors.aboutMeStroke}`,
@@ -181,7 +182,7 @@ const LandingPage = ({ theme, onNavigateToTheme, onThemeChange, onNavigateToAbou
               <p className="project-description">
                 Led UX design for the "Buy More, Save More" feature on Samsung's platform to boost annual sales by $1M through improved visibility and engagement.
               </p>
-              <a href="#" className="project-link">
+              <a href="#" className="project-link" onClick={(e) => { e.preventDefault(); navigate('/foundermatch'); }}>
                 Read Case study
                 <ArrowUpRight size={16} weight="regular" />
               </a>

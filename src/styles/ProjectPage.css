@@ -1,0 +1,707 @@
+/* Project Page Layout */
+.project-page {
+  min-height: 100vh;
+  background-color: #F7F7F4;
+}
+
+/* Project Content Container - Matches navbar width and padding */
+.project-page-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 150px 120px 80px 120px; /* Top: 96px from nav, sides match navbar */
+}
+
+/* Section Heading - Reusable for bold intro text */
+.section-heading {
+  font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #000000;
+  margin: 0 0 48px 0;
+}
+
+/* Legacy support - keep for backward compatibility */
+.project-intro {
+  font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #000000;
+  margin: 0 0 48px 0;
+}
+
+/* Project Hero Image */
+.project-hero-image {
+  background-color: #E8E8E8;
+  border-radius: 16px;
+  margin: 0 0 64px 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-hero-image img {
+  width: 100%;
+  height: 50%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+}
+
+/* Overview Section */
+.project-overview {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+}
+
+.overview-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  background-color: #F2F1EE;
+  border-radius: 12px;
+}
+
+.overview-heading {
+  font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #000000;
+  margin: 0;
+}
+
+.overview-text {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #333333;
+  margin: 0;
+}
+
+.overview-text + .overview-text {
+  margin-top: 8px;
+}
+
+/* Case Study Sections */
+.case-study-section {
+  margin-top: 80px;
+}
+
+.section-title {
+  font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0px;
+  color: #666666;
+  margin: 0 0 24px 0;
+}
+
+/* Content Box - Reusable for problem, opportunity, etc. */
+.content-box {
+  background-color: #F2F1EE;
+  border-radius: 12px;
+  padding: 32px;
+}
+
+/* Legacy support */
+.problem-box,
+.opportunity-box {
+  background-color: #F2F1EE;
+  border-radius: 12px;
+  padding: 32px;
+}
+
+.problem-text {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #000000;
+  margin: 0;
+}
+
+.highlight-text {
+  color: #3615FF;
+  font-weight: 600;
+}
+
+.section-description {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #000000;
+  margin: 0;
+}
+
+/* Discovery Section */
+.discovery-subtitle {
+  font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #000000;
+  margin: 0 0 16px 0;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.insight-card {
+  background-color: #F2F1EE;
+  border-radius: 12px;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.insight-number {
+    font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
+    background-color: #F7F7F4;
+    width: 48px;           /* Fixed width */
+    height: 48px;          /* Fixed height (same as width) */
+    border-radius: 50%;    /* Changed from 64px to 50% for perfect circle */
+    display: flex;         /* Add flex to center the number */
+    align-items: center;   /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    flex-shrink: 0;  
+}
+
+.insight-text {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000000;
+  margin: 0;
+}
+
+/* Pain Points Section */
+.pain-point {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 96px;
+}
+
+.pain-point-reverse {
+  direction: ltr;
+}
+
+.pain-point-reverse .pain-point-content {
+  order: 1;
+}
+
+.pain-point-reverse .pain-point-image-container {
+  order: 2;
+}
+
+.pain-point-image-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pain-point-image-container img {
+  max-width: 80%;
+  height: auto;
+  display: block;
+}
+
+/* Pain Point 2 and 3 - Smaller images */
+.case-study-section .pain-point:nth-of-type(2) .pain-point-image-container img,
+.case-study-section .pain-point:nth-of-type(3) .pain-point-image-container img {
+  max-width: 50%;
+}
+
+.pain-point-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pain-point-label {
+  font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  background-color: #FFE4CC;
+  padding: 8px 16px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.pain-point-quote {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #666666;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Subsection Heading */
+.subsection-heading {
+  font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #000000;
+  margin: 0 0 16px 0;
+}
+
+/* Feature Mapping Image */
+.feature-mapping-image {
+  width: 100%;
+  background-color: #E8E8E8;
+  border-radius: 12px;
+  margin-top: 32px;
+  overflow: hidden;
+}
+
+.feature-mapping-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Sitemap Image */
+.sitemap-image {
+  width: 100%;
+  margin-top: 32px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sitemap-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* User Flow Image */
+.userflow-image {
+  width: 100%;
+  margin-top: 32px;
+  overflow: hidden;
+}
+
+.userflow-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Video Container - Reusable for videos */
+.video-container {
+  width: 100%;
+  margin-bottom: 32px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.video-container video {
+  width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.video-container video::-webkit-media-controls {
+  display: none !important;
+}
+
+.video-container video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+/* Event Based Matching */
+.event-matching-image {
+  width: 100%;
+  background-color: #E8E8E8;
+  border-radius: 12px;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.event-matching-image img {
+  max-width: 90%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+.event-matching-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.event-description {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #333333;
+  margin: 0;
+}
+
+.event-description strong {
+  font-weight: 600;
+  color: #000000;
+}
+
+/* Matching Algorithm Image */
+.matching-algorithm-image {
+  width: 100%;
+  background-color: #E8E8E8;
+  border-radius: 12px;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.matching-algorithm-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Testing Image */
+.testing-image {
+  width: 100%;
+  background-color: #E8E8E8;
+  border-radius: 12px;
+  margin-top: 32px;
+  overflow: hidden;
+}
+
+.testing-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Reflection and Impact Images */
+.reflection-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 32px;
+}
+
+.reflection-image-item {
+  width: 100%;
+  background-color: #E8E8E8;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+
+.reflection-image-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Responsive Design - Matches navbar breakpoints exactly */
+
+/* 1200px to 1400px */
+@media (max-width: 1399px) and (min-width: 1200px) {
+  .project-page-content {
+    padding: 150px 100px 80px 100px;
+  }
+}
+
+/* 1024px to 1199px */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .project-page-content {
+    padding: 150px 48px 80px 48px;
+  }
+
+  .project-overview {
+    gap: 32px;
+  }
+}
+
+/* 768px to 1024px */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .project-page-content {
+    padding: 150px 48px 80px 48px;
+  }
+
+  .project-overview {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .overview-column {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .overview-column .overview-text {
+    display: inline;
+    margin-right: 12px;
+  }
+
+  .overview-column .overview-text:last-child {
+    margin-right: 0;
+  }
+
+
+  .insights-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* 481px to 768px - Tablets */
+@media (max-width: 768px) and (min-width: 481px) {
+  .project-page-content {
+    padding: 150px 48px 60px 48px;
+  }
+
+  .project-intro {
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+
+  .project-hero-image {
+    margin-bottom: 48px;
+  }
+
+  .project-overview {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .overview-column {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .overview-column .overview-text {
+    display: inline;
+    margin-right: 12px;
+    font-size: 14px;
+  }
+
+  .overview-column .overview-text:last-child {
+    margin-right: 0;
+  }
+
+  .overview-heading {
+    font-size: 16px;
+  }
+
+  .insights-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .problem-box {
+    padding: 24px;
+  }
+
+  .problem-text,
+  .section-description {
+    font-size: 16px;
+  }
+
+  .discovery-subtitle {
+    font-size: 20px;
+  }
+
+  .pain-point {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  .pain-point-reverse .pain-point-content,
+  .pain-point-reverse .pain-point-image-container {
+    order: initial;
+  }
+
+  .pain-point-quote {
+    font-size: 14px;
+  }
+
+  .subsection-heading {
+    font-size: 18px;
+  }
+
+  .event-description {
+    font-size: 14px;
+  }
+}
+
+/* Below 481px - Mobile */
+@media (max-width: 480px) {
+  .project-page-content {
+    padding: 150px 24px 48px 24px;
+  }
+
+  .project-intro {
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+
+  .project-hero-image {
+    margin-bottom: 40px;
+    border-radius: 12px;
+  }
+
+  .project-overview {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .overview-column {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .overview-column .overview-text {
+    display: inline;
+    margin-right: 12px;
+  }
+
+  .overview-column .overview-text:last-child {
+    margin-right: 0;
+  }
+
+  .overview-heading {
+    font-size: 16px;
+  }
+
+  .overview-text {
+    font-size: 14px;
+  }
+
+  .overview-text + .overview-text {
+    margin-top: 6px;
+  }
+
+  .case-study-section {
+    margin-top: 60px;
+  }
+
+  .insights-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .insight-card {
+    padding: 24px 20px;
+  }
+
+  .insight-number {
+    font-size: 28px;
+  }
+
+  .insight-text {
+    font-size: 14px;
+  }
+
+  .problem-box {
+    padding: 20px;
+  }
+
+  .problem-text,
+  .section-description {
+    font-size: 14px;
+  }
+
+  .discovery-subtitle {
+    font-size: 18px;
+  }
+
+  .section-title {
+    font-size: 12px;
+  }
+
+  .pain-point {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .pain-point-reverse .pain-point-content,
+  .pain-point-reverse .pain-point-image-container {
+    order: initial;
+  }
+
+
+  .pain-point-quote {
+    font-size: 14px;
+  }
+
+  .pain-point-label {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .subsection-heading {
+    font-size: 16px;
+  }
+
+  .feature-mapping-image {
+    margin-top: 24px;
+  }
+
+  .event-matching-image,
+  .matching-algorithm-image {
+    margin-bottom: 24px;
+  }
+
+  .event-description {
+    font-size: 14px;
+  }
+
+  .video-container {
+    max-height: 400px;
+  }
+
+  .video-container video {
+    max-height: 400px;
+  }
+
+  .reflection-images {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+}
+

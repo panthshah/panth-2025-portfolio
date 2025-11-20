@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import CustomizeButton from './CustomizeButton';
 import ChatSidebar from './ChatSidebar';
@@ -57,7 +58,8 @@ const THEME_COLORS = {
   }
 };
 
-const AboutMe = ({ theme, onBack, onThemeChange }) => {
+const AboutMe = ({ theme, onThemeChange }) => {
+  const navigate = useNavigate();
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const themeColors = useMemo(() => {
@@ -72,10 +74,9 @@ const AboutMe = ({ theme, onBack, onThemeChange }) => {
         theme={theme}
         currentPage="about"
         activeTab="about"
-        onTabClick={onBack}
+        onTabClick={() => navigate('/home')}
         onChatOpen={() => setIsChatOpen(true)}
-        onNavigateToAbout={() => {}}
-        onLogoClick={onBack}
+        onLogoClick={() => navigate('/home')}
         GeminiIcon={GeminiIcon}
       />
 

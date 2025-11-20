@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import NoiseTexture from './textures/NoiseTexture';
 import UnifiedTexture, { TEXTURE_CONFIGS } from './textures/UnifiedTexture';
 import '../styles/ThemeSelection.css';
 
-const ThemeSelection = ({ onThemeSelect, selectedTheme: initialTheme }) => {
+const ThemeSelection = ({ selectedTheme: initialTheme }) => {
+  const navigate = useNavigate();
   // Enhanced noise texture generator function
   const generateNoiseTexture = (baseColor, intensity = 0.3) => {
     const encodedSvg = encodeURIComponent(`
@@ -234,7 +236,8 @@ const ThemeSelection = ({ onThemeSelect, selectedTheme: initialTheme }) => {
         }}
         onClick={() => {
           playClickSound();
-          onThemeSelect(selectedThemeData);
+          localStorage.setItem('selectedTheme', JSON.stringify(selectedThemeData));
+          navigate('/home');
         }}
       >
         Continue

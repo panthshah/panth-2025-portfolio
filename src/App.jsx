@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SplashScreen from './components/SplashScreen';
 import ThemeSelection from './components/ThemeSelection';
 import FlipPhone3D from './components/FlipPhone3D';
 import LandingPage from './components/LandingPage';
 import AboutMe from './components/AboutMe';
+import ProjectPage from './components/ProjectPage';
 import { precompileShaders } from './utils/shaderPreloader';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('splash');
   const [selectedTheme, setSelectedTheme] = useState(null);
+  const [showSplash, setShowSplash] = useState(true);
 
   // Pre-compile shaders on app start
   useEffect(() => {
@@ -32,40 +34,33 @@ function App() {
     }
   }, []);
 
-  const handleSplashComplete = () => {
-    setCurrentPage('theme');
-  };
-
-  const handleThemeSelect = (theme) => {
-    setSelectedTheme(theme);
-    setCurrentPage('landing');
-  };
-
-  const handleNavigateToTheme = () => {
-    setCurrentPage('theme');
-  };
-
   // Update theme without navigating (for modal)
   const handleThemeChange = (theme) => {
     setSelectedTheme(theme);
   };
 
-  const handleNavigateToAbout = () => {
-    setCurrentPage('about');
+  const handleSplashComplete = () => {
+    setShowSplash(false);
   };
 
-  const handleBackFromAbout = () => {
-    setCurrentPage('landing');
-  };
+  // Show splash screen on first load
+  if (showSplash) {
+    return <SplashScreen onComplete={handleSplashComplete} />;
+  }
 
   return (
-    <div className="App">
-      {currentPage === 'splash' && <SplashScreen onComplete={handleSplashComplete} />}
-      {currentPage === 'theme' && <ThemeSelection onThemeSelect={handleThemeSelect} selectedTheme={selectedTheme} />}
-      {currentPage === 'landing' && <LandingPage theme={selectedTheme} onNavigateToTheme={handleNavigateToTheme} onThemeChange={handleThemeChange} onNavigateToAbout={handleNavigateToAbout} />}
-      {currentPage === 'about' && <AboutMe theme={selectedTheme} onBack={handleBackFromAbout} onThemeChange={handleThemeChange} />}
-      {currentPage === 'phone' && <FlipPhone3D />}
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Navigate to="/theme" replace />} />
+          <Route path="/theme" element={<ThemeSelection selectedTheme={selectedTheme} />} />
+          <Route path="/home" element={<LandingPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
+          <Route path="/about" element={<AboutMe theme={selectedTheme} onThemeChange={handleThemeChange} />} />
+          <Route path="/foundermatch" element={<ProjectPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
+          <Route path="/phone" element={<FlipPhone3D />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   )
 }
 

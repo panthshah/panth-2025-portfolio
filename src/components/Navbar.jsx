@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { User, GameController, File, List, X } from '@phosphor-icons/react';
 import '../styles/Navbar.css';
 
@@ -8,10 +9,10 @@ const Navbar = ({
   activeTab, 
   onTabClick, 
   onChatOpen, 
-  onNavigateToAbout,
   onLogoClick,
   GeminiIcon 
 }) => {
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Get theme colors
@@ -100,7 +101,7 @@ const Navbar = ({
                     if (isChatButton) {
                       onChatOpen();
                     } else if (isAboutButton) {
-                      onNavigateToAbout();
+                      navigate('/about');
                     } else {
                       handleTabClick(item.id);
                     }
@@ -152,7 +153,7 @@ const Navbar = ({
                     className={`mobile-menu-tab ${isActive ? 'active' : ''}`}
                     onClick={() => {
                       if (isAboutButton) {
-                        onNavigateToAbout();
+                        navigate('/about');
                         setMobileMenuOpen(false);
                       } else {
                         handleTabClick(item.id);
