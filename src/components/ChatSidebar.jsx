@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { X, ArrowClockwise, PaperPlaneTilt, CircleNotch } from '@phosphor-icons/react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import chatbotImage from '../assets/Chatbot.png';
+import chatbotImage from '../assets/ChatGemini.png';
 import './ChatSidebar.css';
 
 export default function ChatSidebar({ isOpen, onClose, themeColors }) {

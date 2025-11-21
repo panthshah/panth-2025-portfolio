@@ -75,28 +75,9 @@ const ThemeSelection = ({ selectedTheme: initialTheme }) => {
     }
   ];
 
-  const getInitialTheme = () => {
-    if (initialTheme) {
-      const themeIndex = themes.findIndex(t => t.name === initialTheme.name);
-      return themeIndex !== -1 ? { name: initialTheme.name, data: themes[themeIndex] } : { name: 'Peachy Orange', data: themes[0] };
-    }
-    return { name: 'Peachy Orange', data: themes[0] };
-  };
-
-  const initial = getInitialTheme();
-  const [selectedTheme, setSelectedTheme] = useState(initial.name);
-  const [selectedThemeData, setSelectedThemeData] = useState(initial.data);
-
-  // Update theme when navigating back with a selected theme
-  useEffect(() => {
-    if (initialTheme) {
-      const themeIndex = themes.findIndex(t => t.name === initialTheme.name);
-      if (themeIndex !== -1) {
-        setSelectedTheme(initialTheme.name);
-        setSelectedThemeData(themes[themeIndex]);
-      }
-    }
-  }, [initialTheme]);
+  // Always start fresh with default theme (middle position)
+  const [selectedTheme, setSelectedTheme] = useState('Blush Petal');
+  const [selectedThemeData, setSelectedThemeData] = useState(themes[2]); // Middle theme
 
   const playClickSound = () => {
     const mouseclick = new Audio();
