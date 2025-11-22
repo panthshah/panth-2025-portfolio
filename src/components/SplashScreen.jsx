@@ -1,74 +1,114 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import plantImage from '../assets/image1.png';
 
 const SplashScreen = ({ onComplete }) => {
+  const [index, setIndex] = useState(0);
+  
+  // Greetings cycle
   const greetings = [
-    'Hello',
-    'नमस्ते', 
-    'Hola',
-    'Bonjour',
-    'こんにちは'
+    { text: "Namaste", lang: "Hindi" },
+    { text: "Hola", lang: "Spanish" },
+    { text: "Annyeong", lang: "Korean" },
+    { text: "Bonjour", lang: "French" },
+    { text: "Salaam", lang: "Urdu" }
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // Theme Colors for cycle (matched to the greetings order)
+  const bgColors = [
+    '#FFF8F3', // Peachy Orange (Namaste)
+    '#F8F4FF', // Lavender Dream (Hola)
+    '#FFF0F5', // Blush Petal (Annyeong)
+    '#F0F8FF', // Sky (Bonjour)
+    '#FFF5F5'  // Pastel Red (Salaam)
+  ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % greetings.length);
-    }, 800);
+    // Cycle through greetings
+    const intervalDuration = 800; // 0.8s per greeting
+    
+    const timer = setInterval(() => {
+      setIndex(prev => {
+        if (prev < greetings.length - 1) {
+          return prev + 1;
+        }
+        return prev;
+      });
+    }, intervalDuration);
 
-    // Navigate to theme selection after 4 seconds
-    const timeout = setTimeout(() => {
+    // Complete after all greetings + small buffer
+    const totalDuration = (greetings.length * intervalDuration) + 400;
+    const completeTimer = setTimeout(() => {
       onComplete();
-    }, 4000);
+    }, totalDuration);
 
     return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
+      clearInterval(timer);
+      clearTimeout(completeTimer);
     };
-  }, [greetings.length, onComplete]);
+  }, [onComplete, greetings.length]);
+
+  const commonFontStyle = {
+    fontFamily: "'Samsung Sharp Sans', system-ui, sans-serif",
+    color: 'black',
+    margin: 0,
+    lineHeight: '1.1'
+  };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: 'white',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
-      <div style={{
+    <motion.div
+      initial={{ backgroundColor: bgColors[0] }}
+      animate={{ backgroundColor: bgColors[index] }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100vh',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        zIndex: 9999,
+        overflow: 'hidden'
+      }}
+    >
+      {/* Centered Content Container */}
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'flex-start', // Aligns text to the left relative to each other
+        justifyContent: 'center', // Centers vertically
       }}>
-        {/* Text */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
+        <h1 style={{ 
+          ...commonFontStyle,
+          fontSize: '160px', 
+          fontWeight: '800',
         }}>
+          hii.
+        </h1>
+        
+        <div style={{ height: '40px', overflow: 'visible', width: '100%' }}> 
           <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
+            <motion.h2 
+              key={index}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              style={{
-                fontSize: '24px',
-                fontFamily: 'Inclusive Sans, system-ui, sans-serif',
-                color: '#348402',
-                fontWeight: '500',
-                lineHeight: '24px'
+              style={{ 
+                ...commonFontStyle,
+                fontSize: '28px', 
+                fontWeight: '700', 
+                marginTop: '0px',
+                paddingLeft: '12px' // Slight visual alignment with the curve of 'h'
               }}
             >
-              {greetings[currentIndex]}
-            </motion.div>
+              {greetings[index].text}
+            </motion.h2>
           </AnimatePresence>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
