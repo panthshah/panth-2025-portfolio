@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import bgImage from '../../assets/bg.png';
+import { Image, HandPointing } from '@phosphor-icons/react';
+import defaultBgImage from '../../assets/phonebackground.png';
+import widgetBgImage from '../../assets/bg.png';
 import dayViewBg from '../../assets/Day View.png';
 import nightViewBg from '../../assets/Night View.png';
 import rainyBg from '../../assets/Raining.png';
@@ -8,6 +10,7 @@ import WeatherApp from './WeatherApp';
 import CalculatorApp from './CalculatorApp';
 import NotesWidget from './NotesWidget';
 import NotesApp from './NotesApp';
+import WallpaperApp from './WallpaperApp';
 
 const FlipPhone3D = () => {
   // Helper function to check if it's currently day based on local time
@@ -24,12 +27,38 @@ const FlipPhone3D = () => {
   const [weatherBackground, setWeatherBackground] = useState(isCurrentlyDay() ? dayViewBg : nightViewBg);
   const [location, setLocation] = useState('Loading...');
   const [activeApp, setActiveApp] = useState('home');
+  const [phoneBackground, setPhoneBackground] = useState(defaultBgImage);
   const [time, setTime] = useState(new Date());
   const [currentScreen, setCurrentScreen] = useState(0); // 0 = first screen, 1 = second screen
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [notesRefresh, setNotesRefresh] = useState(0);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
+  const [distanceFromMe, setDistanceFromMe] = useState(null);
+
+  // Panth's location (Milpitas/San Jose area)
+  const myLocation = { lat: 37.4323, lng: -121.8996 }; // Milpitas, CA
+
+  // Calculate distance using Haversine formula
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 3959; // Earth's radius in miles
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return Math.round(R * c);
+  };
+
+  // Hide hint on first interaction
+  const handleInteraction = () => {
+    if (showSwipeHint) {
+      setShowSwipeHint(false);
+    }
+  };
 
   // Function to determine weather background
   const getWeatherBackground = (condition, isDay) => {
@@ -45,10 +74,21 @@ const FlipPhone3D = () => {
     // Update time every minute
     const timer = setInterval(() => setTime(new Date()), 60000);
     
+    // Set timeout to show fallback if geolocation takes too long
+    const geoTimeout = setTimeout(() => {
+      if (distanceFromMe === null) {
+        console.log('Geolocation timeout, using fallback');
+        setLocation('San Francisco, US');
+        const sfDistance = calculateDistance(myLocation.lat, myLocation.lng, 37.7749, -122.4194);
+        setDistanceFromMe(sfDistance);
+      }
+    }, 5000); // 5 second timeout
+    
     // Get user's location and weather
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
+          clearTimeout(geoTimeout); // Clear timeout if successful
           const { latitude, longitude } = position.coords;
           
           try {
@@ -59,9 +99,13 @@ const FlipPhone3D = () => {
             const geoData = await geoResponse.json();
             setLocation(`${geoData.city || geoData.locality}, ${geoData.countryCode}`);
 
+            // Calculate distance from my location
+            const distance = calculateDistance(myLocation.lat, myLocation.lng, latitude, longitude);
+            setDistanceFromMe(distance);
+
             // Get weather data
             const weatherResponse = await fetch(
-              `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=fahrenheit`
+              `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,weathercode,is_day&temperature_unit=fahrenheit&timezone=auto`
             );
             const weatherData = await weatherResponse.json();
             
@@ -121,6 +165,7 @@ const FlipPhone3D = () => {
             setWeather({
               temp,
               ...weatherInfo,
+              hourly: weatherData.hourly
             });
             
             // Set weather background based on condition
@@ -128,16 +173,32 @@ const FlipPhone3D = () => {
           } catch (error) {
             console.error('Weather fetch error:', error);
             setLocation('San Francisco, US');
+            // Set fallback distance from San Francisco to my location
+            const sfDistance = calculateDistance(myLocation.lat, myLocation.lng, 37.7749, -122.4194);
+            setDistanceFromMe(sfDistance);
           }
         },
         (error) => {
+          clearTimeout(geoTimeout); // Clear timeout if error
           console.error('Geolocation error:', error);
           setLocation('San Francisco, US');
+          // Set fallback distance from San Francisco to my location
+          const sfDistance = calculateDistance(myLocation.lat, myLocation.lng, 37.7749, -122.4194);
+          setDistanceFromMe(sfDistance);
         }
       );
+    } else {
+      clearTimeout(geoTimeout);
+      console.log('Geolocation not supported');
+      setLocation('San Francisco, US');
+      const sfDistance = calculateDistance(myLocation.lat, myLocation.lng, 37.7749, -122.4194);
+      setDistanceFromMe(sfDistance);
     }
     
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      clearTimeout(geoTimeout);
+    };
   }, []);
 
   const formatTime = () => {
@@ -256,7 +317,7 @@ const FlipPhone3D = () => {
           style={{
             width: '100%',
             height: '100%',
-            backgroundImage: `url(${bgImage})`,
+            backgroundImage: `url(${phoneBackground})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             borderRadius: '6px',
@@ -271,13 +332,14 @@ const FlipPhone3D = () => {
               0 8px 16px rgba(0,0,0,0.3)
             `
           }}
-          onTouchStart={onTouchStart}
+          onTouchStart={(e) => { onTouchStart(e); handleInteraction(); }}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
-          onMouseDown={onTouchStart}
+          onMouseDown={(e) => { onTouchStart(e); handleInteraction(); }}
           onMouseMove={onTouchMove}
           onMouseUp={onTouchEnd}
           onMouseLeave={onTouchEnd}
+          onClick={handleInteraction}
         >
           {/* Glossy Screen Overlay */}
           <div style={{
@@ -339,6 +401,94 @@ const FlipPhone3D = () => {
             transform: 'translateX(-0.5px)'
           }} />
 
+          {/* Swipe Hint Overlay */}
+          {showSwipeHint && activeApp === 'home' && (
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 100,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '8px',
+              pointerEvents: 'none',
+              animation: 'fadeOut 0.5s ease-out forwards',
+              opacity: showSwipeHint ? 1 : 0,
+              transition: 'opacity 0.5s ease-out'
+            }}>
+              <style>
+                {`
+                  @keyframes swipeHand {
+                    0%, 100% { transform: translateX(15px) rotate(15deg); }
+                    50% { transform: translateX(-15px) rotate(-5deg); }
+                  }
+                  @keyframes waterRipple {
+                    0% { width: 0; height: 0; opacity: 0.8; border-width: 4px; }
+                    100% { width: 60px; height: 60px; opacity: 0; border-width: 0px; }
+                  }
+                `}
+              </style>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '12px',
+                position: 'relative'
+              }}>
+                {/* Hand Icon with Ripple Effect */}
+                <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                  {/* Ripple Circles */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '0px',
+                    transform: 'translate(-50%, -50%)',
+                    borderRadius: '50%',
+                    border: '2px solid rgba(255, 255, 255, 0.8)',
+                    animation: 'waterRipple 2s infinite ease-out',
+                    pointerEvents: 'none'
+                  }} />
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '0px',
+                    transform: 'translate(-50%, -50%)',
+                    borderRadius: '50%',
+                    border: '2px solid rgba(255, 255, 255, 0.6)',
+                    animation: 'waterRipple 2s infinite ease-out 0.5s',
+                    pointerEvents: 'none'
+                  }} />
+                  
+                  {/* Hand */}
+                  <div style={{
+                    animation: 'swipeHand 2s infinite ease-in-out',
+                    color: '#fff',
+                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
+                    display: 'flex' 
+                  }}>
+                    <HandPointing size={24} weight="fill" />
+                  </div>
+                </div>
+
+                {/* Text */}
+                <span style={{
+                  color: '#fff',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  fontFamily: 'Satoshi, sans-serif',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.5)',
+                  letterSpacing: '0.5px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  height: '24px' // Match icon height for perfect alignment
+                }}>Swipe to explore</span>
+              </div>
+            </div>
+          )}
+
           {/* Swipeable Widgets Container (only widgets swipe, bottom stays fixed) */}
           {activeApp === 'home' && (
             <div style={{
@@ -379,7 +529,7 @@ const FlipPhone3D = () => {
                   boxShadow: '0 3px 10px rgba(0,0,0,0.1)',
                   cursor: 'pointer',
                   transition: 'transform 0.2s',
-                  minHeight: '90px',
+                  height: '110px',
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'relative',
@@ -441,6 +591,24 @@ const FlipPhone3D = () => {
                 {/* Gallery Widget */}
                 <GalleryWidget />
               </div>
+              
+              {/* Distance Text */}
+              <div style={{
+                marginTop: '8px',
+                textAlign: 'left',
+                color: '#fff',
+                fontSize: '12px',
+                fontWeight: '600',
+                fontFamily: 'Satoshi, -apple-system, sans-serif',
+                textShadow: '0 1px 4px rgba(0,0,0,0.5)',
+                opacity: 0.9
+              }}>
+                {distanceFromMe === null 
+                  ? "Calculating distance..." 
+                  : distanceFromMe === 0 
+                    ? "Viewing from my location" 
+                    : `${distanceFromMe.toLocaleString()} miles away`}
+              </div>
             </div>
 
             {/* Screen 2 - Calculator & More */}
@@ -456,98 +624,96 @@ const FlipPhone3D = () => {
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
-                gap: '8px',
+                gap: '12px',
                 width: '100%'
               }}>
                 {/* Calculator Widget */}
                 <div 
                 onClick={() => setActiveApp('calculator')}
                 style={{
-                  background: 'rgba(255,255,255,0.95)',
+                  background: 'rgba(255, 255, 255, 0.7)', // Reduced opacity to 50%
                   borderRadius: '16px',
                   padding: '10px',
                   boxShadow: '0 3px 10px rgba(0,0,0,0.1)',
                   cursor: 'pointer',
                   transition: 'transform 0.2s',
-                  minHeight: '90px',
+                  height: '110px',
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'relative',
-                  backdropFilter: 'blur(10px)',
+                  backdropFilter: 'blur(20px)',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  gap: '6px',
+                  gap: '8px',
                   width: '100%',
                   boxSizing: 'border-box'
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.03)'}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
                 onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                 >
-                  {/* Buttons Row */}
+                  {/* Icon Container */}
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '10px'
+                    gap: '6px',
+                    height: '48px'
                   }}>
-                    {/* Left side - Plus and Minus buttons */}
+                    {/* Left Column - Plus/Minus Circles */}
                     <div style={{
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '6px'
+                      gap: '4px'
                     }}>
-                      {/* Plus Button */}
+                      {/* Plus Circle */}
                       <div style={{
-                        width: '26px',
-                        height: '26px',
+                        width: '22px',
+                        height: '22px',
                         borderRadius: '50%',
-                        background: '#2a2a2e',
+                        background: '#1C1C1E',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         color: '#fff',
-                        fontSize: '16px',
-                        fontWeight: '600',
-                        fontFamily: 'Satoshi, -apple-system, sans-serif'
+                        fontSize: '14px',
+                        fontWeight: '500'
                       }}>+</div>
                       
-                      {/* Minus Button */}
+                      {/* Minus Circle */}
                       <div style={{
-                        width: '26px',
-                        height: '26px',
+                        width: '22px',
+                        height: '22px',
                         borderRadius: '50%',
-                        background: '#2a2a2e',
+                        background: '#1C1C1E',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         color: '#fff',
-                        fontSize: '16px',
-                        fontWeight: '600',
-                        fontFamily: 'Satoshi, -apple-system, sans-serif'
+                        fontSize: '14px',
+                        fontWeight: '500'
                       }}>−</div>
                     </div>
 
-                    {/* Right side - Equals button */}
+                    {/* Right Pill - Equals */}
                     <div style={{
-                      width: '32px',
-                      height: '58px',
-                      borderRadius: '32px',
-                      background: '#4CAF50',
+                      width: '22px',
+                      height: '48px',
+                      borderRadius: '11px',
+                      background: '#34C759',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       color: '#fff',
                       fontSize: '18px',
-                      fontWeight: '600',
-                      fontFamily: 'Satoshi, -apple-system, sans-serif'
+                      fontWeight: '500'
                     }}>=</div>
                   </div>
 
                   {/* Calculator Label */}
                   <div style={{
                     fontSize: '11px',
-                    fontWeight: '600',
-                    color: '#2a2a2e',
-                    fontFamily: 'Satoshi, -apple-system, sans-serif'
+                    fontWeight: '500',
+                    color: '#000',
+                    fontFamily: '"Samsung Sharp Sans", -apple-system, sans-serif'
                   }}>Calculator</div>
                 </div>
 
@@ -556,6 +722,70 @@ const FlipPhone3D = () => {
                   key={notesRefresh}
                   onClick={() => setActiveApp('notes')} 
                 />
+
+                {/* Wallpaper Widget - Full Width */}
+                <div 
+                  onClick={() => setActiveApp('wallpaper')}
+                  style={{
+                    gridColumn: '1 / -1',
+                    backgroundImage: `url(${widgetBgImage})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    borderRadius: '16px',
+                    padding: '16px',
+                    boxShadow: '0 3px 10px rgba(0,0,0,0.1)',
+                    cursor: 'pointer',
+                    transition: 'transform 0.2s',
+                    height: '110px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    position: 'relative',
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    justifyContent: 'flex-end', // Align content to bottom
+                    alignItems: 'flex-start', // Align content to left
+                    overflow: 'hidden'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                  {/* Glassy Overlay for readability */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'rgba(0,0,0,0.1)', // Reduced opacity to let image pop
+                    backdropFilter: 'blur(0px)',
+                    transition: 'background 0.2s'
+                  }} />
+
+                  {/* Edit Icon in top right */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '12px',
+                    right: '12px',
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    background: 'rgba(255,255,255,0.2)',
+                    backdropFilter: 'blur(5px)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 1
+                  }}>
+                    <Image size={16} weight="bold" color="#fff" />
+                  </div>
+                  
+                  <div style={{
+                    fontSize: '16px',
+                    fontWeight: '600',
+                    color: '#fff',
+                    fontFamily: 'Satoshi, -apple-system, sans-serif',
+                    zIndex: 1,
+                    letterSpacing: '-0.5px',
+                    textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+                  }}>Change Wallpaper</div>
+                </div>
               </div>
             </div>
           </div>
@@ -642,6 +872,7 @@ const FlipPhone3D = () => {
             onClose={() => setActiveApp('home')}
             currentWeather={weather}
             currentLocation={location}
+            background={weatherBackground}
           />
         )}
 
@@ -657,6 +888,15 @@ const FlipPhone3D = () => {
           <NotesApp 
             onClose={() => setActiveApp('home')}
             onNoteSaved={() => setNotesRefresh(prev => prev + 1)}
+          />
+        )}
+
+        {/* Wallpaper App - Full Screen */}
+        {activeApp === 'wallpaper' && (
+          <WallpaperApp 
+            onClose={() => setActiveApp('home')}
+            currentBackground={phoneBackground}
+            onSave={setPhoneBackground}
           />
         )}
 

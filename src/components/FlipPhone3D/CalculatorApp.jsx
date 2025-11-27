@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X } from '@phosphor-icons/react';
+import { CaretLeft } from '@phosphor-icons/react';
 
 const CalculatorApp = ({ onClose }) => {
   const [display, setDisplay] = useState('0');
@@ -33,16 +33,11 @@ const CalculatorApp = ({ onClose }) => {
 
   const calculate = (prev, current, op) => {
     switch (op) {
-      case '+':
-        return prev + current;
-      case '-':
-        return prev - current;
-      case '×':
-        return prev * current;
-      case '÷':
-        return current !== 0 ? prev / current : 0;
-      default:
-        return current;
+      case '+': return prev + current;
+      case '-': return prev - current;
+      case '×': return prev * current;
+      case '÷': return current !== 0 ? prev / current : 0;
+      default: return current;
     }
   };
 
@@ -73,46 +68,75 @@ const CalculatorApp = ({ onClose }) => {
     }
   };
 
-  const Button = ({ label, onClick, variant = 'default' }) => {
-    const baseStyle = {
-      padding: '16px',
-      borderRadius: '12px',
-      border: 'none',
-      fontSize: '20px',
-      fontWeight: '600',
-      fontFamily: 'Satoshi, -apple-system, sans-serif',
-      cursor: 'pointer',
-      transition: 'all 0.2s',
-      userSelect: 'none',
-      height: '100%',
-      width: '100%'
-    };
+  const handleToggleSign = () => {
+    setDisplay(String(parseFloat(display) * -1));
+  };
 
-    const variants = {
-      default: {
-        background: '#fff',
-        color: '#2a2a2e',
-        border: '1px solid #e0e0e0'
-      },
-      operator: {
-        background: '#4CAF50',
-        color: '#fff'
-      },
-      clear: {
-        background: '#ff5252',
-        color: '#fff'
+  const handlePercent = () => {
+    setDisplay(String(parseFloat(display) / 100));
+  };
+
+  const Button = ({ label, onClick, variant = 'number' }) => {
+    const getStyle = () => {
+      const base = {
+        border: 'none',
+        fontSize: '24px',
+        fontWeight: '700',
+        fontFamily: '"Samsung Sharp Sans", -apple-system, sans-serif',
+        cursor: 'pointer',
+        borderRadius: '24px', 
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'background 0.2s',
+        width: '100%',
+        height: '100%',
+        color: '#fff',
+        padding: 0
+      };
+
+      switch (variant) {
+        case 'operator':
+          return {
+            ...base,
+            background: 'rgba(255, 255, 255, 0.12)',
+            fontSize: '28px',
+            fontWeight: '700'
+          };
+        case 'top':
+          return {
+            ...base,
+            background: 'rgba(255, 255, 255, 0.12)',
+            fontSize: '18px'
+          };
+        case 'equals':
+          return {
+            ...base,
+            background: 'rgba(255, 255, 255, 0.12)',
+            color: '#00D4AA',
+            fontSize: '28px',
+            fontWeight: '700'
+          };
+        default:
+          return {
+            ...base,
+            background: 'transparent',
+            fontSize: '24px',
+            fontWeight: '500'
+          };
       }
     };
 
     return (
       <button
-        style={{ ...baseStyle, ...variants[variant] }}
+        style={getStyle()}
         onClick={onClick}
         onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(0.95)';
+          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
+          if (variant === 'number') e.currentTarget.style.background = 'transparent';
+          else e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
         }}
       >
         {label}
@@ -121,128 +145,112 @@ const CalculatorApp = ({ onClose }) => {
   };
 
   return (
-    <>
-      <style>{`
-        .calculator-scroll-container::-webkit-scrollbar {
-          display: none;
-        }
-        .calculator-scroll-container {
-          scrollbar-width: none;
-          -ms-overflow-style: none;
-        }
-      `}</style>
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'transparent',
-        borderRadius: '24px',
-        padding: '16px',
-        display: 'flex',
-        flexDirection: 'column',
-        zIndex: 20,
-        overflowY: 'auto',
-        overflowX: 'hidden',
-        paddingBottom: '80px'
-      }}
-      className="calculator-scroll-container"
-      >
-        {/* Header */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '16px'
-      }}>
-        <h2 style={{
-          color: '#000',
-          fontSize: '18px',
-          fontWeight: '700',
-          fontFamily: 'Satoshi, -apple-system, sans-serif',
-          margin: 0,
-        }}>Calculator</h2>
+    <div style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: '120px', // Much more clearance for camera area
+      borderRadius: '6px 6px 0 0',
+      padding: '16px',
+      display: 'flex',
+      flexDirection: 'column',
+      zIndex: 50,
+      background: 'transparent', 
+    }}>
+      {/* Header / Back Button */}
+      <div style={{ height: '40px', display: 'flex', alignItems: 'center', marginBottom: '4px' }}>
         <button
           onClick={onClose}
           style={{
-            background: 'rgba(255,255,255,0.2)',
+            background: 'transparent',
             border: 'none',
-            borderRadius: '50%',
-            width: '32px',
-            height: '32px',
+            color: '#fff',
             cursor: 'pointer',
+            padding: '4px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            backdropFilter: 'blur(10px)'
+            justifyContent: 'center'
           }}
         >
-          <X size={20} color="#fff" weight="bold" />
+          <CaretLeft size={24} weight="bold" />
         </button>
       </div>
 
-      {/* Display */}
+      {/* Display Area */}
       <div style={{
-        background: 'rgba(255,255,255,0.95)',
-        borderRadius: '16px',
-        padding: '20px',
-        marginBottom: '16px',
-        textAlign: 'right',
-        backdropFilter: 'blur(10px)',
-        boxShadow: '0 3px 10px rgba(0,0,0,0.1)'
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        padding: '12px 8px',
+        borderBottom: '1px solid rgba(255,255,255,0.15)',
+        marginBottom: '8px',
+        flex: 1 // Take remaining space
       }}>
+        {previousValue !== null && (
+          <div style={{
+            color: 'rgba(255,255,255,0.5)',
+            fontSize: '14px',
+            marginBottom: '4px',
+            fontFamily: '"Samsung Sharp Sans", sans-serif',
+            fontWeight: '700'
+          }}>
+            {previousValue} {operation}
+          </div>
+        )}
         <div style={{
-          fontSize: '36px',
+          color: '#fff',
+          fontSize: '32px',
           fontWeight: '700',
-          color: '#2a2a2e',
-          fontFamily: 'Satoshi, -apple-system, sans-serif',
-          wordWrap: 'break-word',
-          minHeight: '44px'
+          fontFamily: '"Samsung Sharp Sans", sans-serif',
+          lineHeight: 1
         }}>
           {display}
         </div>
       </div>
 
-      {/* Buttons */}
+      {/* Keypad - Fixed Height to prevent overlap */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '8px',
-        flex: 1
+        gridTemplateRows: 'repeat(5, 1fr)',
+        gap: '5px',
+        height: '200px', // Even more compact to ensure clearance
+        width: '100%'
       }}>
-        <Button label="C" onClick={handleClear} variant="clear" />
+        {/* Row 1 */}
+        <Button label="C" onClick={handleClear} variant="top" />
+        <Button label="( )" onClick={() => {}} variant="top" />
+        <Button label="%" onClick={handlePercent} variant="top" />
         <Button label="÷" onClick={() => handleOperation('÷')} variant="operator" />
-        <Button label="×" onClick={() => handleOperation('×')} variant="operator" />
-        <Button label="-" onClick={() => handleOperation('-')} variant="operator" />
-        
+
+        {/* Row 2 */}
         <Button label="7" onClick={() => handleNumber(7)} />
         <Button label="8" onClick={() => handleNumber(8)} />
         <Button label="9" onClick={() => handleNumber(9)} />
-        <div style={{ gridRow: 'span 2', height: '100%' }}>
-          <Button label="+" onClick={() => handleOperation('+')} variant="operator" />
-        </div>
-        
+        <Button label="×" onClick={() => handleOperation('×')} variant="operator" />
+
+        {/* Row 3 */}
         <Button label="4" onClick={() => handleNumber(4)} />
         <Button label="5" onClick={() => handleNumber(5)} />
         <Button label="6" onClick={() => handleNumber(6)} />
-        
+        <Button label="-" onClick={() => handleOperation('-')} variant="operator" />
+
+        {/* Row 4 */}
         <Button label="1" onClick={() => handleNumber(1)} />
         <Button label="2" onClick={() => handleNumber(2)} />
         <Button label="3" onClick={() => handleNumber(3)} />
-        <div style={{ gridRow: 'span 2', height: '100%' }}>
-          <Button label="=" onClick={handleEquals} variant="operator" />
-        </div>
-        
-        <div style={{ gridColumn: 'span 2', height: '100%' }}>
-          <Button label="0" onClick={() => handleNumber(0)} />
-        </div>
+        <Button label="+" onClick={() => handleOperation('+')} variant="operator" />
+
+        {/* Row 5 */}
+        <Button label="+/-" onClick={handleToggleSign} />
+        <Button label="0" onClick={() => handleNumber(0)} />
         <Button label="." onClick={handleDecimal} />
+        <Button label="=" onClick={handleEquals} variant="equals" />
       </div>
     </div>
-    </>
   );
 };
 
 export default CalculatorApp;
-

@@ -1,214 +1,85 @@
-import { useState, useEffect, useRef } from 'react';
-import { X, MagnifyingGlass, Sun, CloudRain, Cloud, Moon, CloudMoon } from '@phosphor-icons/react';
+import { useState, useEffect } from 'react';
+import { CaretLeft, Moon, Sun, Cloud, CloudRain, CloudLightning, Wind, Drop } from '@phosphor-icons/react';
 
-// Weather App Component (Full Screen)
-const WeatherApp = ({ onClose, currentWeather, currentLocation }) => {
-  const [searchCity, setSearchCity] = useState('');
-  const [cities, setCities] = useState([
-    { name: currentLocation, temp: currentWeather.temp, condition: currentWeather.condition, iconType: 'sun', isDay: true }
-  ]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [suggestions, setSuggestions] = useState([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [isLoadingDefaults, setIsLoadingDefaults] = useState(true);
-  const hasLoadedDefaults = useRef(false);
+const WeatherApp = ({ onClose, currentWeather, currentLocation, background }) => {
+  const [hourlyForecast, setHourlyForecast] = useState([]);
 
-  // Fetch city suggestions as user types
-  const fetchSuggestions = async (query) => {
-    if (query.length < 3) {
-      setSuggestions([]);
-      setShowSuggestions(false);
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=en&format=json`
-      );
-      const data = await response.json();
-      
-      if (data.results && data.results.length > 0) {
-        setSuggestions(data.results);
-        setShowSuggestions(true);
-      } else {
-        setSuggestions([]);
-        setShowSuggestions(false);
-      }
-    } catch (error) {
-      console.error('Error fetching suggestions:', error);
-      setSuggestions([]);
-      setShowSuggestions(false);
-    }
-  };
-
-  // Handle input change
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setSearchCity(value);
-  };
-
-  // Debounced effect to fetch suggestions
   useEffect(() => {
-    if (searchCity.length >= 3) {
-      const timeoutId = setTimeout(() => {
-        fetchSuggestions(searchCity);
-      }, 300);
-      return () => clearTimeout(timeoutId);
-    } else {
-      setSuggestions([]);
-      setShowSuggestions(false);
-    }
-  }, [searchCity]);
-
-  // Fetch real weather for default cities on mount
-  useEffect(() => {
-    const fetchDefaultCities = async () => {
-      // Only run once using ref
-      if (hasLoadedDefaults.current) {
-        return;
-      }
+    if (currentWeather?.hourly) {
+      const now = new Date();
+      const currentHourISO = now.toISOString().slice(0, 13); // Match YYYY-MM-DDTHH format roughly
       
-      hasLoadedDefaults.current = true;
-
-      const defaultLocations = [
-        { name: 'New York', latitude: 40.7128, longitude: -74.0060, country: 'USA' },
-        { name: 'London', latitude: 51.5074, longitude: -0.1278, country: 'UK' }
-      ];
-
-      const weatherPromises = defaultLocations.map(async (location) => {
-        try {
-          const response = await fetch(
-            `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current_weather=true&temperature_unit=fahrenheit&timezone=auto`
-          );
-          const data = await response.json();
-          return {
-            location,
-            weather: data.current_weather
-          };
-        } catch (error) {
-          console.error(`Error fetching weather for ${location.name}:`, error);
-          return null;
-        }
+      // Find index of current hour. API returns local time if timezone=auto, but format is ISO-like "2023-11-27T14:00"
+      // Use simple comparison or find closest time
+      const currentHour = now.getHours();
+      const todayStr = now.toISOString().slice(0, 10); // YYYY-MM-DD
+      
+      // Open-Meteo returns time in local timezone but ISO format string.
+      // We'll just find the index that matches the current hour approx or just start from current time index
+      
+      // Simpler approach: The API returns data starting from 00:00 today (usually) or past days.
+      // We can just find the entry where the time string matches our current hour.
+      
+      const hourlyData = currentWeather.hourly;
+      const startIndex = hourlyData.time.findIndex(t => {
+        const tDate = new Date(t);
+        return tDate.getHours() === currentHour && tDate.getDate() === now.getDate();
       });
 
-      const results = await Promise.all(weatherPromises);
-      const newCities = results
-        .filter(result => result !== null)
-        .map(result => {
-          const { location, weather } = result;
-          const temp = Math.round(weather.temperature);
-          const weatherCode = weather.weathercode;
-          const isDay = weather.is_day === 1;
+      if (startIndex !== -1) {
+        const next24Hours = [];
+        for (let i = startIndex; i < startIndex + 24 && i < hourlyData.time.length; i++) {
+          const timeStr = hourlyData.time[i];
+          const temp = Math.round(hourlyData.temperature_2m[i]);
+          const code = hourlyData.weathercode[i];
+          const isDay = hourlyData.is_day[i] === 1;
           
-          const weatherInfo = getWeatherInfo(weatherCode, isDay);
+          // Format time
+          const date = new Date(timeStr);
+          const hour = date.getHours();
+          const formattedTime = i === startIndex ? 'Now' : date.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
           
-          return {
-            name: `${location.name}, ${location.country}`,
+          next24Hours.push({
+            time: formattedTime,
             temp,
-            condition: weatherInfo.condition,
-            iconType: weatherInfo.iconType,
-            isDay
-          };
-        });
+            icon: getWeatherIcon(code, isDay)
+          });
+        }
+        setHourlyForecast(next24Hours);
+      }
+    } else {
+      // Fallback mock data if no hourly data
+      setHourlyForecast([
+        { time: 'Now', temp: currentWeather.temp, icon: currentWeather.icon },
+        { time: '1 PM', temp: currentWeather.temp + 1, icon: '☀️' },
+        { time: '2 PM', temp: currentWeather.temp + 2, icon: '☀️' },
+        { time: '3 PM', temp: currentWeather.temp + 1, icon: '⛅' },
+        { time: '4 PM', temp: currentWeather.temp - 1, icon: '⛅' },
+      ]);
+    }
+  }, [currentWeather]);
 
-      setCities(prevCities => [...prevCities, ...newCities]);
-      setIsLoadingDefaults(false);
-    };
-
-    fetchDefaultCities();
-  }, []);
-
-  // Helper function to map weather codes to conditions and icons
-  const getWeatherInfo = (weatherCode, isDay) => {
+  const getWeatherIcon = (code, isDay) => {
     const weatherMap = {
-      0: { condition: isDay ? 'Clear' : 'Clear Night', iconType: isDay ? 'sun' : 'moon' },
-      1: { condition: isDay ? 'Mainly Clear' : 'Mainly Clear', iconType: isDay ? 'sun' : 'moon' },
-      2: { condition: 'Partly Cloudy', iconType: isDay ? 'cloud' : 'cloudmoon' },
-      3: { condition: 'Overcast', iconType: 'cloud' },
-      45: { condition: 'Foggy', iconType: 'cloud' },
-      48: { condition: 'Depositing Rime Fog', iconType: 'cloud' },
-      51: { condition: 'Light Drizzle', iconType: 'rain' },
-      53: { condition: 'Moderate Drizzle', iconType: 'rain' },
-      55: { condition: 'Dense Drizzle', iconType: 'rain' },
-      56: { condition: 'Light Freezing Drizzle', iconType: 'rain' },
-      57: { condition: 'Dense Freezing Drizzle', iconType: 'rain' },
-      61: { condition: 'Slight Rain', iconType: 'rain' },
-      63: { condition: 'Moderate Rain', iconType: 'rain' },
-      65: { condition: 'Heavy Rain', iconType: 'rain' },
-      66: { condition: 'Light Freezing Rain', iconType: 'rain' },
-      67: { condition: 'Heavy Freezing Rain', iconType: 'rain' },
-      71: { condition: 'Slight Snow', iconType: 'cloud' },
-      73: { condition: 'Moderate Snow', iconType: 'cloud' },
-      75: { condition: 'Heavy Snow', iconType: 'cloud' },
-      77: { condition: 'Snow Grains', iconType: 'cloud' },
-      80: { condition: 'Slight Rain Showers', iconType: 'rain' },
-      81: { condition: 'Moderate Rain Showers', iconType: 'rain' },
-      82: { condition: 'Violent Rain Showers', iconType: 'rain' },
-      85: { condition: 'Slight Snow Showers', iconType: 'cloud' },
-      86: { condition: 'Heavy Snow Showers', iconType: 'cloud' },
-      95: { condition: 'Thunderstorm', iconType: 'rain' },
-      96: { condition: 'Thunderstorm with Slight Hail', iconType: 'rain' },
-      99: { condition: 'Thunderstorm with Heavy Hail', iconType: 'rain' }
+      0: isDay ? '☀️' : '🌙',
+      1: isDay ? '🌤️' : '🌙',
+      2: isDay ? '⛅' : '☁️',
+      3: '☁️',
+      45: '🌫️',
+      48: '🌫️',
+      51: '🌦️',
+      61: '🌧️',
+      80: '🌧️',
+      95: '⛈️',
     };
-
-    return weatherMap[weatherCode] || { condition: isDay ? 'Clear' : 'Clear Night', iconType: isDay ? 'sun' : 'moon' };
+    return weatherMap[code] || (isDay ? '⛅' : '☁️');
   };
 
-  // Handle selecting a suggestion
-  const handleSelectSuggestion = async (location) => {
-    const { latitude, longitude, name, country } = location;
-    setSearchCity('');
-    setSuggestions([]);
-    setShowSuggestions(false);
-    setIsSearching(true);
-
-    try {
-      // Fetch weather data for the selected location
-      const weatherResponse = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=fahrenheit&timezone=auto`
-      );
-      const weatherData = await weatherResponse.json();
-      
-      const temp = Math.round(weatherData.current_weather.temperature);
-      const weatherCode = weatherData.current_weather.weathercode;
-      const isDay = weatherData.current_weather.is_day === 1;
-      
-      const weatherInfo = getWeatherInfo(weatherCode, isDay);
-      
-      const newCity = {
-        name: country ? `${name}, ${country}` : name,
-        temp: temp,
-        condition: weatherInfo.condition,
-        iconType: weatherInfo.iconType,
-        isDay
-      };
-      
-      setCities([...cities, newCity]);
-    } catch (error) {
-      console.error('Error fetching weather:', error);
-      alert(`Unable to fetch weather data: ${error.message}`);
-    } finally {
-      setIsSearching(false);
-    }
-  };
-
-  const getWeatherIcon = (iconType) => {
-    switch (iconType) {
-      case 'sun':
-        return <Sun size={24} weight="fill" color="#000" />;
-      case 'moon':
-        return <Moon size={24} weight="fill" color="#000" />;
-      case 'cloud':
-        return <Cloud size={24} weight="fill" color="#000" />;
-      case 'cloudmoon':
-        return <CloudMoon size={24} weight="fill" color="#000" />;
-      case 'rain':
-        return <CloudRain size={24} weight="fill" color="#000" />;
-      default:
-        return <Sun size={24} weight="fill" color="#000" />;
-    }
-  };
-
+  // Get formatted date
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
   return (
     <div style={{
       position: 'absolute',
@@ -216,208 +87,220 @@ const WeatherApp = ({ onClose, currentWeather, currentLocation }) => {
       left: 0,
       right: 0,
       bottom: 0,
-      background: 'transparent',
-      borderRadius: '24px',
-      padding: '16px',
+      backgroundImage: `url(${background})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      borderRadius: '6px',
       display: 'flex',
       flexDirection: 'column',
-      zIndex: 20,
-      overflow: 'hidden'
+      zIndex: 50,
+      overflow: 'hidden',
+      color: '#fff',
+      fontFamily: '"Samsung One", -apple-system, sans-serif'
     }}>
-      {/* Header */}
-      <div style={{
+      {/* Header / Back Button */}
+      <div style={{ 
+        padding: '12px 16px',
         display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '16px'
+        alignItems: 'center'
       }}>
-        <h2 style={{
-          color: '#000',
-          fontSize: '18px',
-          fontWeight: '700',
-          fontFamily: 'Satoshi, -apple-system, sans-serif',
-          margin: 0
-        }}>Weather</h2>
         <button
           onClick={onClose}
           style={{
             background: 'transparent',
             border: 'none',
+            color: '#fff',
             cursor: 'pointer',
-            padding: 0,
+            padding: '4px',
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
+            alignItems: 'center'
           }}
         >
-          <X size={24} color="#000" weight="bold" />
+          <CaretLeft size={24} weight="bold" />
         </button>
       </div>
 
-      {/* Search Bar Container */}
-      <div style={{ position: 'relative', marginBottom: '16px' }}>
-        {/* Search Bar */}
-        <div style={{
-          display: 'flex',
-          gap: '8px',
-          background: 'transparent',
-          borderRadius: '48px',
-          padding: '2px 16px',
-          alignItems: 'center',
-          border: '1px solid #000'
-        }}>
-          <MagnifyingGlass size={20} color="#000" weight="regular" />
-          <input
-            type="text"
-            value={searchCity}
-            onChange={handleInputChange}
-            placeholder={isSearching ? 'searching...' : 'search city'}
-            disabled={isSearching}
-            style={{
-              flex: 1,
-              padding: '10px 0',
-              border: 'none',
-              background: 'transparent',
-              fontSize: '14px',
-              fontFamily: 'Satoshi, -apple-system, sans-serif',
-              fontWeight: '600',
-              outline: 'none',
-              color: '#000',
-              opacity: isSearching ? 0.5 : 1
-            }}
-          />
-        </div>
-
-        {/* Autocomplete Suggestions Dropdown */}
-        {showSuggestions && suggestions.length > 0 && (
-          <div style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            marginTop: '8px',
-            background: '#fff',
-            border: '1px solid #000',
-            borderRadius: '16px',
-            maxHeight: '200px',
-            overflowY: 'auto',
-            zIndex: 100,
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none'
-          }}
-          className="suggestions-dropdown"
-          >
-            <style>{`
-              .suggestions-dropdown::-webkit-scrollbar {
-                display: none;
-              }
-            `}</style>
-            {suggestions.map((suggestion, index) => (
-              <div
-                key={index}
-                onClick={() => handleSelectSuggestion(suggestion)}
-                style={{
-                  padding: '12px 16px',
-                  cursor: 'pointer',
-                  borderBottom: index < suggestions.length - 1 ? '1px solid #eee' : 'none',
-                  transition: 'background 0.2s'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = '#f5f5f5'}
-                onMouseLeave={(e) => e.currentTarget.style.background = '#fff'}
-              >
-                <div style={{
-                  fontSize: '14px',
-                  fontWeight: '700',
-                  color: '#000',
-                  fontFamily: 'Satoshi, -apple-system, sans-serif',
-                  marginBottom: '2px'
-                }}>
-                  {suggestion.name}
-                </div>
-                <div style={{
-                  fontSize: '12px',
-                  color: '#666',
-                  fontFamily: 'Satoshi, -apple-system, sans-serif'
-                }}>
-                  {suggestion.admin1 && `${suggestion.admin1}, `}{suggestion.country}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Cities List - Scrollable */}
-      <div 
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
-          paddingBottom: '80px',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none'
-        }}
-        className="weather-scroll-container"
+      {/* Main Content - Scrollable */}
+      <div style={{
+        flex: 1,
+        overflowY: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingBottom: '20px'
+      }}
+      className="weather-scroll-container"
       >
         <style>{`
           .weather-scroll-container::-webkit-scrollbar {
             display: none;
           }
+          .weather-scroll-container {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+          }
+          .horizontal-scroll::-webkit-scrollbar {
+            display: none;
+          }
         `}</style>
-        {cities.map((city, index) => (
-          <div
-            key={index}
+
+        {/* Main Weather Info */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          marginBottom: '24px',
+          width: '100%'
+        }}>
+          {/* Icon */}
+          <div style={{ 
+            fontSize: '64px', 
+            marginBottom: '4px',
+            filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.2))'
+          }}>
+            {currentWeather.icon}
+          </div>
+
+          {/* Temperature */}
+          <div style={{
+            fontSize: '72px',
+            fontWeight: '400',
+            lineHeight: '1',
+            marginBottom: '8px',
+            letterSpacing: '-2px'
+          }}>
+            {currentWeather.temp}°
+          </div>
+
+          {/* Location */}
+          <div style={{
+            fontSize: '18px',
+            fontWeight: '500',
+            marginBottom: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+          }}>
+            <span>📍</span> {currentLocation.split(',')[0]}
+          </div>
+
+          {/* High/Low */}
+          <div style={{
+            fontSize: '14px',
+            opacity: 0.9,
+            fontWeight: '400'
+          }}>
+            {currentWeather.temp + 10}° / {currentWeather.temp - 8}° Feels like {currentWeather.temp}°
+          </div>
+        </div>
+
+        {/* Summary Card */}
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '20px',
+          width: 'calc(100% - 32px)', // Full width minus margins
+          padding: '16px',
+          marginBottom: '16px',
+          backdropFilter: 'blur(10px)',
+          boxSizing: 'border-box' // Ensure padding doesn't expand width
+        }}>
+          <div style={{
+            fontSize: '15px',
+            fontWeight: '500',
+            lineHeight: '1.4'
+          }}>
+            {currentWeather.condition} right now. High of {currentWeather.temp + 10}° today.
+          </div>
+        </div>
+
+        {/* Hourly Forecast */}
+        <div style={{
+          width: '100%',
+          paddingLeft: '16px',
+          boxSizing: 'border-box'
+        }}>
+          <div 
+            className="horizontal-scroll"
             style={{
-              background: '#fff',
-              borderRadius: '16px',
-              padding: '10px',
               display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              border: '2px solid #000'
+              gap: '24px',
+              overflowX: 'auto',
+              paddingRight: '16px',
+              paddingBottom: '10px'
             }}
           >
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px'
-            }}>
-              {getWeatherIcon(city.iconType)}
-              <div>
-                <div style={{
-                  fontSize: '18px',
-                  fontWeight: '700',
-                  color: '#000',
-                  fontFamily: 'Satoshi, -apple-system, sans-serif',
-                  marginBottom: '2px'
+            {hourlyForecast.map((item, index) => (
+              <div key={index} style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                minWidth: '40px'
+              }}>
+                <div style={{ 
+                  fontSize: '13px', 
+                  marginBottom: '8px', 
+                  opacity: 0.9,
+                  fontWeight: '500',
+                  whiteSpace: 'nowrap'
                 }}>
-                  {city.name}
+                  {item.time}
                 </div>
-                <div style={{
-                  fontSize: '12px',
-                  color: '#666',
-                  fontFamily: 'Satoshi, -apple-system, sans-serif'
+                <div style={{ 
+                  fontSize: '24px', 
+                  marginBottom: '8px', 
+                  filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' 
                 }}>
-                  {city.condition}
+                  {item.icon}
+                </div>
+                <div style={{ 
+                  fontSize: '16px', 
+                  fontWeight: '600' 
+                }}>
+                  {item.temp}°
                 </div>
               </div>
-            </div>
-            <div style={{
-              fontSize: '24px',
-              fontWeight: '700',
-              color: '#000',
-              fontFamily: 'Satoshi, -apple-system, sans-serif'
-            }}>
-              {city.temp}°
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        {/* Details Grid */}
+        <div style={{
+          width: 'calc(100% - 32px)',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '12px',
+          marginTop: '10px'
+        }}>
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.1)',
+            borderRadius: '20px',
+            padding: '16px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px'
+          }}>
+            <div style={{ fontSize: '13px', opacity: 0.8, display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Wind size={16} /> Wind
+            </div>
+            <div style={{ fontSize: '18px', fontWeight: '600' }}>8 mph</div>
+          </div>
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.1)',
+            borderRadius: '20px',
+            padding: '16px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px'
+          }}>
+            <div style={{ fontSize: '13px', opacity: 0.8, display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Drop size={16} /> Humidity
+            </div>
+            <div style={{ fontSize: '18px', fontWeight: '600' }}>45%</div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
 export default WeatherApp;
-

@@ -84,7 +84,7 @@ const GalleryWidget = () => {
       boxShadow: '0 3px 10px rgba(0,0,0,0.1)',
       cursor: 'pointer',
       transition: 'transform 0.2s',
-      minHeight: '90px',
+      height: '110px',
       display: 'flex',
       flexDirection: 'column',
       backdropFilter: 'blur(10px)',
