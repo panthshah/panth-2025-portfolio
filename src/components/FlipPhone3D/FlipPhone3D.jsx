@@ -414,10 +414,7 @@ const FlipPhone3D = () => {
               flexDirection: 'column',
               alignItems: 'center',
               gap: '8px',
-              pointerEvents: 'none',
-              animation: 'fadeOut 0.5s ease-out forwards',
-              opacity: showSwipeHint ? 1 : 0,
-              transition: 'opacity 0.5s ease-out'
+              pointerEvents: 'none'
             }}>
               <style>
                 {`
