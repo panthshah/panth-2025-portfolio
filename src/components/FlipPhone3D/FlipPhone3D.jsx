@@ -243,9 +243,11 @@ const FlipPhone3D = () => {
     if (isLeftSwipe && currentScreen < 1) {
       // Swipe left to go to next screen
       handleScreenChange(currentScreen + 1);
+      handleInteraction(); // Dismiss hint after successful swipe
     } else if (isRightSwipe && currentScreen > 0) {
       // Swipe right to go to previous screen
       handleScreenChange(currentScreen - 1);
+      handleInteraction(); // Dismiss hint after successful swipe
     }
   };
 
@@ -332,14 +334,13 @@ const FlipPhone3D = () => {
               0 8px 16px rgba(0,0,0,0.3)
             `
           }}
-          onTouchStart={(e) => { onTouchStart(e); handleInteraction(); }}
+          onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
-          onMouseDown={(e) => { onTouchStart(e); handleInteraction(); }}
+          onMouseDown={onTouchStart}
           onMouseMove={onTouchMove}
           onMouseUp={onTouchEnd}
           onMouseLeave={onTouchEnd}
-          onClick={handleInteraction}
         >
           {/* Glossy Screen Overlay */}
           <div style={{
