@@ -81,7 +81,7 @@ const SplashScreen = ({ onComplete }) => {
       }}>
         <h1 style={{ 
           ...commonFontStyle,
-          fontSize: '160px', 
+          fontSize: 'clamp(80px, 18vw, 160px)', // Responsive: min 80px on mobile, max 160px on desktop
           fontWeight: '800',
         }}>
           hii.
@@ -97,10 +97,10 @@ const SplashScreen = ({ onComplete }) => {
               transition={{ duration: 0.3 }}
               style={{ 
                 ...commonFontStyle,
-                fontSize: '28px', 
+                fontSize: 'clamp(18px, 4vw, 28px)', // Responsive subtitle
                 fontWeight: '700', 
                 marginTop: '0px',
-                paddingLeft: '12px' // Slight visual alignment with the curve of 'h'
+                paddingLeft: 'clamp(6px, 1.5vw, 12px)' // Responsive alignment
               }}
             >
               {greetings[index].text}

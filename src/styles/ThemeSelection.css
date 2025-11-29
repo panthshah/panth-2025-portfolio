@@ -148,7 +148,8 @@
 /* ===== MOBILE RESPONSIVE - Ferris Wheel Interaction ===== */
 @media (max-width: 768px) {
   .theme-selection-container {
-    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    height: 100vh; /* Fallback */
     width: 100vw;
     padding: 0;
     overflow: hidden;
@@ -162,7 +163,7 @@
     margin-bottom: 0;
     padding: 0 20px;
     position: absolute;
-    top: 20px;
+    top: 48px; /* Increased from 20px */
     left: 0;
     right: 0;
     color: #000;
@@ -212,7 +213,7 @@
   }
 
   .theme-label {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: #000;
     white-space: nowrap;
@@ -221,7 +222,7 @@
 
   .continue-button {
     position: absolute;
-    bottom: 50px;
+    bottom: 15%; /* Use percentage for better mobile browser compatibility */
     left: 50%;
     transform: translateX(-50%);
     margin-top: 0;
@@ -235,20 +236,20 @@
 
 @media (max-width: 480px) {
   .theme-selection-title {
-    top: 40px;
+    top: 32px;
   }
   
   .theme-circle.middle {
-    width: 130px;
-    height: 130px;
+    width: 120px;
+    height: 120px;
   }
   
   .theme-circle.regular {
-    width: 110px;
-    height: 110px;
+    width: 100px;
+    height: 100px;
   }
   
   .continue-button {
-    bottom: 40px;
+    bottom: 10%; /* Slightly higher on smaller phones */
   }
 }

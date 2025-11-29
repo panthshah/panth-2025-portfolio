@@ -6,9 +6,9 @@ import UnifiedTexture, { TEXTURE_CONFIGS } from './textures/UnifiedTexture';
 import '../styles/ThemeSelection.css';
 
 // Constants for Wheel
-const ITEM_ANGLE_GAP = 25; // Gap between items
-const WHEEL_RADIUS = 350; 
-const TOTAL_SPAN = 5 * ITEM_ANGLE_GAP; // 125 degrees
+const ITEM_ANGLE_GAP = 45; // Increased gap to show only ~3 circles at a time
+const WHEEL_RADIUS = 280; // Reduced radius for tighter layout
+const TOTAL_SPAN = 5 * ITEM_ANGLE_GAP; // 225 degrees
 
 const ThemeSelection = ({ selectedTheme: initialTheme }) => {
   const navigate = useNavigate();
@@ -306,11 +306,11 @@ const ThemeSelection = ({ selectedTheme: initialTheme }) => {
             const yOffset = Math.sin(angleRad) * WHEEL_RADIUS;
             
             // Wheel Center positioned on LEFT side of screen
-            // We want the Active Item (at 0 deg) to be centered at x=200px (Shifted right)
+            // We want the Active Item (at 0 deg) to be centered at x=180px
             // Active X = CenterX + Radius
-            // So CenterX = 200 - Radius = 200 - 350 = -150
+            // So CenterX = 180 - Radius = 180 - 280 = -100
             
-            const wheelCenterX = -150; 
+            const wheelCenterX = -100; 
             const wheelCenterY = 0; 
             
             const x = wheelCenterX + xOffset;
