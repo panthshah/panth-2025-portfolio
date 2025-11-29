@@ -214,8 +214,8 @@
   justify-content: center;
   width: clamp(300px, 44vw, 634px);
   height: auto;
-  aspect-ratio: 4 / 3;
-  background-color: #fff;
+  aspect-ratio: auto;
+  background-color: transparent;
 }
 
 .project-image img {
