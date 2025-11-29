@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import FlipPhone3D from './FlipPhone3D';
 import ChatSidebar from './ChatSidebar';
 import CustomizeButton from './CustomizeButton';
-import project1Image from '../assets/776shots_so.png';
+import project1Image from '../assets/96shots_so.png';
 import geminiIcon from '../assets/gemini 1.svg';
 import zeenatAvatar from '../assets/Testimonial/Zeenat.jpeg';
 import joshAvatar from '../assets/Testimonial/Josh.jpeg';
@@ -17,6 +17,9 @@ import cursorCat from '../assets/custom cursor/cursor-cat.png';
 import cursorFox from '../assets/custom cursor/cursor cat-1.png';
 import cursorCreature from '../assets/custom cursor/cursor-demogorgon.png';
 import cursorDog from '../assets/custom cursor/cursor-doggo.png';
+import linkedInIcon from '../assets/LinkedIn1.png';
+import githubIcon from '../assets/github.png';
+import xIcon from '../assets/X.png';
 import '../styles/LandingPage.css';
 
 // Custom Gemini Icon Component
@@ -178,9 +181,9 @@ const LandingPage = ({ theme, onThemeChange }) => {
           {/* Project 1 - Samsung */}
           <div className="project-card">
             <div className="project-content">
-              <h2 className="project-title">Samsung Electronics America</h2>
+              <h2 className="project-title">FounderMatch</h2>
               <p className="project-description">
-                Led UX design for the "Buy More, Save More" feature on Samsung's platform to boost annual sales by $1M through improved visibility and engagement.
+                 FounderMatch is a platform that helps founders find co-founders with the right skills and vision to help them build their next startup idea
               </p>
               <a href="#" className="project-link" onClick={(e) => { e.preventDefault(); navigate('/foundermatch'); }}>
                 Read Case study
@@ -190,7 +193,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
             <div className="project-image">
               <img 
                 src={project1Image}
-                alt="Samsung Electronics America project"
+                alt="Foundermatch case study"
               />
             </div>
           </div>
@@ -384,6 +387,18 @@ const LandingPage = ({ theme, onThemeChange }) => {
             <p className="footer-subtitle">
               Created with MagicPath + Figma + Paper + Cursor.
             </p>
+            
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', marginTop: '32px' }}>
+              <a href="https://www.linkedin.com/in/panthshah19/" target="_blank" rel="noopener noreferrer">
+                <img src={linkedInIcon} alt="LinkedIn" style={{ width: '42px', height: '42px', cursor: 'pointer' }} />
+              </a>
+              <a href="https://github.com/panthshah" target="_blank" rel="noopener noreferrer">
+                <img src={githubIcon} alt="GitHub" style={{ width: '54px', height: '42px', cursor: 'pointer' }} />
+              </a>
+              <a href="https://x.com/panthshah_" target="_blank" rel="noopener noreferrer">
+                <img src={xIcon} alt="X" style={{ width: '42px', height: '42px', cursor: 'pointer' }} />
+              </a>
+            </div>
           </div>
         </div>
       </footer>
