@@ -195,10 +195,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
                 onClick={handleCopyEmail}
                 style={{
                   transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                  backgroundColor: isCopied ? '#F0FDF4' : 'transparent',
-                  borderColor: isCopied ? '#22C55E' : '#000000',
-                  color: isCopied ? '#15803D' : '#000000',
-                  width: isCopied ? '140px' : 'auto' // Optional: fix width to prevent layout shift if needed
+                  width: isCopied ? '140px' : 'auto'
                 }}
               >
                 {isCopied ? (

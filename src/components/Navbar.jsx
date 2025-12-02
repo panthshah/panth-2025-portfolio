@@ -86,6 +86,8 @@ const Navbar = ({
             let isActive = false;
             if (currentPage === 'about' && isAboutButton) {
               isActive = true;
+            } else if (currentPage === 'playground' && item.id === 'playground') {
+              isActive = true;
             } else if (currentPage === 'landing' && !isChatButton) {
               isActive = activeTab === item.id;
             }
@@ -104,6 +106,8 @@ const Navbar = ({
                       navigate('/about');
                     } else if (item.id === 'playground') {
                       navigate('/playground');
+                    } else if (item.id === 'resume') {
+                      window.open('/Panth Shah FT Resume.pdf', '_blank');
                     } else {
                       handleTabClick(item.id);
                     }
@@ -145,6 +149,8 @@ const Navbar = ({
               let isActive = false;
               if (currentPage === 'about' && isAboutButton) {
                 isActive = true;
+              } else if (currentPage === 'playground' && item.id === 'playground') {
+                isActive = true;
               } else if (currentPage === 'landing') {
                 isActive = activeTab === item.id;
               }
@@ -156,6 +162,12 @@ const Navbar = ({
                     onClick={() => {
                       if (isAboutButton) {
                         navigate('/about');
+                        setMobileMenuOpen(false);
+                      } else if (item.id === 'playground') {
+                        navigate('/playground');
+                        setMobileMenuOpen(false);
+                      } else if (item.id === 'resume') {
+                        window.open('/Panth Shah FT Resume.pdf', '_blank');
                         setMobileMenuOpen(false);
                       } else {
                         handleTabClick(item.id);
