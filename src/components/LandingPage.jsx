@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, ArrowLeft, ArrowRight, Copy, Heart, Smiley, Clock } from '@phosphor-icons/react';
+import { ArrowUpRight, ArrowLeft, ArrowRight, Copy, Heart, Smiley, Clock, Check } from '@phosphor-icons/react';
 import Navbar from './Navbar';
 import FlipPhone3D from './FlipPhone3D';
 import ChatSidebar from './ChatSidebar';
@@ -72,6 +72,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [currentProject, setCurrentProject] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   // Handle project change with scale + fade animation
   const handleProjectChange = (newProject) => {
@@ -127,6 +128,16 @@ const LandingPage = ({ theme, onThemeChange }) => {
     setActiveTab(tabId);
   };
 
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText('panthshahdesigns@gmail.com');
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  };
+
   return (
     <div className="landing-page">
       {/* Navigation Bar */}
@@ -179,9 +190,28 @@ const LandingPage = ({ theme, onThemeChange }) => {
                 About Me
                 <ArrowUpRight size={16} weight="bold" />
               </button>
-              <button className="btn-secondary">
-                <Copy size={16} weight="regular" />
-                Copy Email
+              <button 
+                className={`btn-secondary ${isCopied ? 'copied' : ''}`}
+                onClick={handleCopyEmail}
+                style={{
+                  transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                  backgroundColor: isCopied ? '#F0FDF4' : 'transparent',
+                  borderColor: isCopied ? '#22C55E' : '#000000',
+                  color: isCopied ? '#15803D' : '#000000',
+                  width: isCopied ? '140px' : 'auto' // Optional: fix width to prevent layout shift if needed
+                }}
+              >
+                {isCopied ? (
+                  <>
+                    <Check size={16} weight="bold" />
+                    <span className="copy-text-animate">Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy size={16} weight="regular" />
+                    Copy Email
+                  </>
+                )}
               </button>
             </div>
           </div>

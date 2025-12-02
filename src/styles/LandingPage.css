@@ -462,7 +462,6 @@
   .footer-title {
     font-size: 48px;
   }
-
   .footer-subtitle {
     font-size: 17px;
   }
@@ -928,3 +927,19 @@
   }
 }
 
+/* Copy Email Button Animation */
+.copy-text-animate {
+  animation: slideUpFade 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  display: inline-block;
+}
+
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

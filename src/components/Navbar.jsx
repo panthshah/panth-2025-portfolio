@@ -102,6 +102,8 @@ const Navbar = ({
                       onChatOpen();
                     } else if (isAboutButton) {
                       navigate('/about');
+                    } else if (item.id === 'playground') {
+                      navigate('/playground');
                     } else {
                       handleTabClick(item.id);
                     }

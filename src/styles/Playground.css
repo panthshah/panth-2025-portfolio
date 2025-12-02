@@ -1,0 +1,369 @@
+/* Playground Page */
+.playground-page {
+  height: 100vh;
+  background-color: #F7F7F4;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.playground-container {
+  flex: 1;
+  display: flex;
+  padding: 120px 120px 40px 120px; /* Match navbar padding (120px left/right) */
+  gap: 40px;
+  overflow: hidden;
+}
+
+/* ==================== */
+/* LEFT SIDE - NAV      */
+/* ==================== */
+.playground-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.nav-item-icon {
+  width: 80px;
+  height: 80px;
+  background-color: #F2F1EE;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.nav-item-icon img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.nav-item-icon svg {
+  width: 40px;
+  height: 40px;
+  color: #666;
+}
+
+.nav-item-label {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+/* ==================== */
+/* RIGHT SIDE - CONTENT */
+/* ==================== */
+.playground-content {
+  flex: 1;
+  background-color: #F2F1EE;
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0; /* Important for flex children */
+}
+
+.content-header {
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.content-title {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+}
+
+.content-description {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+  max-width: 900px;
+}
+
+/* Prototype Preview Area */
+.prototype-area {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 0; /* Important for flex children */
+  position: relative;
+}
+
+.prototype-area img,
+.prototype-area video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Iframe wrapper for scaling */
+.iframe-wrapper {
+  width: 143%; /* 100% / 0.7 scale = ~143% to fill width after scaling */
+  height: 143%;
+  transform: scale(0.7);
+  transform-origin: top left;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.iframe-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Phone Component Wrapper */
+.phone-component-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.85);
+  transform-origin: center center;
+}
+
+.prototype-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  gap: 12px;
+  width: 100%;
+}
+
+.prototype-placeholder svg {
+  width: 48px;
+  height: 48px;
+  opacity: 0.5;
+}
+
+.prototype-placeholder span {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-size: 14px;
+}
+
+/* ==================== */
+/* RESPONSIVE           */
+/* ==================== */
+
+/* 1200px to 1399px */
+@media (max-width: 1399px) and (min-width: 1200px) {
+  .playground-container {
+    padding: 100px 32px 32px 100px; /* Match navbar: 100px left, 32px right */
+  }
+
+  .content-title {
+    font-size: 24px;
+  }
+
+  .content-description {
+    font-size: 14px;
+  }
+}
+
+/* 1024px to 1199px */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .playground-container {
+    padding: 100px 48px 32px 48px; /* Match navbar: 48px both sides */
+    gap: 32px;
+  }
+
+  .nav-item-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .nav-item-icon img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .nav-item-label {
+    font-size: 13px;
+  }
+
+  .playground-content {
+    padding: 28px;
+  }
+
+  .content-title {
+    font-size: 22px;
+  }
+
+  .content-description {
+    font-size: 14px;
+  }
+}
+
+/* 768px to 1024px */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .playground-container {
+    padding: 90px 48px 32px 48px; /* Match navbar: 48px both sides */
+    gap: 28px;
+  }
+
+  .playground-nav {
+    gap: 20px;
+  }
+
+  .nav-item-icon {
+    width: 65px;
+    height: 65px;
+  }
+
+  .nav-item-icon img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .nav-item-label {
+    font-size: 12px;
+  }
+
+  .playground-content {
+    padding: 24px;
+  }
+
+  .content-title {
+    font-size: 20px;
+  }
+
+  .content-description {
+    font-size: 13px;
+  }
+}
+
+/* 481px to 768px - Tablets */
+@media (max-width: 768px) and (min-width: 481px) {
+  .playground-container {
+    flex-direction: column;
+    padding: 80px 48px 24px 48px; /* Match navbar: 48px both sides */
+    gap: 24px;
+  }
+
+  .playground-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 8px;
+    flex-shrink: 0;
+  }
+
+  .nav-item-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .nav-item-icon img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .nav-item-label {
+    font-size: 11px;
+  }
+
+  .playground-content {
+    padding: 20px;
+  }
+
+  .content-title {
+    font-size: 18px;
+  }
+
+  .content-description {
+    font-size: 13px;
+  }
+}
+
+/* Below 480px - Mobile */
+@media (max-width: 480px) {
+  .playground-container {
+    flex-direction: column;
+    padding: 70px 24px 20px 24px; /* Match navbar: 24px both sides */
+    gap: 16px;
+  }
+
+  .playground-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 16px;
+    padding-bottom: 8px;
+    flex-shrink: 0;
+  }
+
+  .nav-item {
+    gap: 8px;
+  }
+
+  .nav-item-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 6px;
+  }
+
+  .nav-item-icon img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .nav-item-label {
+    font-size: 10px;
+  }
+
+  .playground-content {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .content-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .content-description {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .prototype-area {
+    border-radius: 12px;
+  }
+
+  .prototype-placeholder svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .prototype-placeholder span {
+    font-size: 12px;
+  }
+}
