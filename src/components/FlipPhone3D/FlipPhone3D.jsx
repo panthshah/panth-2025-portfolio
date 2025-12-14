@@ -134,11 +134,11 @@ const FlipPhone3D = () => {
                 },
                 45: { 
                   condition: 'Foggy', 
-                  icon: '🌫️' 
+                  icon: '🌁' 
                 },
                 48: { 
                   condition: 'Foggy', 
-                  icon: '🌫️' 
+                  icon: '🌁' 
                 },
                 51: { 
                   condition: 'Light Drizzle', 

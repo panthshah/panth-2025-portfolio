@@ -1,0 +1,314 @@
+/* ===================================
+   Color Picker Panel - Glassmorphic
+   =================================== */
+
+/* Floating Action Button */
+.customize-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1001;
+  box-shadow: none;
+}
+
+.customize-fab:hover {
+  transform: translateY(-3px);
+  box-shadow: none;
+}
+
+.customize-fab.active {
+  transform: rotate(90deg);
+}
+
+.customize-fab.active:hover {
+  transform: rotate(90deg) translateY(-3px);
+}
+
+.fab-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+/* Glassmorphic Panel */
+.color-picker-panel {
+  position: fixed;
+  bottom: 88px;
+  right: 24px;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  
+  /* Initial hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.95);
+  transform-origin: bottom right;
+  transition: 
+    opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    visibility 0.3s,
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.color-picker-panel.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.panel-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Section Labels */
+.section-label {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* ===================================
+   2D Color Grid
+   =================================== */
+.color-grid-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.color-grid {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  cursor: crosshair;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: background 0.15s ease;
+}
+
+/* Sparkle Trail Animation - 4-pointed star */
+.sparkle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+  clip-path: polygon(
+    50% 0%, 
+    61% 35%, 
+    100% 50%, 
+    61% 65%, 
+    50% 100%, 
+    39% 65%, 
+    0% 50%, 
+    39% 35%
+  );
+  animation: sparkleLife 0.6s ease-out forwards;
+}
+
+@keyframes sparkleLife {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3) rotate(25deg);
+  }
+}
+
+/* Grid Lines - Hidden for clean look */
+.grid-lines {
+  display: none;
+}
+
+.grid-line {
+  display: none;
+}
+
+/* Anchor Dots - Hidden for clean look */
+.anchor-dot {
+  display: none;
+}
+
+/* Draggable Handle */
+.drag-handle {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  border: 2.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: none;
+  transition: transform 0.15s ease;
+  z-index: 10;
+}
+
+.drag-handle:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.drag-handle.dragging {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: none;
+}
+
+.handle-inner {
+  display: none;
+}
+
+/* ===================================
+   Color Presets
+   =================================== */
+.presets-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.preset-row {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.preset-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: none;
+  position: relative;
+}
+
+.preset-btn:hover {
+  transform: scale(1.15);
+  box-shadow: none;
+}
+
+.preset-btn.active {
+  border-color: transparent;
+  transform: scale(1.1);
+  box-shadow: none;
+}
+
+.preset-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+}
+
+/* ===================================
+   Cursor Selection
+   =================================== */
+.cursor-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.cursor-row {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.cursor-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+.cursor-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: scale(1.08);
+}
+
+.cursor-btn.active {
+  border-color: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.cursor-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cursor-btn svg {
+  color: #333;
+}
+
+/* ===================================
+   Responsive
+   =================================== */
+@media (max-width: 480px) {
+  .color-picker-panel {
+    right: 16px;
+    bottom: 80px;
+    width: calc(100vw - 32px);
+    max-width: 320px;
+  }
+  
+  .customize-fab {
+    right: 16px;
+    bottom: 16px;
+  }
+  
+  .preset-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .cursor-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* ===================================
+   Dark mode support (future)
+   =================================== */
+@media (prefers-color-scheme: dark) {
+  /* Can add dark mode styles here if needed */
+}
+

@@ -157,7 +157,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
           {/* Left Side - Content */}
           <div className="hero-content">
             <h1 className="hero-headline"> 
-              Meet Panth, a data driven designer shaping experiences for B2B and B2C Enterprises.
+              Meet Panth, a data driven designer shaping experiences for B2B and B2C Enterprises
             </h1>
             
             <p className="hero-description">
