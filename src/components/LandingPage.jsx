@@ -156,12 +156,12 @@ const LandingPage = ({ theme, onThemeChange }) => {
         <div className="hero-container">
           {/* Left Side - Content */}
           <div className="hero-content">
-            <h1 className="hero-headline">
-              Meet Panth, a product designer who thrives on experimenting and trying new things
+            <h1 className="hero-headline"> 
+              Meet Panth, a data driven designer shaping experiences for B2B and B2C Enterprises.
             </h1>
             
             <p className="hero-description">
-              When I'm not designing, I enjoy playing pickleball, trying new recipes, editing fun videos, trying exploring ideas into functional prototypes using cursor
+            Outside of design, I enjoy playing pickleball, cooking new recipes, and turning Figma designs into functional prototypes with Figma Make or Cursor
             </p>
             
             <p className="hero-current">
@@ -254,7 +254,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
               <h2 className="project-title">{currentProject === 0 ? 'FounderMatch' : 'Samsung Electronics'}</h2>
               <p className="project-description">
                 {currentProject === 0 
-                  ? 'FounderMatch is a platform that helps founders find co-founders with the right skills and vision to help them build their next startup idea'
+                  ? 'Designed the end-to-end experience for FounderMatch a platform for co-founder matching, driving 200+ sign-ups on launch day'
                   : 'Led UX design for the "Buy More, Save More" feature on Samsung\'s platform to boost annual sales by $1M through improved visibility and engagement.'
                 }
               </p>
@@ -345,7 +345,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
                 </div>
               </div>
               <p className="testimonial-content">
-                Panth is a fantastic designer who enjoys exploring.
+              Panth blended seamlessly with the team from day one, exactly as expected. He works really well with others, listens carefully, and genuinely applies feedback to improve his work. He consistently goes above and beyond with whatever he does
               </p>
             </div>
 
@@ -361,7 +361,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
                 </div>
               </div>
               <p className="testimonial-content">
-                Panth is a fantastic designer who enjoys exploring.
+              I’ve really enjoyed working with Panth. His technical background makes collaboration smoother, and he’s great at thinking through problems with both design and engineering in mind
               </p>
             </div>
 
@@ -377,7 +377,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
                 </div>
               </div>
               <p className="testimonial-content">
-                Panth is a fantastic designer who enjoys exploring.
+              Panth runs our weekly AI meetings and workshops and does a great job guiding the team through new tools and ideas. He makes it easy for everyone to stay current and actually use what we learn.
               </p>
             </div>
 
@@ -393,7 +393,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
                 </div>
               </div>
               <p className="testimonial-content">
-                Panth is a fantastic designer who enjoys exploring.
+              Working with Panth on Digital Appliances has been great. He’s thoughtful about keeping design aligned with product goals, business needs, and data insights, which makes collaboration smoother and more effective.
               </p>
             </div>
 
@@ -409,7 +409,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
                 </div>
               </div>
               <p className="testimonial-content">
-                Panth is a fantastic designer who enjoys exploring.
+              Panth brings great energy and enthusiasm to everything he works on. His positive attitude is contagious and makes collaboration genuinely enjoyable
               </p>
             </div>
 
@@ -425,7 +425,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
                 </div>
               </div>
               <p className="testimonial-content">
-                Panth is a fantastic designer who enjoys exploring.
+              Panth’s engineering background really helps during design handoff, making it easier for the team to turn designs into working builds.
               </p>
             </div>
           </div>
