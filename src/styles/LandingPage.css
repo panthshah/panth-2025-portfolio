@@ -137,10 +137,19 @@
   height: 100%;
 }
 
+/* For large screens > 1440px - Scale up phone */
+@media (min-width: 1441px) {
+  .hero-visual {
+    transform: scale(1);
+    width: 420px;
+    height: 440px;
+  }
+}
+
 /* ===== PROJECTS SECTION ===== */
 .projects-section {
   margin-top: 0px;
-  padding: 0 120px 80px 120px;
+  padding: 0 120px 60px 120px;
 }
 
 .projects-container {
@@ -228,7 +237,7 @@
 
 /* ===== TESTIMONIALS SECTION ===== */
 .testimonials-section {
-  padding: 80px 120px 120px 120px;
+  padding: 60px 120px 60px 120px;
   background-color: #F7F7F4;
 }
 
@@ -319,7 +328,7 @@
 
 /* ===== FOOTER SECTION ===== */
 .footer-section {
-  padding: 0 120px 120px 120px;
+  padding: 60px 120px 120px 120px;
 }
 
 .footer-container {
@@ -428,7 +437,7 @@
   
 
   .projects-section {
-    padding: 0px 32px 120px 100px;
+    padding: 0px 32px 60px 100px;
   }
 
   .projects-container {
@@ -451,7 +460,7 @@
   }
 
   .footer-section {
-    padding: 80px 100px 100px 100px;
+    padding: 60px 100px 100px 100px;
   }
 
   .footer-container {
@@ -493,7 +502,7 @@
   }
 
   .projects-section {
-    padding: 0 48px;
+    padding: 0px 48px 60px 48px;
   }
 
   .projects-container {
@@ -507,7 +516,7 @@
   }
 
   .testimonials-section {
-    padding: 120px 48px 60px 48px;
+    padding: 60px 48px 60px 48px;
   }
 
   .testimonials-grid {
@@ -521,7 +530,7 @@
   }
 
   .footer-section {
-    padding: 80px 48px;
+    padding: 60px 48px;
   }
 
   .footer-container {
@@ -574,7 +583,7 @@
   }
 
   .projects-section {
-    padding: 64px 64px;
+    padding: 0px 64px 64px 64px;
   }
 
   .projects-container {
@@ -615,7 +624,7 @@
   }
 
   .testimonials-section {
-    padding: 60px 64px;
+    padding: 64px 64px;
   }
 
   .testimonials-grid {
@@ -694,7 +703,7 @@
   }
 
   .projects-section {
-    padding: 64px 48px;
+    padding: 0px 48px 64px 48px;
   }
 
   .projects-container {
@@ -729,7 +738,7 @@
   }
 
   .testimonials-section {
-    padding: 48px 48px;
+    padding: 64px 48px;
   }
 
   .testimonials-grid {
@@ -766,7 +775,7 @@
   }
 
   .footer-section {
-    padding: 60px 32px 60px 32px;
+    padding: 64px 48px 64px 48px;
   }
 
   .footer-container {
@@ -787,7 +796,7 @@
   /* Mobile: Below 480px */
   .hero-container {
     flex-direction: column;
-    gap: 150px;
+    gap: 64px;
     padding: 64px 24px;
     align-items: center;
   }
@@ -826,13 +835,15 @@
   }
 
   .hero-visual {
-    width: 140px;
-    height: 160px;
-    transform: scale(0.6);
+    width: 320px;
+    height: 340px;
+    transform: scale(0.75);
+    margin-top: -20px;
+    margin-bottom: 20px;
   }
 
   .projects-section {
-    padding: 64px 24px;
+    padding: 0px 24px 64px 24px;
   }
 
   .projects-container {
@@ -873,7 +884,7 @@
   }
 
   .testimonials-section {
-    padding: 40px 24px;
+    padding: 64px 24px;
   }
 
   .testimonials-grid {
@@ -910,7 +921,7 @@
   }
 
   .footer-section {
-    padding: 60px 24px 48px 24px;
+    padding: 64px 24px 64px 24px;
   }
 
   .footer-container {
