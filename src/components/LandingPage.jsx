@@ -294,7 +294,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+              boxShadow: 'none',
               transition: 'background-color 0.2s, opacity 0.2s',
               opacity: currentProject === 0 ? 0.5 : 1
             }}
@@ -315,7 +315,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+              boxShadow: 'none',
               transition: 'background-color 0.2s, opacity 0.2s',
               opacity: currentProject === 1 ? 0.5 : 1
             }}

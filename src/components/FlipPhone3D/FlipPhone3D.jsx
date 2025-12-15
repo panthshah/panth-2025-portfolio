@@ -325,14 +325,7 @@ const FlipPhone3D = () => {
             borderRadius: '6px',
             position: 'relative',
             overflow: 'hidden',
-            border: '3px solid #0a0a0a',
-            boxShadow: `
-              0 0 40px rgba(255,255,255,0.2),
-              0 0 80px rgba(255,255,255,0.1),
-              inset 0 0 60px rgba(255,255,255,0.05),
-              inset 0 2px 4px rgba(255,255,255,0.1),
-              0 8px 16px rgba(0,0,0,0.3)
-            `
+            border: '3px solid #0a0a0a'
           }}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}

@@ -177,14 +177,13 @@ const CustomizeButton = ({ theme, onThemeChange }) => {
   const showGradient = nearestAnchorDistance < 0.25;
   const gradientOpacity = showGradient ? Math.round((1 - nearestAnchorDistance / 0.25) * 40) : 0;
 
-  // Set initial handle position based on current theme
+  // Reset handle to center when panel opens
   useEffect(() => {
-    const themeName = theme?.name || 'Blush Petal';
-    const anchor = COLOR_ANCHORS.find(a => a.name === themeName);
-    if (anchor) {
-      setHandlePosition({ x: anchor.x, y: anchor.y });
+    if (isPanelOpen) {
+      setHandlePosition({ x: 0.5, y: 0.5 });
+      setCurrentColor('#FFB13D'); // Peachy Orange (center)
     }
-  }, []);
+  }, [isPanelOpen]);
 
   // Apply theme
   const applyTheme = useCallback((themeName) => {
@@ -198,12 +197,21 @@ const CustomizeButton = ({ theme, onThemeChange }) => {
   // Handle drag start
   const handleDragStart = useCallback((e) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragging(true);
+    // Prevent body scroll on mobile while dragging
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
   }, []);
 
   // Handle drag move
   const handleDragMove = useCallback((e) => {
     if (!isDragging || !gridRef.current) return;
+    
+    // Prevent page scroll on mobile while dragging
+    if (e.cancelable) {
+      e.preventDefault();
+    }
     
     const rect = gridRef.current.getBoundingClientRect();
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -243,6 +251,9 @@ const CustomizeButton = ({ theme, onThemeChange }) => {
   const handleDragEnd = useCallback(() => {
     if (isDragging) {
       setIsDragging(false);
+      // Restore body scroll on mobile
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
       // Clear sparkles after animation completes
       setTimeout(() => setSparkles([]), 800);
     }
@@ -253,7 +264,8 @@ const CustomizeButton = ({ theme, onThemeChange }) => {
     if (isDragging) {
       window.addEventListener('mousemove', handleDragMove);
       window.addEventListener('mouseup', handleDragEnd);
-      window.addEventListener('touchmove', handleDragMove);
+      // Use passive: false to allow preventDefault() on touch events
+      window.addEventListener('touchmove', handleDragMove, { passive: false });
       window.addEventListener('touchend', handleDragEnd);
     }
     
@@ -262,6 +274,9 @@ const CustomizeButton = ({ theme, onThemeChange }) => {
       window.removeEventListener('mouseup', handleDragEnd);
       window.removeEventListener('touchmove', handleDragMove);
       window.removeEventListener('touchend', handleDragEnd);
+      // Ensure body scroll is restored on cleanup
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
     };
   }, [isDragging, handleDragMove, handleDragEnd]);
 
@@ -317,7 +332,7 @@ const CustomizeButton = ({ theme, onThemeChange }) => {
         <div className="panel-content">
           {/* 2D Color Grid */}
           <div className="color-grid-section">
-            <span className="section-label">Drag to blend</span>
+            <span className="section-label">Drag to change color</span>
             <div 
               className={`color-grid ${isDragging ? 'is-dragging' : ''}`}
               ref={gridRef}
@@ -403,7 +418,7 @@ const CustomizeButton = ({ theme, onThemeChange }) => {
 
           {/* Cursor Selection */}
           <div className="cursor-section">
-            <span className="section-label">Cursor</span>
+            <span className="section-label">Choose your cursor</span>
             <div className="cursor-row">
               {cursors.map((cursor) => (
                 <button
