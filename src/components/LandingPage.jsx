@@ -161,55 +161,76 @@ const LandingPage = ({ theme, onThemeChange }) => {
             </h1>
             
             <p className="hero-description">
-            Outside of design, I enjoy playing pickleball, cooking new recipes, and turning Figma designs into functional prototypes with Figma Make or Cursor
-            </p>
-            
-            <p className="hero-current">
-              Currently Product designer at{' '}
+            I design thoughtful, scalable product experiences at{' '}
+            <span className="link-preview-wrapper">
               <a 
                 href="https://www.samsung.com" 
                 target="_blank" 
-                rel="noopener noreferrer"
-                className="hero-link"
-                style={{ color: themeColors.companyName }}
+                rel="noopener noreferrer" 
+                className="link-preview-link"
+                onMouseEnter={(e) => {
+                  const preview = e.currentTarget.nextElementSibling;
+                  if (preview) preview.style.display = 'block';
+                }}
+                onMouseLeave={(e) => {
+                  const preview = e.currentTarget.nextElementSibling;
+                  if (preview) preview.style.display = 'none';
+                }}
               >
                 Samsung Electronics America
               </a>
+              <div className="link-preview-box">
+                <iframe 
+                  src="https://www.samsung.com" 
+                  title="Samsung Preview"
+                  className="link-preview-iframe"
+                />
+              </div>
+            </span>
+            {' '}across Digital Appliances and Visual Displays 
+            </p>
+            
+            <p className="hero-current">
+              Previously at <span style={{ textDecoration: 'underline' }}>Founderway.Ai</span> and <span style={{ textDecoration: 'underline' }}>Northeastern University</span>
             </p>
             
             <div className="hero-buttons">
-              <button 
-                className="btn-primary btn-about-me"
-                onClick={() => navigate('/about')}
+              <a 
+                href="https://www.linkedin.com/in/panthshah19/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
                 style={{
+                  textDecoration: 'none',
                   backgroundColor: 'transparent',
                   border: `1.5px solid ${themeColors.aboutMeStroke}`,
-                  color: '#000000'
+                  color: '#000000',
+                  borderRadius: '24px',
+                  padding: '0 20px',
+                  height: '40px'
                 }}
               >
-                About Me
-                <ArrowUpRight size={16} weight="bold" />
-              </button>
-              <button 
-                className={`btn-secondary ${isCopied ? 'copied' : ''}`}
-                onClick={handleCopyEmail}
+                LinkedIn
+                <ArrowUpRight size={14} weight="bold" />
+              </a>
+              <a 
+                href="https://x.com/panthshah_"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
                 style={{
-                  transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                  width: isCopied ? '140px' : 'auto'
+                  textDecoration: 'none',
+                  backgroundColor: 'transparent',
+                  border: `1.5px solid ${themeColors.aboutMeStroke}`,
+                  color: '#000000',
+                  borderRadius: '24px',
+                  padding: '0 20px',
+                  height: '40px'
                 }}
               >
-                {isCopied ? (
-                  <>
-                    <Check size={16} weight="bold" />
-                    <span className="copy-text-animate">Copied</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy size={16} weight="regular" />
-                    Copy Email
-                  </>
-                )}
-              </button>
+                Twitter
+                <ArrowUpRight size={14} weight="bold" />
+              </a>
             </div>
           </div>
 
