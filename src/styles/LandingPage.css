@@ -176,7 +176,7 @@
 /* For large screens > 1440px - Scale up phone */
 @media (min-width: 1441px) {
   .hero-visual {
-    transform: scale(1);
+    transform: scale(0.9);
     width: 420px;
     height: 440px;
   }

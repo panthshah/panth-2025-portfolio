@@ -12,8 +12,17 @@ import { precompileShaders } from './utils/shaderPreloader';
 function AppContent() {
   const [selectedTheme, setSelectedTheme] = useState(null);
   const [showSplash, setShowSplash] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Default theme for mobile
+  const defaultMobileTheme = {
+    name: 'Peachy Orange',
+    gradient: 'linear-gradient(180deg, #FFF8F3 0%, #FFDEAD 100%)',
+    colors: ['#FFF8F3', '#FFDEAD'],
+    useShader: true
+  };
 
   // Pre-compile shaders on app start
   useEffect(() => {
@@ -22,6 +31,13 @@ function AppContent() {
     } catch (error) {
       console.error('Shader precompilation failed:', error);
     }
+  }, []);
+
+  // Check for mobile on resize
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Clear saved theme on mount to ensure fresh start every reload
@@ -41,9 +57,12 @@ function AppContent() {
         } catch (error) {
           console.error('Failed to parse saved theme:', error);
         }
+      } else if (isMobile) {
+        // Set default theme for mobile if no theme is saved
+        setSelectedTheme(defaultMobileTheme);
       }
     }
-  }, [location.pathname]);
+  }, [location.pathname, isMobile]);
 
   // Update theme without navigating (for modal)
   const handleThemeChange = (theme) => {
@@ -54,7 +73,14 @@ function AppContent() {
 
   const handleSplashComplete = () => {
     setShowSplash(false);
-    navigate('/theme', { replace: true });
+    // On mobile, skip theme selection and go directly to home
+    if (isMobile) {
+      localStorage.setItem('selectedTheme', JSON.stringify(defaultMobileTheme));
+      setSelectedTheme(defaultMobileTheme);
+      navigate('/home', { replace: true });
+    } else {
+      navigate('/theme', { replace: true });
+    }
   };
 
   // Show splash screen as overlay

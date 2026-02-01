@@ -104,9 +104,9 @@ const ThemeSelection = ({ selectedTheme: initialTheme }) => {
     }
   ];
 
-  // Always start fresh with default theme (middle position)
-  const [selectedTheme, setSelectedTheme] = useState('Blush Petal');
-  const [selectedThemeData, setSelectedThemeData] = useState(themes[2]); // Middle theme
+  // Always start fresh with default theme (Peachy Orange)
+  const [selectedTheme, setSelectedTheme] = useState('Peachy Orange');
+  const [selectedThemeData, setSelectedThemeData] = useState(themes[0]); // Peachy Orange
 
   const playClickSound = () => {
     const mouseclick = new Audio();
@@ -419,7 +419,7 @@ const ThemeSelection = ({ selectedTheme: initialTheme }) => {
 
       <motion.button
         className="continue-button"
-        style={{ background: selectedThemeData ? selectedThemeData.colors[1] : themes[2].colors[1] }}
+        style={{ background: selectedThemeData ? selectedThemeData.colors[1] : themes[0].colors[1] }}
         whileHover={{ scale: 1.05, y: -2 }}
         whileTap={{ scale: 0.95 }}
         transition={{
