@@ -13,7 +13,7 @@
 .hero-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 120px 120px;
+  padding: 120px 120px 150px 120px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -166,6 +166,7 @@
   justify-content: center;
   flex-shrink: 0;
   transform: scale(0.8);
+  transform-origin: right center;
 }
 
 .hero-visual canvas {
@@ -185,38 +186,112 @@
 /* ===== PROJECTS SECTION ===== */
 .projects-section {
   margin-top: 0px;
-  padding: 0 120px 60px 120px;
+  padding: 0 120px 150px 120px;
 }
 
-.projects-container {
+.projects-title {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #000000;
+  margin: 0 0 48px 0;
+  text-align: left;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 48px;
+}
+
+/* Featured Project Card */
+.project-featured {
+  max-width: 1400px;
+  margin: 0 auto 64px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-featured-image {
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+  border-radius: 20px;
   background-color: #F2F1EE;
-  border-radius: 24px;
-  padding: 64px 32px;
+}
+
+.project-featured-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.project-featured-content {
+  padding: 24px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.project-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-text {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #999999;
+  letter-spacing: -0.01em;
+}
+
+/* Project Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
   max-width: 1400px;
   margin: 0 auto;
 }
 
 .project-card {
   display: flex;
-  gap: 48px;
-  justify-content: space-around;
-  align-items: center;
-  margin: 0 auto;
+  flex-direction: column;
+}
+
+.project-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: #F2F1EE;
+  border-radius: 16px;
+}
+
+.project-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .project-content {
-  width: 417px;
-  height: auto;
+  padding: 24px 0 0 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
-  flex-shrink: 0;
+  gap: 0;
 }
 
 .project-title {
   font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #000000;
@@ -227,16 +302,16 @@
 .project-description {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   width: 100%;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 1.67;
   color: #333333;
-  margin: 0 0 12px 0;
+  margin: 0 0 16px 0;
 }
 
 .project-link {
   font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: #000000;
   text-decoration: none;
@@ -250,30 +325,9 @@
   opacity: 0.7;
 }
 
-.project-image {
-  flex-shrink: 0;
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: clamp(300px, 44vw, 634px);
-  aspect-ratio: 16 / 10;
-  background-color: transparent;
-}
-
-.project-image img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-}
-
 /* ===== TESTIMONIALS SECTION ===== */
 .testimonials-section {
-  padding: 60px 120px 60px 120px;
+  padding: 60px 120px 150px 120px;
   background-color: #F7F7F4;
 }
 
@@ -364,7 +418,7 @@
 
 /* ===== FOOTER SECTION ===== */
 .footer-section {
-  padding: 60px 120px 120px 120px;
+  padding: 0px 120px 120px 120px;
 }
 
 .footer-container {
@@ -460,7 +514,7 @@
 /* For screens 1200px to 1400px - Scale down phone, keep side-by-side */
 @media (max-width: 1399px) and (min-width: 1200px) {
   .hero-container {
-    padding: 120px 32px 120px 100px;
+    padding: 120px 32px 150px 100px;
   }
 
   
@@ -473,15 +527,15 @@
   
 
   .projects-section {
-    padding: 0px 32px 60px 100px;
+    padding: 0px 100px 150px 100px;
   }
 
-  .projects-container {
-    padding: 32px 48px;
+  .projects-grid {
+    gap: 24px;
   }
 
   .testimonials-section {
-    padding: 60px 100px;
+    padding: 60px 100px 150px 100px;
   }
 
   .testimonials-grid {
@@ -496,7 +550,7 @@
   }
 
   .footer-section {
-    padding: 60px 100px 100px 100px;
+    padding: 0px 100px 100px 100px;
   }
 
   .footer-container {
@@ -516,7 +570,7 @@
 /* For screens 1024px to 1200px - Tablet, keep side-by-side but smaller */
 @media (max-width: 1199px) and (min-width: 1024px) {
   .hero-container {
-    padding: 120px 48px;
+    padding: 120px 48px 150px 48px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -538,21 +592,23 @@
   }
 
   .projects-section {
-    padding: 0px 48px 60px 48px;
+    padding: 0px 48px 150px 48px;
   }
 
-  .projects-container {
-    padding: 32px 48px;
+  .projects-grid {
+    gap: 24px;
   }
 
-  .project-card {
-    flex-direction: row;
-    gap: 32px;
-    justify-content: space-between;
+  .project-title {
+    font-size: 20px;
+  }
+
+  .project-description {
+    font-size: 14px;
   }
 
   .testimonials-section {
-    padding: 60px 48px 60px 48px;
+    padding: 60px 48px 150px 48px;
   }
 
   .testimonials-grid {
@@ -566,7 +622,7 @@
   }
 
   .footer-section {
-    padding: 60px 48px;
+    padding: 0px 48px 48px 48px;
   }
 
   .footer-container {
@@ -588,7 +644,7 @@
   .hero-container {
     flex-direction: column;
     gap: 120px;
-    padding: 120px 64px;
+    padding: 120px 64px 120px 64px;
     align-items: center;
   }
 
@@ -619,48 +675,32 @@
   }
 
   .projects-section {
-    padding: 0px 64px 64px 64px;
+    padding: 0px 64px 120px 64px;
   }
 
-  .projects-container {
-    height: auto;
-    padding: 48px 32px;
+  .project-featured-image {
+    aspect-ratio: 16 / 9;
   }
 
-  .project-card {
-    flex-direction: column;
-    gap: 64px;
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
 
   .project-content {
-    width: 100%;
-    text-align: center;
-    display: flex;
-    gap: 16px;
-    flex-direction: column;
-    align-items: center;
+    padding: 20px 0 0 0;
   }
 
   .project-title {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .project-description {
-    font-size: 16px;
-    text-align: center;
-    width: 70%;
-    margin: 0 auto;
-  }
-
-  .project-image {
-    width: 70%;
-  }
-  .project-link{
-    justify-content: center;
+    font-size: 14px;
   }
 
   .testimonials-section {
-    padding: 64px 64px;
+    padding: 60px 64px 120px 64px;
   }
 
   .testimonials-grid {
@@ -674,13 +714,18 @@
     height: auto;
   }
 
+  .projects-title {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+
   .testimonials-title {
     font-size: 28px;
     margin-bottom: 32px;
   }
 
   .footer-section {
-    padding: 60px 48px 64px 48px;
+    padding: 0px 48px 64px 48px;
   }
 
   .footer-container {
@@ -702,7 +747,7 @@
   .hero-container {
     flex-direction: column;
     gap: 120px;
-    padding: 120px 48px;
+    padding: 120px 48px 100px 48px;
     align-items: center;
   }
 
@@ -739,42 +784,41 @@
   }
 
   .projects-section {
-    padding: 0px 48px 64px 48px;
+    padding: 0px 48px 100px 48px;
   }
 
-  .projects-container {
-    height: auto;
-    padding: 32px 24px;
+  .project-featured {
+    margin-bottom: 32px;
   }
 
-  .project-card {
-    flex-direction: column;
+  .project-featured-image {
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+  }
+
+  .project-featured-content {
+    padding: 16px 0 0 0;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
     gap: 24px;
   }
 
   .project-content {
-    width: 100%;
-    text-align: center;
-    gap: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 20px 0 0 0;
   }
 
   .project-title {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .project-description {
-    font-size: 14px;
-  }
-
-  .project-image {
-    width: 60%;
+    font-size: 15px;
   }
 
   .testimonials-section {
-    padding: 64px 48px;
+    padding: 48px 48px 100px 48px;
   }
 
   .testimonials-grid {
@@ -786,6 +830,11 @@
     padding: 24px;
     width: auto;
     height: auto;
+  }
+
+  .projects-title {
+    font-size: 24px;
+    margin-bottom: 24px;
   }
 
   .testimonials-title {
@@ -811,7 +860,7 @@
   }
 
   .footer-section {
-    padding: 64px 48px 64px 48px;
+    padding: 0px 48px 64px 48px;
   }
 
   .footer-container {
@@ -833,7 +882,7 @@
   .hero-container {
     flex-direction: column;
     gap: 64px;
-    padding: 64px 24px;
+    padding: 64px 24px 80px 24px;
     align-items: center;
   }
 
@@ -879,48 +928,49 @@
   }
 
   .projects-section {
-    padding: 0px 24px 64px 24px;
+    padding: 0px 24px 80px 24px;
   }
 
-  .projects-container {
-    height: auto;
-    padding: 24px 16px;
-    border-radius: 16px;
+  .project-featured {
+    margin-bottom: 24px;
   }
 
-  .project-card {
-    flex-direction: column;
+  .project-featured-image {
+    aspect-ratio: 16 / 10;
+    border-radius: 12px;
+  }
+
+  .project-featured-content {
+    padding: 12px 0 0 0;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
     gap: 20px;
   }
 
+  .project-image {
+    border-radius: 12px;
+  }
+
   .project-content {
-    width: 70%;
-    text-align: center;
-    gap: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 16px 0 0 0;
   }
 
   .project-title {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .project-description {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .project-link {
-    font-size: 12px;
-    margin-top: 8px;
-  }
-
-  .project-image {
-    width: 100%;
+    font-size: 13px;
   }
 
   .testimonials-section {
-    padding: 64px 24px;
+    padding: 40px 24px 80px 24px;
   }
 
   .testimonials-grid {
@@ -932,6 +982,11 @@
     padding: 20px;
     width: auto;
     height: auto;
+  }
+
+  .projects-title {
+    font-size: 22px;
+    margin-bottom: 20px;
   }
 
   .testimonials-title {
@@ -957,7 +1012,7 @@
   }
 
   .footer-section {
-    padding: 64px 24px 64px 24px;
+    padding: 0px 24px 64px 24px;
   }
 
   .footer-container {

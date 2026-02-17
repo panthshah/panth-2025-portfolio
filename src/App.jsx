@@ -6,6 +6,8 @@ import FlipPhone3D from './components/FlipPhone3D';
 import LandingPage from './components/LandingPage';
 import AboutMe from './components/AboutMe';
 import ProjectPage from './components/ProjectPage';
+import SamsungPage from './components/SamsungPage';
+import NortheasternPage from './components/NortheasternPage';
 import Playground from './components/Playground';
 import { precompileShaders } from './utils/shaderPreloader';
 
@@ -96,6 +98,8 @@ function AppContent() {
         <Route path="/home" element={<LandingPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
         <Route path="/about" element={<AboutMe theme={selectedTheme} onThemeChange={handleThemeChange} />} />
         <Route path="/foundermatch" element={<ProjectPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
+        <Route path="/samsung" element={<SamsungPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
+        <Route path="/northeastern" element={<NortheasternPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
         <Route path="/phone" element={<FlipPhone3D />} />
         <Route path="/playground" element={<Playground theme={selectedTheme} onThemeChange={handleThemeChange} />} />
       </Routes>

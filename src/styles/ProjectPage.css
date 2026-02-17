@@ -84,8 +84,10 @@
   margin: 0;
 }
 
-.overview-text + .overview-text {
-  margin-top: 8px;
+.overview-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 /* Case Study Sections */
@@ -427,6 +429,79 @@
   display: block;
 }
 
+/* ===== CONFIDENTIAL WALL ===== */
+.confidential-wall {
+  position: relative;
+  margin-top: 80px;
+}
+
+.confidential-faded-content {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 10%, transparent 50%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 10%, transparent 50%);
+  filter: blur(1px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.confidential-faded-content .case-study-section {
+  margin-top: 0;
+}
+
+.confidential-faded-content .case-study-section + .case-study-section {
+  margin-top: 48px;
+}
+
+.confidential-overlay {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: -40px;
+  padding-bottom: 40px;
+}
+
+.confidential-message {
+  text-align: center;
+  max-width: 480px;
+}
+
+.confidential-heading {
+  font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.confidential-description {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #666666;
+  margin: 0 0 24px 0;
+}
+
+.confidential-cta {
+  display: inline-block;
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #000000;
+  padding: 12px 32px;
+  border-radius: 32px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.confidential-cta:hover {
+  opacity: 0.8;
+}
+
 /* Responsive Design - Matches navbar breakpoints exactly */
 
 /* 1200px to 1400px */
@@ -562,6 +637,18 @@
   .event-description {
     font-size: 14px;
   }
+
+  .confidential-wall {
+    margin-top: 48px;
+  }
+
+  .confidential-heading {
+    font-size: 20px;
+  }
+
+  .confidential-description {
+    font-size: 15px;
+  }
 }
 
 /* Below 481px - Mobile */
@@ -688,6 +775,23 @@
 
   .event-description {
     font-size: 14px;
+  }
+
+  .confidential-wall {
+    margin-top: 40px;
+  }
+
+  .confidential-heading {
+    font-size: 18px;
+  }
+
+  .confidential-description {
+    font-size: 14px;
+  }
+
+  .confidential-cta {
+    font-size: 14px;
+    padding: 10px 28px;
   }
 
   .video-container {

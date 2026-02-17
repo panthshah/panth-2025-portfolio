@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import CustomizeButton from './CustomizeButton';
@@ -32,6 +32,10 @@ const ProjectPage = ({ theme, onThemeChange }) => {
   const navigate = useNavigate();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('playground');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleChatOpen = () => {
     setIsChatOpen(true);
@@ -75,25 +79,33 @@ const ProjectPage = ({ theme, onThemeChange }) => {
         <div className="project-overview">
           <div className="overview-column">
             <h3 className="overview-heading">Timeline</h3>
-            <p className="overview-text">Jan 2024- May 2024</p>
+            <div className="overview-items">
+              <p className="overview-text">Jan 2024 - May 2024</p>
+            </div>
           </div>
           <div className="overview-column">
             <h3 className="overview-heading">Team</h3>
-            <p className="overview-text">1 Designer</p>
-            <p className="overview-text">1 Developer</p>
-            <p className="overview-text">2 AI Engineers</p>
+            <div className="overview-items">
+              <p className="overview-text">1 Designer</p>
+              <p className="overview-text">1 Developer</p>
+              <p className="overview-text">2 AI Engineers</p>
+            </div>
           </div>
           <div className="overview-column">
             <h3 className="overview-heading">Tools</h3>
-            <p className="overview-text">Figma</p>
-            <p className="overview-text">Figma Jam</p>
-            <p className="overview-text">Mural</p>
+            <div className="overview-items">
+              <p className="overview-text">Figma</p>
+              <p className="overview-text">Figma Jam</p>
+              <p className="overview-text">Mural</p>
+            </div>
           </div>
           <div className="overview-column">
             <h3 className="overview-heading">Disciplines</h3>
-            <p className="overview-text">MVP</p>
-            <p className="overview-text">Business Plan</p>
-            <p className="overview-text">UX Design</p>
+            <div className="overview-items">
+              <p className="overview-text">MVP</p>
+              <p className="overview-text">Business Plan</p>
+              <p className="overview-text">UX Design</p>
+            </div>
           </div>
         </div>
 

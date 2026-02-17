@@ -1,12 +1,13 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, ArrowLeft, ArrowRight, Copy, Heart, Smiley, Clock, Check } from '@phosphor-icons/react';
+import { ArrowUpRight, Copy, Heart, Smiley, Clock, Check } from '@phosphor-icons/react';
 import Navbar from './Navbar';
 import FlipPhone3D from './FlipPhone3D';
 import ChatSidebar from './ChatSidebar';
 import CustomizeButton from './CustomizeButton';
 import project1Image from '../assets/96shots_so.png';
-import project2Image from '../assets/776shots_so.png';
+import project2Image from '../assets/projectcase1.png';
+import project3Image from '../assets/Northeastern.png';
 import geminiIcon from '../assets/gemini 1.svg';
 import zeenatAvatar from '../assets/Testimonial/Zeenat.jpeg';
 import joshAvatar from '../assets/Testimonial/Josh.jpeg';
@@ -70,24 +71,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('chat');
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [currentProject, setCurrentProject] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
-
-  // Handle project change with scale + fade animation
-  const handleProjectChange = (newProject) => {
-    if (isAnimating || newProject === currentProject) return;
-    setIsAnimating(true);
-    
-    // After fade out, change project
-    setTimeout(() => {
-      setCurrentProject(newProject);
-      // After content change, fade back in
-      setTimeout(() => {
-        setIsAnimating(false);
-      }, 50);
-    }, 300);
-  };
 
   const themeColors = useMemo(() => {
     const themeName = theme?.name || 'Peachy Orange';
@@ -243,108 +227,69 @@ const LandingPage = ({ theme, onThemeChange }) => {
 
       {/* Projects Section */}
       <section className="projects-section">
-        <div className="projects-container">
-          <div 
-            className="project-card"
-            style={{
-              transform: isAnimating ? 'scale(0.96)' : 'scale(1)',
-              opacity: isAnimating ? 0 : 1,
-              transition: 'transform 0.3s ease-out, opacity 0.3s ease-out'
-            }}
-          >
+        <h2 className="projects-title">Projects</h2>
+
+        {/* Featured Project - Samsung Electronics */}
+        <div className="project-featured">
+          <div className="project-featured-image" onClick={() => navigate('/samsung')} style={{ cursor: 'pointer' }}>
+            <img 
+              src={project2Image}
+              alt="Samsung Electronics case study"
+            />
+          </div>
+          <div className="project-featured-content">
+            <h2 className="project-title">Samsung Electronics America</h2>
+            <p className="project-description">
+              Led UX design for the "Buy More, Save More" feature on Samsung's platform to boost annual sales by $1M through improved visibility and engagement.
+            </p>
+            <a href="#" className="project-link" onClick={(e) => { e.preventDefault(); navigate('/samsung'); }}>
+              Read Case study
+              <ArrowUpRight size={16} weight="regular" />
+            </a>
+          </div>
+        </div>
+
+        {/* Project Grid */}
+        <div className="projects-grid">
+          {/* FounderMatch Card */}
+          <div className="project-card">
+            <div className="project-image" onClick={() => navigate('/foundermatch')} style={{ cursor: 'pointer' }}>
+              <img 
+                src={project1Image}
+                alt="FounderMatch case study"
+              />
+            </div>
             <div className="project-content">
-              {currentProject === 1 && (
-                <span style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '6px 12px',
-                  backgroundColor: '#FFFFFF',
-                  color: '#000000',
-                  borderRadius: '20px',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                  marginBottom: '12px',
-                  fontFamily: "'Samsung Sharp Sans', system-ui, sans-serif",
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-                }}>
-                  <Clock size={14} weight="bold" color="#000" />
-                  Coming Soon
-                </span>
-              )}
-              <h2 className="project-title">{currentProject === 0 ? 'FounderMatch' : 'Samsung Electronics'}</h2>
+              <h2 className="project-title">FounderMatch</h2>
               <p className="project-description">
-                {currentProject === 0 
-                  ? 'Designed the end-to-end experience for FounderMatch a platform for co-founder matching, driving 200+ sign-ups on launch day'
-                  : 'Led UX design for the "Buy More, Save More" feature on Samsung\'s platform to boost annual sales by $1M through improved visibility and engagement.'
-                }
+                Designed the end-to-end experience for FounderMatch, a platform for co-founder matching, driving 200+ sign-ups on launch day.
               </p>
-              <a href="#" className="project-link" onClick={(e) => { e.preventDefault(); navigate(currentProject === 0 ? '/foundermatch' : '/samsung'); }}>
+              <a href="#" className="project-link" onClick={(e) => { e.preventDefault(); navigate('/foundermatch'); }}>
                 Read Case study
                 <ArrowUpRight size={16} weight="regular" />
               </a>
             </div>
-            <div className="project-image">
+          </div>
+
+          {/* Northeastern Card */}
+          <div className="project-card">
+            <div className="project-image" onClick={() => navigate('/northeastern')} style={{ cursor: 'pointer' }}>
               <img 
-                src={currentProject === 0 ? project1Image : project2Image}
-                alt={currentProject === 0 ? 'Foundermatch case study' : 'Samsung Electronics case study'}
+                src={project3Image}
+                alt="Accessibility at Northeastern case study"
               />
             </div>
+            <div className="project-content">
+              <h2 className="project-title">Accessibility at Northeastern</h2>
+              <p className="project-description">
+                Conducted accessibility audits across 10+ Northeastern websites, improving the experience for 30,000+ students across 13 countries.
+              </p>
+              <a href="#" className="project-link" onClick={(e) => { e.preventDefault(); navigate('/northeastern'); }}>
+                Read Case study
+                <ArrowUpRight size={16} weight="regular" />
+              </a>
+            </div>
           </div>
-        </div>
-        
-        {/* Navigation Buttons */}
-        <div style={{
-          display: 'flex',
-          gap: '12px',
-          justifyContent: 'flex-end',
-          marginTop: '32px',
-          maxWidth: '1400px',
-          margin: '32px auto 0 auto',
-          paddingRight: '0'
-        }}>
-          <button
-            onClick={() => handleProjectChange(Math.max(0, currentProject - 1))}
-            style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '12px',
-              border: 'none',
-              backgroundColor: '#FFFFFF',
-              cursor: currentProject === 0 || isAnimating ? 'not-allowed' : 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: 'none',
-              transition: 'background-color 0.2s, opacity 0.2s',
-              opacity: currentProject === 0 ? 0.5 : 1
-            }}
-            onMouseEnter={(e) => { if (currentProject !== 0) e.currentTarget.style.backgroundColor = '#F5F5F5'; }}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
-          >
-            <ArrowLeft size={20} weight="regular" color="#000" />
-          </button>
-          <button
-            onClick={() => handleProjectChange(Math.min(1, currentProject + 1))}
-            style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '12px',
-              border: 'none',
-              backgroundColor: '#FFFFFF',
-              cursor: currentProject === 1 || isAnimating ? 'not-allowed' : 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: 'none',
-              transition: 'background-color 0.2s, opacity 0.2s',
-              opacity: currentProject === 1 ? 0.5 : 1
-            }}
-            onMouseEnter={(e) => { if (currentProject !== 1) e.currentTarget.style.backgroundColor = '#F5F5F5'; }}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFFFFF'}
-          >
-            <ArrowRight size={20} weight="regular" color="#000" />
-          </button>
         </div>
       </section>
 
