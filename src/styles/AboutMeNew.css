@@ -1,0 +1,484 @@
+/* ===== ABOUT ME NEW PAGE ===== */
+.about-new-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #F7F7F4;
+}
+
+/* ===== HERO SECTION - 2 Column, Top Aligned ===== */
+.about-new-hero {
+  padding: 140px 120px 100px 120px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.about-new-hero-grid {
+  display: flex;
+  gap: 64px;
+  align-items: stretch;
+}
+
+.about-new-hero-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.about-new-hero-image {
+  flex: 0 0 clamp(220px, 30%, 380px);
+  border-radius: 20px;
+  overflow: hidden;
+  background: #F2F1EE;
+}
+
+.about-new-hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-new-headline {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: #000000;
+  margin: 0 0 40px 0;
+}
+
+.about-new-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-new-intro p {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #444444;
+  margin: 0;
+}
+
+.about-new-intro p:first-child {
+  font-size: 18px;
+  color: #222222;
+  font-weight: 500;
+}
+
+/* ===== BENTO PHOTO GRID ===== */
+.about-new-photos {
+  padding: 0 120px 150px 120px;
+}
+
+.about-new-photos-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.about-new-bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.about-bento-item {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #F2F1EE;
+  height: 200px;
+}
+
+.about-bento-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-bento-item.about-bento-wide {
+  grid-column: span 2;
+}
+
+/* ===== EXPERIENCE & EDUCATION SECTIONS ===== */
+.about-new-experience,
+.about-new-education {
+  padding: 0 120px 100px 120px;
+}
+
+.about-new-experience-inner,
+.about-new-education-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.about-new-section-title {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #000000;
+  margin: 0 0 40px 0;
+}
+
+/* Timeline */
+.about-new-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-new-timeline-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-new-timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.about-new-timeline-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.about-new-company-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #F2F1EE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #666666;
+}
+
+.about-new-company-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-new-company {
+  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: -0.01em;
+}
+
+.about-new-divider {
+  font-size: 16px;
+  color: #CCCCCC;
+  font-weight: 300;
+}
+
+.about-new-role {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #666666;
+}
+
+.about-new-period {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #999999;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.about-new-timeline-line {
+  height: 1px;
+  background: #EEEEEE;
+  width: 100%;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+
+/* 1200px - 1399px */
+@media (max-width: 1399px) and (min-width: 1200px) {
+  .about-new-hero {
+    padding: 140px 100px 80px 100px;
+  }
+
+  .about-new-photos {
+    padding: 0 100px 120px 100px;
+  }
+
+  .about-new-experience,
+  .about-new-education {
+    padding: 0 100px 100px 100px;
+  }
+}
+
+/* 1024px - 1199px */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .about-new-hero {
+    padding: 140px 48px 80px 48px;
+  }
+
+  .about-new-hero-grid {
+    gap: 48px;
+  }
+
+  .about-new-headline {
+    font-size: 28px;
+  }
+
+  .about-new-photos {
+    padding: 0 48px 120px 48px;
+  }
+
+  .about-bento-item {
+    height: 180px;
+  }
+
+  .about-new-experience,
+  .about-new-education {
+    padding: 0 48px 80px 48px;
+  }
+}
+
+/* 768px - 1024px (Large Tablet) */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .about-new-hero {
+    padding: 130px 64px 60px 64px;
+  }
+
+  .about-new-hero-grid {
+    gap: 40px;
+  }
+
+  .about-new-headline {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+
+  .about-new-intro p {
+    font-size: 16px;
+  }
+
+  .about-new-intro p:first-child {
+    font-size: 17px;
+  }
+
+  .about-new-hero-image {
+    border-radius: 16px;
+  }
+
+  .about-new-photos {
+    padding: 0 64px 100px 64px;
+  }
+
+  .about-new-bento {
+    gap: 12px;
+  }
+
+  .about-bento-item {
+    height: 160px;
+  }
+
+  .about-new-experience,
+  .about-new-education {
+    padding: 0 64px 80px 64px;
+  }
+
+  .about-new-section-title {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+
+  .about-new-timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .about-new-period {
+    font-size: 14px;
+  }
+}
+
+/* 481px - 768px (Tablet) */
+@media (max-width: 768px) and (min-width: 481px) {
+  .about-new-hero {
+    padding: 120px 48px 48px 48px;
+  }
+
+  .about-new-hero-grid {
+    flex-direction: column;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  .about-new-headline {
+    font-size: 26px;
+    margin-bottom: 28px;
+  }
+
+  .about-new-intro p {
+    font-size: 16px;
+  }
+
+  .about-new-intro p:first-child {
+    font-size: 17px;
+  }
+
+  .about-new-hero-image {
+    width: 100%;
+    height: 360px;
+    border-radius: 16px;
+  }
+
+  .about-new-photos {
+    padding: 0 48px 80px 48px;
+  }
+
+  .about-new-bento {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .about-bento-item {
+    height: 160px;
+  }
+
+  .about-bento-item.about-bento-wide {
+    grid-column: span 2;
+  }
+
+  .about-new-experience,
+  .about-new-education {
+    padding: 0 48px 64px 48px;
+  }
+
+  .about-new-section-title {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .about-new-company-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
+  }
+
+  .about-new-company {
+    font-size: 16px;
+  }
+
+  .about-new-role {
+    font-size: 15px;
+  }
+
+  .about-new-timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+/* Below 480px (Mobile) */
+@media (max-width: 480px) {
+  .about-new-hero {
+    padding: 64px 24px 40px 24px;
+  }
+
+  .about-new-hero-grid {
+    flex-direction: column;
+    gap: 32px;
+    align-items: flex-start;
+  }
+
+  .about-new-headline {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .about-new-intro {
+    gap: 16px;
+  }
+
+  .about-new-intro p {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .about-new-intro p:first-child {
+    font-size: 16px;
+  }
+
+  .about-new-hero-image {
+    width: 100%;
+    height: 320px;
+    border-radius: 14px;
+  }
+
+  .about-new-photos {
+    padding: 0 24px 64px 24px;
+  }
+
+  .about-new-bento {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .about-bento-item {
+    height: 130px;
+    border-radius: 10px;
+  }
+
+  .about-bento-item.about-bento-wide {
+    grid-column: span 2;
+  }
+
+  .about-new-experience,
+  .about-new-education {
+    padding: 0 24px 48px 24px;
+  }
+
+  .about-new-section-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .about-new-company-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+  }
+
+  .about-new-company {
+    font-size: 15px;
+  }
+
+  .about-new-role {
+    font-size: 14px;
+  }
+
+  .about-new-period {
+    font-size: 13px;
+  }
+
+  .about-new-timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 16px 0;
+  }
+
+  .about-new-timeline-left {
+    gap: 8px;
+  }
+}

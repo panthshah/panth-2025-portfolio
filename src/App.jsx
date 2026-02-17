@@ -4,11 +4,11 @@ import SplashScreen from './components/SplashScreen';
 import ThemeSelection from './components/ThemeSelection';
 import FlipPhone3D from './components/FlipPhone3D';
 import LandingPage from './components/LandingPage';
-import AboutMe from './components/AboutMe';
 import ProjectPage from './components/ProjectPage';
 import SamsungPage from './components/SamsungPage';
 import NortheasternPage from './components/NortheasternPage';
 import Playground from './components/Playground';
+import AboutMeNew from './components/AboutMeNew';
 import { precompileShaders } from './utils/shaderPreloader';
 
 function AppContent() {
@@ -96,7 +96,7 @@ function AppContent() {
         <Route path="/" element={<Navigate to="/theme" replace />} />
         <Route path="/theme" element={<ThemeSelection selectedTheme={selectedTheme} />} />
         <Route path="/home" element={<LandingPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
-        <Route path="/about" element={<AboutMe theme={selectedTheme} onThemeChange={handleThemeChange} />} />
+        <Route path="/about" element={<AboutMeNew theme={selectedTheme} onThemeChange={handleThemeChange} />} />
         <Route path="/foundermatch" element={<ProjectPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
         <Route path="/samsung" element={<SamsungPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
         <Route path="/northeastern" element={<NortheasternPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />

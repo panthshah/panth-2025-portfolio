@@ -672,6 +672,7 @@
     width: 200px;
     height: 220px;
     transform: scale(0.75);
+    transform-origin: center center;
   }
 
   .projects-section {
@@ -781,6 +782,7 @@
     width: 160px;
     height: 180px;
     transform: scale(0.7);
+    transform-origin: center center;
   }
 
   .projects-section {
@@ -923,6 +925,7 @@
     width: 320px;
     height: 340px;
     transform: scale(0.75);
+    transform-origin: center center;
     margin-top: -20px;
     margin-bottom: 20px;
   }
