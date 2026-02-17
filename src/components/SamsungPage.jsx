@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import CustomizeButton from './CustomizeButton';
 import ChatSidebar from './ChatSidebar';
 import geminiIcon from '../assets/gemini 1.svg';
-import heroImage from '../assets/projectcase1.png';
+import heroImage from '../assets/Projectcase1.png';
 import '../styles/ProjectPage.css';
 
 const GeminiIcon = ({ size = 20, className }) => (

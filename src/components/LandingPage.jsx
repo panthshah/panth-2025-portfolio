@@ -6,7 +6,7 @@ import FlipPhone3D from './FlipPhone3D';
 import ChatSidebar from './ChatSidebar';
 import CustomizeButton from './CustomizeButton';
 import project1Image from '../assets/96shots_so.png';
-import project2Image from '../assets/projectcase1.png';
+import project2Image from '../assets/Projectcase1.png';
 import project3Image from '../assets/Northeastern.png';
 import geminiIcon from '../assets/gemini 1.svg';
 import zeenatAvatar from '../assets/Testimonial/Zeenat.jpeg';
