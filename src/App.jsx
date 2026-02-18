@@ -10,6 +10,7 @@ import NortheasternPage from './components/NortheasternPage';
 import Playground from './components/Playground';
 import AboutMeNew from './components/AboutMeNew';
 import { precompileShaders } from './utils/shaderPreloader';
+import { Analytics } from '@vercel/analytics/react';
 
 function AppContent() {
   const [selectedTheme, setSelectedTheme] = useState(null);
@@ -111,6 +112,7 @@ function App() {
   return (
     <BrowserRouter>
       <AppContent />
+      <Analytics />
     </BrowserRouter>
   );
 }
