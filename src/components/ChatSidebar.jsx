@@ -9,6 +9,8 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
   const [message, setMessage] = useState('');
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [streamingText, setStreamingText] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [topic, setTopic] = useState('home');
   
@@ -53,10 +55,10 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
     }
   }, [isOpen]);
 
-  // Auto-scroll to bottom when new messages arrive
+  // Auto-scroll to bottom when new messages arrive or during streaming
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [history]);
+  }, [history, streamingText]);
 
   // Topic detection function
   function detectTopic(text) {
@@ -110,11 +112,29 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
       // ========== Experience Flow ==========
       case 'experience-companies':
         return [
+          'Samsung',
           'FounderMatch',
           'FounderWay',
           'Northeastern University',
           'More Options'
         ];
+      
+      case 'samsung-details':
+        const allSamsungDetails = [
+          'Galaxy XR',
+          'Buy More Save More',
+          'Shop Live Redesign',
+          'More Options'
+        ];
+        
+        if (clickedChip) {
+          return [
+            ...allSamsungDetails.filter(chip => chip !== clickedChip),
+            'More Options'
+          ];
+        }
+        
+        return allSamsungDetails;
       
       case 'foundermatch-details':
         const allFounderMatchDetails = [
@@ -202,52 +222,102 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
   };
 
   async function sendMessage() {
-    if (!message.trim() || isLoading) return;
+    if (!message.trim() || isLoading || isStreaming) return;
     
     const userMessage = message.trim();
     setMessage('');
     setIsLoading(true);
+    setIsStreaming(false);
+    setStreamingText('');
 
     try {
-      // Call the API
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           message: userMessage,
-          history: history.slice(-4) // Send last 4 messages for context
+          history: history.slice(-4)
         }),
       });
 
-      const data = await res.json();
-      
-      // Check if the response was successful
-      if (!res.ok) {
-        console.error('API Error:', data);
-        setHistory([...history, { 
-          user: userMessage, 
-          bot: data.reply || 'Sorry, I couldn\'t connect to the AI. Please try again.' 
-        }]);
+      const contentType = res.headers.get('content-type') || '';
+
+      // Rate-limited or error — non-streaming JSON response
+      if (!contentType.includes('text/event-stream')) {
+        const data = await res.json();
+        const botReply = data.reply || 'Sorry, I couldn\'t generate a response.';
+        setHistory(prev => [...prev, { user: userMessage, bot: emphasizeMetrics(botReply) }]);
+        updateChipsBasedOnMessage(userMessage);
         setIsLoading(false);
         return;
       }
 
-      const botReply = data.reply || 'Sorry, I couldn\'t generate a response.';
-      const replyWithEmphasis = emphasizeMetrics(botReply);
-      
-      const newHistory = [...history, { user: userMessage, bot: replyWithEmphasis }];
-      setHistory(newHistory);
+      // Streaming SSE response
+      setIsLoading(false);
+      setIsStreaming(true);
+      setHistory(prev => [...prev, { user: userMessage, bot: '' }]);
 
-      // Update chips AFTER response is received
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let fullText = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed || !trimmed.startsWith('data: ')) continue;
+
+          const data = trimmed.slice(6);
+          if (data === '[DONE]') break;
+
+          try {
+            const parsed = JSON.parse(data);
+            if (parsed.content) {
+              fullText += parsed.content;
+              setStreamingText(fullText);
+              setHistory(prev => {
+                const updated = [...prev];
+                updated[updated.length - 1] = { ...updated[updated.length - 1], bot: fullText };
+                return updated;
+              });
+            }
+          } catch {}
+        }
+      }
+
+      // Finalize: apply metric emphasis to completed text
+      const finalText = emphasizeMetrics(fullText);
+      setHistory(prev => {
+        const updated = [...prev];
+        updated[updated.length - 1] = { ...updated[updated.length - 1], bot: finalText };
+        return updated;
+      });
+      setIsStreaming(false);
+      setStreamingText('');
       updateChipsBasedOnMessage(userMessage);
+
     } catch (error) {
       console.error('Error:', error);
-      setHistory([...history, { 
-        user: userMessage, 
-        bot: 'Sorry, something went wrong. Please try again.' 
-      }]);
+      setIsStreaming(false);
+      setStreamingText('');
+      setHistory(prev => {
+        if (prev.length > 0 && prev[prev.length - 1].bot === '') {
+          const updated = [...prev];
+          updated[updated.length - 1] = { ...updated[updated.length - 1], bot: 'Sorry, something went wrong. Please try again.' };
+          return updated;
+        }
+        return [...prev, { user: message, bot: 'Sorry, something went wrong. Please try again.' }];
+      });
     } finally {
       setIsLoading(false);
+      setIsStreaming(false);
     }
   }
   
@@ -305,6 +375,14 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
     }
     
     // Handle company selection
+    if (userMessage === 'Samsung') {
+      setTopic('samsung-details');
+      setClickedCompany('Samsung');
+      setClickedCompanyDetail(null);
+      setSuggestions(getSuggestionsForTopic('samsung-details'));
+      return;
+    }
+    
     if (userMessage === 'FounderMatch') {
       setTopic('foundermatch-details');
       setClickedCompany('FounderMatch');
@@ -329,6 +407,14 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
       return;
     }
     
+    // Handle Samsung project chips
+    const samsungProjectChips = ['Galaxy XR', 'Buy More Save More', 'Shop Live Redesign'];
+    if (samsungProjectChips.includes(userMessage) && topic === 'samsung-details') {
+      setClickedCompanyDetail(userMessage);
+      setSuggestions(getSuggestionsForTopic('samsung-details', userMessage));
+      return;
+    }
+
     // Handle company detail chips
     const companyDetailChips = [
       'Problem Statement',
@@ -340,7 +426,6 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
     if (companyDetailChips.includes(userMessage)) {
       setClickedCompanyDetail(userMessage);
       
-      // Determine which company's details to show
       if (topic === 'foundermatch-details') {
         setSuggestions(getSuggestionsForTopic('foundermatch-details', userMessage));
       } else if (topic === 'founderway-details') {
@@ -360,6 +445,26 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
       setClickedSkillChip(null);
       setClickedCompany(null);
       setClickedCompanyDetail(null);
+      setSuggestions(getSuggestionsForTopic('home'));
+      return;
+    }
+
+    // Handle "Contact" — respond instantly with contact info
+    if (text === 'Contact') {
+      setHistory(prev => [...prev, {
+        user: 'Contact',
+        bot: "You can reach me at **panthshahdesigns@gmail.com** — feel free to drop me a message anytime!\n\nYou can also connect with me on [LinkedIn](https://www.linkedin.com/in/panthshah19/) or check out my work on [GitHub](https://github.com/panthshah)."
+      }]);
+      setSuggestions(getSuggestionsForTopic('home'));
+      return;
+    }
+
+    // Handle "Resume" — respond instantly with download link
+    if (text === 'Resume') {
+      setHistory(prev => [...prev, {
+        user: 'Resume',
+        bot: "Here's my resume — [Download Resume](/Panth%20Shah%20FT%20Resume.pdf). Feel free to take a look!"
+      }]);
       setSuggestions(getSuggestionsForTopic('home'));
       return;
     }
@@ -571,7 +676,7 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
                   
                   {/* Bot message */}
                   <div className="chat-message-wrapper bot">
-                    <div className="chat-message bot-message">
+                    <div className={`chat-message bot-message ${isStreaming && i === history.length - 1 ? 'streaming' : ''}`}>
                       <ReactMarkdown 
                         remarkPlugins={[remarkGfm]}
                         components={{
@@ -579,17 +684,19 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
                           strong: ({ node, ...props }) => <strong className="chat-markdown-strong" {...props} />,
                           ul: ({ node, ...props }) => <ul className="chat-markdown-ul" {...props} />,
                           li: ({ node, ...props }) => <li className="chat-markdown-li" {...props} />,
+                          a: ({ node, ...props }) => <a className="chat-markdown-link" target="_blank" rel="noopener noreferrer" {...props} />,
                         }}
                       >
                         {chat.bot}
                       </ReactMarkdown>
+                      {isStreaming && i === history.length - 1 && <span className="streaming-cursor" />}
                     </div>
                   </div>
                 </div>
               ))}
               
-              {/* Loading indicator */}
-              {isLoading && (
+              {/* Loading indicator (only shown before streaming starts) */}
+              {isLoading && !isStreaming && (
                 <div className="chat-message-wrapper bot">
                   <div className="chat-message bot-message">
                     <div className="chat-loading">
@@ -656,12 +763,12 @@ export default function ChatSidebar({ isOpen, onClose, themeColors }) {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={isLoading ? 'Thinking...' : 'Ask me anything about Panth'}
-                disabled={isLoading}
+                placeholder={isLoading || isStreaming ? 'Thinking...' : 'Ask me anything about Panth'}
+                disabled={isLoading || isStreaming}
               />
               <button
                 onClick={sendMessage}
-                disabled={isLoading || !message.trim()}
+                disabled={isLoading || isStreaming || !message.trim()}
                 className="chat-send-btn"
                 style={{ backgroundColor: themeColors?.companyName || '#FFB13D' }}
                 aria-label="Send message"
