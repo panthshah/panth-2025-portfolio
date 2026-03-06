@@ -94,8 +94,8 @@ function AppContent() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Navigate to="/theme" replace />} />
-        <Route path="/theme" element={<ThemeSelection selectedTheme={selectedTheme} />} />
+        <Route path="/" element={isMobile ? <Navigate to="/home" replace /> : <Navigate to="/theme" replace />} />
+        <Route path="/theme" element={isMobile ? <Navigate to="/home" replace /> : <ThemeSelection selectedTheme={selectedTheme} />} />
         <Route path="/home" element={<LandingPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
         <Route path="/about" element={<AboutMeNew theme={selectedTheme} onThemeChange={handleThemeChange} />} />
         <Route path="/foundermatch" element={<ProjectPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
