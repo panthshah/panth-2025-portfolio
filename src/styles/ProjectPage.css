@@ -21,6 +21,16 @@
   margin: 0 0 48px 0;
 }
 
+/* Case Study Title */
+.case-study-title {
+  font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #000000;
+  margin: 0 0 48px 0;
+}
+
 /* Legacy support - keep for backward compatibility */
 .project-intro {
   font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -29,6 +39,54 @@
   line-height: 1.6;
   color: #000000;
   margin: 0 0 48px 0;
+}
+
+/* ===== CASE STUDY SIDEBAR LAYOUT ===== */
+.case-study-layout {
+  display: flex;
+  gap: 64px;
+}
+
+.case-study-sidebar {
+  flex-shrink: 0;
+  width: 160px;
+  position: relative;
+}
+
+.case-study-sidebar-nav {
+  position: sticky;
+  top: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.case-study-sidebar-link {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #999999;
+  background: none;
+  border: none;
+  padding: 6px 0;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease;
+  line-height: 1.4;
+}
+
+.case-study-sidebar-link:hover {
+  color: #333333;
+}
+
+.case-study-sidebar-link.active {
+  color: #000000;
+  font-weight: 600;
+}
+
+.case-study-body {
+  flex: 1;
+  min-width: 0;
 }
 
 /* Project Hero Image */
@@ -53,17 +111,19 @@
 /* Overview Section */
 .project-overview {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 48px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 64px;
 }
 
 .overview-column {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 24px;
+  gap: 12px;
+  padding: 20px;
   background-color: #F2F1EE;
   border-radius: 12px;
+  min-width: 0;
 }
 
 .overview-heading {
@@ -77,10 +137,11 @@
 
 .overview-text {
   font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
   color: #333333;
+  word-wrap: break-word;
   margin: 0;
 }
 
@@ -93,6 +154,11 @@
 /* Case Study Sections */
 .case-study-section {
   margin-top: 80px;
+  scroll-margin-top: 160px;
+}
+
+.case-study-section-first {
+  margin-top: 0;
 }
 
 .section-title {
@@ -429,6 +495,273 @@
   display: block;
 }
 
+/* ===== RESEARCH PARTS ===== */
+.research-part {
+  margin-top: 48px;
+}
+
+.research-part-label {
+  font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #999999;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+}
+
+.research-part-description {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #333333;
+  margin: 0 0 32px 0;
+}
+
+/* NPS Quote Cards */
+.nps-quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.nps-quote-card {
+  background-color: #FFFFFF;
+  border-left: 3px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 20px 24px;
+}
+
+.nps-quote-text {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.5;
+  color: #000000;
+  margin: 0 0 8px 0;
+}
+
+.nps-quote-source {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #999999;
+  margin: 0;
+}
+
+/* NPS Stats */
+.nps-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.nps-stat-card {
+  background-color: #FFFFFF;
+  border-left: 3px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.nps-stat-number {
+  font-family: 'Samsung Sharp Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  color: #D94F4F;
+  margin: 0 0 8px 0;
+  line-height: 1;
+}
+
+.nps-stat-description {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #333333;
+  margin: 0;
+}
+
+/* UX Audit Cards */
+.audit-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.audit-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.audit-card-image {
+  background-color: #F2F1EE;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.audit-card-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.audit-card-insight {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #333333;
+  margin: 0;
+  text-align: center;
+}
+
+.audit-card-insight strong {
+  font-weight: 600;
+  color: #000000;
+}
+
+/* ===== COMPETITIVE ANALYSIS TABLE ===== */
+.comp-table-wrapper {
+  margin-top: 40px;
+  background-color: #FAF8F5;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #EDE9E3;
+}
+
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.comp-table thead tr {
+  border-bottom: 1px solid #EDE9E3;
+}
+
+.comp-table th {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: #999999;
+  text-align: center;
+  padding: 16px 16px;
+}
+
+.comp-criteria-header {
+  text-align: left !important;
+  padding-left: 28px !important;
+}
+
+.comp-highlight-header {
+  color: #C45C3E !important;
+  font-weight: 700;
+}
+
+.comp-table tbody tr {
+  border-bottom: 1px solid #EDE9E3;
+}
+
+.comp-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.comp-table td {
+  padding: 14px 16px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.comp-criteria {
+  text-align: left !important;
+  padding-left: 28px !important;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1A1A1A;
+  line-height: 1.4;
+}
+
+.comp-pass {
+  color: #3D8B37;
+  font-size: 18px;
+}
+
+.comp-fail {
+  color: #E05252;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.comp-score-row {
+  border-top: 2px solid #EDE9E3 !important;
+}
+
+.comp-score-row td {
+  border-bottom: none;
+}
+
+.comp-score-label {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px;
+  color: #999999 !important;
+}
+
+.comp-score {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.comp-score-samsung {
+  color: #E05252;
+}
+
+/* Takeaway Box */
+.comp-takeaway {
+  margin-top: 32px;
+  background-color: #F2F1EE;
+  border-radius: 12px;
+  padding: 32px;
+}
+
+.comp-takeaway-label {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #999999;
+  margin: 0 0 16px 0;
+}
+
+.comp-takeaway-text {
+  font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #1A1A1A;
+  margin: 0;
+}
+
+.audit-card-full {
+  margin-top: 24px;
+}
+
+.audit-card-image video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
 /* ===== CONFIDENTIAL WALL ===== */
 .confidential-wall {
   position: relative;
@@ -518,7 +851,8 @@
   }
 
   .project-overview {
-    gap: 32px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 }
 
@@ -526,6 +860,14 @@
 @media (max-width: 1024px) and (min-width: 768px) {
   .project-page-content {
     padding: 150px 48px 80px 48px;
+  }
+
+  .case-study-sidebar {
+    display: none;
+  }
+
+  .case-study-layout {
+    display: block;
   }
 
   .project-overview {
@@ -562,6 +904,15 @@
     padding: 150px 48px 60px 48px;
   }
 
+  .case-study-sidebar {
+    display: none;
+  }
+
+  .case-study-layout {
+    display: block;
+  }
+
+  .case-study-title,
   .project-intro {
     font-size: 16px;
     margin-bottom: 40px;
@@ -638,6 +989,42 @@
     font-size: 14px;
   }
 
+  .nps-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .nps-stat-number {
+    font-size: 28px;
+  }
+
+  .audit-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .audit-card-image {
+    padding: 20px;
+  }
+
+  .comp-table th,
+  .comp-table td {
+    padding: 16px 10px;
+    font-size: 13px;
+  }
+
+  .comp-criteria {
+    font-size: 13px !important;
+    padding-left: 20px !important;
+  }
+
+  .comp-criteria-header {
+    padding-left: 20px !important;
+  }
+
+  .comp-takeaway {
+    padding: 24px;
+  }
+
   .confidential-wall {
     margin-top: 48px;
   }
@@ -657,6 +1044,15 @@
     padding: 150px 24px 48px 24px;
   }
 
+  .case-study-sidebar {
+    display: none;
+  }
+
+  .case-study-layout {
+    display: block;
+  }
+
+  .case-study-title,
   .project-intro {
     font-size: 14px;
     margin-bottom: 32px;
@@ -775,6 +1171,67 @@
 
   .event-description {
     font-size: 14px;
+  }
+
+  .nps-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .nps-stat-number {
+    font-size: 28px;
+  }
+
+  .nps-quote-text {
+    font-size: 14px;
+  }
+
+  .audit-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .audit-card-image {
+    padding: 16px;
+  }
+
+  .comp-table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+  }
+
+  .comp-table th,
+  .comp-table td {
+    padding: 14px 8px;
+    font-size: 12px;
+  }
+
+  .comp-criteria {
+    font-size: 12px !important;
+    padding-left: 16px !important;
+  }
+
+  .comp-criteria-header {
+    padding-left: 16px !important;
+  }
+
+  .comp-pass {
+    font-size: 16px;
+  }
+
+  .comp-fail {
+    font-size: 14px;
+  }
+
+  .comp-takeaway {
+    padding: 20px;
+  }
+
+  .comp-takeaway-text {
+    font-size: 14px;
+  }
+
+  .research-part {
+    margin-top: 36px;
   }
 
   .confidential-wall {

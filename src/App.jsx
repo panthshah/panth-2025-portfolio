@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import SplashScreen from './components/SplashScreen';
-import ThemeSelection from './components/ThemeSelection';
 import FlipPhone3D from './components/FlipPhone3D';
 import LandingPage from './components/LandingPage';
 import ProjectPage from './components/ProjectPage';
@@ -12,20 +11,18 @@ import AboutMeNew from './components/AboutMeNew';
 import { precompileShaders } from './utils/shaderPreloader';
 import { Analytics } from '@vercel/analytics/react';
 
+const DEFAULT_THEME = {
+  name: 'Peachy Orange',
+  gradient: 'linear-gradient(180deg, #FFF8F3 0%, #FFDEAD 100%)',
+  colors: ['#FFF8F3', '#FFDEAD'],
+  useShader: true
+};
+
 function AppContent() {
-  const [selectedTheme, setSelectedTheme] = useState(null);
+  const [selectedTheme, setSelectedTheme] = useState(DEFAULT_THEME);
   const [showSplash, setShowSplash] = useState(true);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Default theme for mobile
-  const defaultMobileTheme = {
-    name: 'Peachy Orange',
-    gradient: 'linear-gradient(180deg, #FFF8F3 0%, #FFDEAD 100%)',
-    colors: ['#FFF8F3', '#FFDEAD'],
-    useShader: true
-  };
 
   // Pre-compile shaders on app start
   useEffect(() => {
@@ -36,57 +33,43 @@ function AppContent() {
     }
   }, []);
 
-  // Check for mobile on resize
+  // On mount, set default theme in localStorage
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const savedTheme = localStorage.getItem('selectedTheme');
+    if (savedTheme) {
+      try {
+        setSelectedTheme(JSON.parse(savedTheme));
+      } catch (error) {
+        console.error('Failed to parse saved theme:', error);
+        localStorage.setItem('selectedTheme', JSON.stringify(DEFAULT_THEME));
+      }
+    } else {
+      localStorage.setItem('selectedTheme', JSON.stringify(DEFAULT_THEME));
+    }
   }, []);
 
-  // Clear saved theme on mount to ensure fresh start every reload
+  // Sync theme from localStorage on navigation
   useEffect(() => {
-    localStorage.removeItem('selectedTheme');
-    setSelectedTheme(null);
-  }, []);
-
-  // Load theme from localStorage when user navigates away from theme selection
-  useEffect(() => {
-    if (location.pathname !== '/theme' && location.pathname !== '/') {
-      const savedTheme = localStorage.getItem('selectedTheme');
-      if (savedTheme) {
-        try {
-          const parsedTheme = JSON.parse(savedTheme);
-          setSelectedTheme(parsedTheme);
-        } catch (error) {
-          console.error('Failed to parse saved theme:', error);
-        }
-      } else if (isMobile) {
-        // Set default theme for mobile if no theme is saved
-        setSelectedTheme(defaultMobileTheme);
+    const savedTheme = localStorage.getItem('selectedTheme');
+    if (savedTheme) {
+      try {
+        setSelectedTheme(JSON.parse(savedTheme));
+      } catch (error) {
+        console.error('Failed to parse saved theme:', error);
       }
     }
-  }, [location.pathname, isMobile]);
+  }, [location.pathname]);
 
-  // Update theme without navigating (for modal)
   const handleThemeChange = (theme) => {
     setSelectedTheme(theme);
-    // Also save to localStorage so it persists during navigation
     localStorage.setItem('selectedTheme', JSON.stringify(theme));
   };
 
   const handleSplashComplete = () => {
     setShowSplash(false);
-    // On mobile, skip theme selection and go directly to home
-    if (isMobile) {
-      localStorage.setItem('selectedTheme', JSON.stringify(defaultMobileTheme));
-      setSelectedTheme(defaultMobileTheme);
-      navigate('/home', { replace: true });
-    } else {
-      navigate('/theme', { replace: true });
-    }
+    navigate('/home', { replace: true });
   };
 
-  // Show splash screen as overlay
   if (showSplash) {
     return <SplashScreen onComplete={handleSplashComplete} />;
   }
@@ -94,8 +77,7 @@ function AppContent() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={isMobile ? <Navigate to="/home" replace /> : <Navigate to="/theme" replace />} />
-        <Route path="/theme" element={isMobile ? <Navigate to="/home" replace /> : <ThemeSelection selectedTheme={selectedTheme} />} />
+        <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<LandingPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />
         <Route path="/about" element={<AboutMeNew theme={selectedTheme} onThemeChange={handleThemeChange} />} />
         <Route path="/foundermatch" element={<ProjectPage theme={selectedTheme} onThemeChange={handleThemeChange} />} />

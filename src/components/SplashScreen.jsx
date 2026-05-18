@@ -1,113 +1,107 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import BlushFace from '../assets/BlushFace.svg';
+import BrandStyleFace from '../assets/BrandStyleFace.svg';
+import DifferentFace from '../assets/DifferentFace.svg';
+import SmilingSpectaclesFace from '../assets/SmilingSpectaclesFace.svg';
+
+const faces = [
+  { src: BrandStyleFace, bg: '#FCEFD7' },
+  { src: DifferentFace, bg: '#7BEFF7' },
+  { src: SmilingSpectaclesFace, bg: '#C4F77B' },
+  { src: BlushFace, bg: '#FECE73' },
+];
+
+const FACE_DURATION = 600;
+
+const entranceVariants = [
+  {
+    enter: { opacity: 0, scale: 0.85 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.35, ease: [0.34, 1.56, 0.64, 1] },
+    },
+    exit: { opacity: 0, scale: 1.08, transition: { duration: 0.2, ease: 'easeIn' } },
+  },
+  {
+    enter: { opacity: 0, x: 60 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
+    exit: { opacity: 0, x: -40, transition: { duration: 0.2, ease: 'easeIn' } },
+  },
+  {
+    enter: { opacity: 0, y: -50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.35, ease: [0.34, 1.56, 0.64, 1] },
+    },
+    exit: { opacity: 0, y: 30, transition: { duration: 0.2, ease: 'easeIn' } },
+  },
+  {
+    enter: { opacity: 0, scale: 0.9, rotate: -8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      rotate: 0,
+      transition: { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] },
+    },
+    exit: { opacity: 0, transition: { duration: 0.2, ease: 'easeIn' } },
+  },
+];
 
 const SplashScreen = ({ onComplete }) => {
   const [index, setIndex] = useState(0);
-  
-  // Greetings cycle
-  const greetings = [
-    { text: "Namaste", lang: "Hindi" },
-    { text: "Hola", lang: "Spanish" },
-    { text: "Annyeong", lang: "Korean" },
-    { text: "Bonjour", lang: "French" },
-    { text: "Salaam", lang: "Urdu" }
-  ];
-
-  // Theme Colors for cycle (matched to the greetings order)
-  const bgColors = [
-    '#FFF8F3', // Peachy Orange (Namaste)
-    '#F8F4FF', // Lavender Dream (Hola)
-    '#FFF0F5', // Blush Petal (Annyeong)
-    '#F0F8FF', // Sky (Bonjour)
-    '#FFF5F5'  // Pastel Red (Salaam)
-  ];
 
   useEffect(() => {
-    // Cycle through greetings
-    const intervalDuration = 800; // 0.8s per greeting
-    
-    const timer = setInterval(() => {
-      setIndex(prev => {
-        if (prev < greetings.length - 1) {
-          return prev + 1;
-        }
-        return prev;
-      });
-    }, intervalDuration);
+    const interval = setInterval(() => {
+      setIndex(prev => (prev < faces.length - 1 ? prev + 1 : prev));
+    }, FACE_DURATION);
 
-    // Complete after all greetings + small buffer
-    const totalDuration = (greetings.length * intervalDuration) + 400;
-    const completeTimer = setTimeout(() => {
-      onComplete();
-    }, totalDuration);
+    const completeTimer = setTimeout(onComplete, faces.length * FACE_DURATION + 300);
 
     return () => {
-      clearInterval(timer);
+      clearInterval(interval);
       clearTimeout(completeTimer);
     };
-  }, [onComplete, greetings.length]);
-
-  const commonFontStyle = {
-    fontFamily: "'Samsung Sharp Sans', system-ui, sans-serif",
-    color: 'black',
-    margin: 0,
-    lineHeight: '1.1'
-  };
+  }, [onComplete]);
 
   return (
     <motion.div
-      initial={{ backgroundColor: bgColors[0] }}
-      animate={{ backgroundColor: bgColors[index] }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
+      initial={{ backgroundColor: faces[0].bg }}
+      animate={{ backgroundColor: faces[index].bg }}
+      transition={{ duration: 0.4, ease: 'easeInOut' }}
       style={{
         position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100vh',
+        inset: 0,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 9999,
-        overflow: 'hidden'
+        overflow: 'hidden',
       }}
     >
-      {/* Centered Content Container */}
-      <div style={{ 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: 'flex-start', // Aligns text to the left relative to each other
-        justifyContent: 'center', // Centers vertically
-      }}>
-        <h1 style={{ 
-          ...commonFontStyle,
-          fontSize: 'clamp(80px, 18vw, 160px)', // Responsive: min 80px on mobile, max 160px on desktop
-          fontWeight: '800',
-        }}>
-          hii.
-        </h1>
-        
-        <div style={{ height: '40px', overflow: 'visible', width: '100%' }}> 
-          <AnimatePresence mode="wait">
-            <motion.h2 
-              key={index}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              style={{ 
-                ...commonFontStyle,
-                fontSize: 'clamp(18px, 4vw, 28px)', // Responsive subtitle
-                fontWeight: '700', 
-                marginTop: '0px',
-                paddingLeft: 'clamp(6px, 1.5vw, 12px)' // Responsive alignment
-              }}
-            >
-              {greetings[index].text}
-            </motion.h2>
-          </AnimatePresence>
-        </div>
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={index}
+          src={faces[index].src}
+          alt=""
+          variants={entranceVariants[index]}
+          initial="enter"
+          animate="visible"
+          exit="exit"
+          draggable={false}
+          style={{
+            width: 'clamp(160px, 28vw, 260px)',
+            height: 'auto',
+            willChange: 'transform, opacity',
+          }}
+        />
+      </AnimatePresence>
     </motion.div>
   );
 };
