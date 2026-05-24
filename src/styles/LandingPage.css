@@ -364,6 +364,7 @@
   border-radius: 6px;
   max-width: 1400px;
   margin: 0 auto;
+  box-sizing: border-box;
   position: relative;
   display: flex;
   align-items: center;
