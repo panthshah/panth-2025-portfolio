@@ -270,7 +270,7 @@
 }
 
 .testimonials-container {
-  max-width: 1440px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -665,7 +665,7 @@
   }
 
   .footer-section {
-    padding: 0px 48px 64px 48px;
+    padding: 0px 64px 64px 64px;
   }
 
   .footer-container {
