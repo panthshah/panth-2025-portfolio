@@ -62,7 +62,7 @@
 
 /* Rounded Tab Buttons */
 .navbar-tab {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: #000000;
@@ -192,7 +192,7 @@
 
 .mobile-menu-tab {
   width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 15px;
   font-weight: 400;
   color: #000000;

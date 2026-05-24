@@ -54,7 +54,7 @@
 }
 
 .about-new-intro p {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.7;
@@ -183,14 +183,14 @@
 }
 
 .about-new-role {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: #666666;
 }
 
 .about-new-period {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 15px;
   font-weight: 400;
   color: #999999;

@@ -5,9 +5,10 @@ import Navbar from './Navbar';
 import FlipPhone3D from './FlipPhone3D';
 import ChatSidebar from './ChatSidebar';
 import CustomizeButton from './CustomizeButton';
-import project1Image from '../assets/96shots_so.png';
+import project1Image from '../assets/foundermatch-thumbnail.png';
 import project2Image from '../assets/Projectcase1.png';
-import project3Image from '../assets/Northeastern.png';
+import samsungVideo from '../assets/thumbnail1.mp4';
+import project3Image from '../assets/northeastern-thumbnail.png';
 import geminiIcon from '../assets/gemini 1.svg';
 import zeenatAvatar from '../assets/Testimonial/Zeenat.jpeg';
 import joshAvatar from '../assets/Testimonial/Josh.jpeg';
@@ -175,7 +176,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
             </p>
             
             <p className="hero-current">
-              Previously at <span style={{ textDecoration: 'underline' }}>Founderway.Ai</span> and <span style={{ textDecoration: 'underline' }}>Northeastern University</span>
+              Previously at Founderway and Northeastern University
             </p>
             
             <div className="hero-buttons">
@@ -227,67 +228,34 @@ const LandingPage = ({ theme, onThemeChange }) => {
 
       {/* Projects Section */}
       <section className="projects-section">
-        <h2 className="projects-title">Projects</h2>
-
-        {/* Featured Project - Samsung Electronics */}
-        <div className="project-featured">
-          <div className="project-featured-image" onClick={() => navigate('/samsung')} style={{ cursor: 'pointer' }}>
-            <img 
-              src={project2Image}
-              alt="Samsung Electronics case study"
-            />
-          </div>
-          <div className="project-featured-content">
-            <h2 className="project-title">Samsung Electronics America</h2>
-            <p className="project-description">
-              Led a research-driven redesign of Samsung.com's Product Finder compare experience, improving how millions of shoppers filter and compare products side by side.
-            </p>
-            <a href="#" className="project-link" onClick={(e) => { e.preventDefault(); navigate('/samsung'); }}>
-              Read Case study
-              <ArrowUpRight size={16} weight="regular" />
-            </a>
-          </div>
-        </div>
-
-        {/* Project Grid */}
         <div className="projects-grid">
-          {/* FounderMatch Card */}
-          <div className="project-card">
-            <div className="project-image" onClick={() => navigate('/foundermatch')} style={{ cursor: 'pointer' }}>
-              <img 
-                src={project1Image}
-                alt="FounderMatch case study"
-              />
+          <div className="project-card" onClick={() => navigate('/samsung')}>
+            <div className="project-image">
+              <video src={samsungVideo} autoPlay loop muted playsInline />
+            </div>
+            <div className="project-content">
+              <h2 className="project-title">Product Finder Compare Experience</h2>
+              <span className="project-tag">2025 · Samsung Electronics</span>
+            </div>
+          </div>
+
+          <div className="project-card" onClick={() => navigate('/foundermatch')}>
+            <div className="project-image">
+              <img src={project1Image} alt="FounderMatch" />
             </div>
             <div className="project-content">
               <h2 className="project-title">FounderMatch</h2>
-              <p className="project-description">
-                Designed the end-to-end experience for FounderMatch, a platform for co-founder matching, driving 200+ sign-ups on launch day.
-              </p>
-              <a href="#" className="project-link" onClick={(e) => { e.preventDefault(); navigate('/foundermatch'); }}>
-                Read Case study
-                <ArrowUpRight size={16} weight="regular" />
-              </a>
+              <span className="project-tag">2024-25 · Founderway</span>
             </div>
           </div>
 
-          {/* Northeastern Card */}
-          <div className="project-card">
-            <div className="project-image" onClick={() => navigate('/northeastern')} style={{ cursor: 'pointer' }}>
-              <img 
-                src={project3Image}
-                alt="Accessibility at Northeastern case study"
-              />
+          <div className="project-card" onClick={() => navigate('/northeastern')}>
+            <div className="project-image">
+              <img src={project3Image} alt="Accessibility at Northeastern" />
             </div>
             <div className="project-content">
               <h2 className="project-title">Accessibility at Northeastern</h2>
-              <p className="project-description">
-                Conducted accessibility audits across 10+ Northeastern websites, improving the experience for 30,000+ students across 13 countries.
-              </p>
-              <a href="#" className="project-link" onClick={(e) => { e.preventDefault(); navigate('/northeastern'); }}>
-                Read Case study
-                <ArrowUpRight size={16} weight="regular" />
-              </a>
+              <span className="project-tag">2023-24 · Northeastern University</span>
             </div>
           </div>
         </div>

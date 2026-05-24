@@ -93,7 +93,7 @@
 }
 
 .content-description {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 14px;
   line-height: 1.6;
   color: #333;
@@ -166,7 +166,7 @@
 }
 
 .prototype-placeholder span {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 14px;
 }
 

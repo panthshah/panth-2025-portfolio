@@ -13,7 +13,7 @@
 .hero-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 120px 120px 150px 120px;
+  padding: 120px 120px 120px 120px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -40,7 +40,7 @@
 }
 
 .hero-description {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.67;
@@ -51,7 +51,7 @@
 }
 
 .hero-current {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.33;
@@ -117,7 +117,7 @@
 
 .btn-primary,
 .btn-secondary {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 14px;
   font-weight: 500;
   height: 40px;
@@ -174,19 +174,19 @@
   height: 100%;
 }
 
-/* For large screens > 1440px - Scale up phone */
+/* For large screens > 1440px */
 @media (min-width: 1441px) {
   .hero-visual {
-    transform: scale(0.9);
-    width: 420px;
-    height: 440px;
+    transform: scale(0.85);
+    width: 380px;
+    height: 400px;
   }
 }
 
 /* ===== PROJECTS SECTION ===== */
 .projects-section {
   margin-top: 0px;
-  padding: 0 120px 150px 120px;
+  padding: 0 120px 120px 120px;
 }
 
 .projects-title {
@@ -203,58 +203,11 @@
   margin-bottom: 48px;
 }
 
-/* Featured Project Card */
-.project-featured {
-  max-width: 1400px;
-  margin: 0 auto 64px auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.project-featured-image {
-  width: 100%;
-  aspect-ratio: 16 / 8;
-  overflow: hidden;
-  border-radius: 20px;
-  background-color: #F2F1EE;
-}
-
-.project-featured-image img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-}
-
-.project-featured-content {
-  padding: 24px 0 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
-}
-
-.project-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.placeholder-text {
-  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: #999999;
-  letter-spacing: -0.01em;
-}
-
 /* Project Grid */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
+  gap: 40px;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -262,6 +215,7 @@
 .project-card {
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .project-image {
@@ -269,10 +223,11 @@
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background-color: #F2F1EE;
-  border-radius: 16px;
+  border-radius: 6px;
 }
 
-.project-image img {
+.project-image img,
+.project-image video {
   width: 100%;
   height: 100%;
   display: block;
@@ -282,52 +237,37 @@
 }
 
 .project-content {
-  padding: 24px 0 0 0;
+  padding: 16px 0 0 0;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.project-tag {
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #888888;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-align: right;
 }
 
 .project-title {
   font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
-  font-size: 22px;
+  font-size: 17px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #000000;
-  margin: 0 0 10px 0;
-  width: 100%;
-}
-
-.project-description {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
-  width: 100%;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.67;
-  color: #333333;
-  margin: 0 0 16px 0;
-}
-
-.project-link {
-  font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: #000000;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: opacity 0.2s ease;
-}
-
-.project-link:hover {
-  opacity: 0.7;
+  margin: 0;
 }
 
 /* ===== TESTIMONIALS SECTION ===== */
 .testimonials-section {
-  padding: 60px 120px 150px 120px;
+  padding: 120px 120px 120px 120px;
   background-color: #F7F7F4;
 }
 
@@ -400,7 +340,7 @@
 }
 
 .testimonial-position {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 14px;
   font-weight: 400;
   color: #666666;
@@ -408,7 +348,7 @@
 }
 
 .testimonial-content {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.6;
@@ -499,7 +439,7 @@
 }
 
 .footer-subtitle {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.6;
@@ -514,7 +454,7 @@
 /* For screens 1200px to 1400px - Scale down phone, keep side-by-side */
 @media (max-width: 1399px) and (min-width: 1200px) {
   .hero-container {
-    padding: 120px 32px 150px 100px;
+    padding: 120px 100px 120px 100px;
   }
 
   
@@ -527,15 +467,15 @@
   
 
   .projects-section {
-    padding: 0px 100px 150px 100px;
+    padding: 0px 100px 120px 100px;
   }
 
   .projects-grid {
-    gap: 24px;
+    gap: 32px;
   }
 
   .testimonials-section {
-    padding: 60px 100px 150px 100px;
+    padding: 120px 100px 120px 100px;
   }
 
   .testimonials-grid {
@@ -570,7 +510,7 @@
 /* For screens 1024px to 1200px - Tablet, keep side-by-side but smaller */
 @media (max-width: 1199px) and (min-width: 1024px) {
   .hero-container {
-    padding: 120px 48px 150px 48px;
+    padding: 120px 48px 120px 48px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -592,23 +532,23 @@
   }
 
   .projects-section {
-    padding: 0px 48px 150px 48px;
+    padding: 0px 48px 120px 48px;
   }
 
   .projects-grid {
-    gap: 24px;
+    gap: 28px;
   }
 
   .project-title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
-  .project-description {
-    font-size: 14px;
+  .project-tag {
+    font-size: 13px;
   }
 
   .testimonials-section {
-    padding: 60px 48px 150px 48px;
+    padding: 120px 48px 120px 48px;
   }
 
   .testimonials-grid {
@@ -676,32 +616,24 @@
   }
 
   .projects-section {
-    padding: 0px 64px 120px 64px;
-  }
-
-  .project-featured-image {
-    aspect-ratio: 16 / 9;
+    padding: 0px 64px 100px 64px;
   }
 
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-
-  .project-content {
-    padding: 20px 0 0 0;
+    gap: 28px;
   }
 
   .project-title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
-  .project-description {
-    font-size: 14px;
+  .project-tag {
+    font-size: 13px;
   }
 
   .testimonials-section {
-    padding: 60px 64px 120px 64px;
+    padding: 100px 64px 100px 64px;
   }
 
   .testimonials-grid {
@@ -786,41 +718,24 @@
   }
 
   .projects-section {
-    padding: 0px 48px 100px 48px;
-  }
-
-  .project-featured {
-    margin-bottom: 32px;
-  }
-
-  .project-featured-image {
-    aspect-ratio: 16 / 9;
-    border-radius: 16px;
-  }
-
-  .project-featured-content {
-    padding: 16px 0 0 0;
+    padding: 0px 48px 80px 48px;
   }
 
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  .project-content {
-    padding: 20px 0 0 0;
+    gap: 32px;
   }
 
   .project-title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
-  .project-description {
-    font-size: 15px;
+  .project-tag {
+    font-size: 13px;
   }
 
   .testimonials-section {
-    padding: 48px 48px 100px 48px;
+    padding: 80px 48px 80px 48px;
   }
 
   .testimonials-grid {
@@ -934,46 +849,29 @@
     padding: 0px 24px 80px 24px;
   }
 
-  .project-featured {
-    margin-bottom: 24px;
-  }
-
-  .project-featured-image {
-    aspect-ratio: 16 / 10;
-    border-radius: 12px;
-  }
-
-  .project-featured-content {
-    padding: 12px 0 0 0;
-  }
-
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 28px;
   }
 
   .project-image {
-    border-radius: 12px;
+    border-radius: 6px;
   }
 
   .project-content {
-    padding: 16px 0 0 0;
+    padding: 12px 0 0 0;
   }
 
   .project-title {
-    font-size: 18px;
+    font-size: 16px;
   }
 
-  .project-description {
-    font-size: 13px;
-  }
-
-  .project-link {
-    font-size: 13px;
+  .project-tag {
+    font-size: 12px;
   }
 
   .testimonials-section {
-    padding: 40px 24px 80px 24px;
+    padding: 64px 24px 64px 24px;
   }
 
   .testimonials-grid {
