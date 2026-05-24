@@ -234,8 +234,8 @@ const LandingPage = ({ theme, onThemeChange }) => {
               <video src={samsungVideo} autoPlay loop muted playsInline />
             </div>
             <div className="project-content">
-              <h2 className="project-title">Product Finder Compare Experience</h2>
               <span className="project-tag">2025 · Samsung Electronics</span>
+              <p className="project-description">Redesigning the compare experience for Samsung.com's Product Finder</p>
             </div>
           </div>
 
@@ -244,8 +244,8 @@ const LandingPage = ({ theme, onThemeChange }) => {
               <img src={project1Image} alt="FounderMatch" />
             </div>
             <div className="project-content">
-              <h2 className="project-title">FounderMatch</h2>
               <span className="project-tag">2024-25 · Founderway</span>
+              <p className="project-description">A co-founder matching platform that drove 200+ sign-ups on launch day</p>
             </div>
           </div>
 
@@ -254,8 +254,8 @@ const LandingPage = ({ theme, onThemeChange }) => {
               <img src={project3Image} alt="Accessibility at Northeastern" />
             </div>
             <div className="project-content">
-              <h2 className="project-title">Accessibility at Northeastern</h2>
               <span className="project-tag">2023-24 · Northeastern University</span>
+              <p className="project-description">Auditing accessibility across 10+ university websites for 30,000+ students</p>
             </div>
           </div>
         </div>

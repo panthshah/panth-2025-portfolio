@@ -13,7 +13,7 @@
 .hero-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 120px 120px 120px 120px;
+  padding: 120px 120px 150px 120px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -186,7 +186,7 @@
 /* ===== PROJECTS SECTION ===== */
 .projects-section {
   margin-top: 0px;
-  padding: 0 120px 120px 120px;
+  padding: 0 120px 150px 120px;
 }
 
 .projects-title {
@@ -207,7 +207,8 @@
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
+  column-gap: 40px;
+  row-gap: 48px;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -239,10 +240,9 @@
 .project-content {
   padding: 16px 0 0 0;
   display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
 }
 
 .project-tag {
@@ -251,23 +251,21 @@
   font-weight: 400;
   color: #888888;
   letter-spacing: 0.01em;
-  white-space: nowrap;
-  flex-shrink: 0;
-  text-align: right;
 }
 
-.project-title {
+.project-description {
   font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #000000;
   margin: 0;
+  line-height: 1.4;
 }
 
 /* ===== TESTIMONIALS SECTION ===== */
 .testimonials-section {
-  padding: 120px 120px 120px 120px;
+  padding: 60px 120px 150px 120px;
   background-color: #F7F7F4;
 }
 
@@ -454,28 +452,25 @@
 /* For screens 1200px to 1400px - Scale down phone, keep side-by-side */
 @media (max-width: 1399px) and (min-width: 1200px) {
   .hero-container {
-    padding: 120px 100px 120px 100px;
+    padding: 120px 100px 150px 100px;
   }
 
-  
   .hero-visual {
-    width: 300px;
-    height: 320px;
+    width: 380px;
+    height: 400px;
     transform: scale(0.7);
   }
 
-  
-
   .projects-section {
-    padding: 0px 100px 120px 100px;
+    padding: 0px 100px 150px 100px;
   }
 
   .projects-grid {
-    gap: 32px;
+    gap: 24px;
   }
 
   .testimonials-section {
-    padding: 120px 100px 120px 100px;
+    padding: 60px 100px 150px 100px;
   }
 
   .testimonials-grid {
@@ -510,7 +505,7 @@
 /* For screens 1024px to 1200px - Tablet, keep side-by-side but smaller */
 @media (max-width: 1199px) and (min-width: 1024px) {
   .hero-container {
-    padding: 120px 48px 120px 48px;
+    padding: 120px 48px 150px 48px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -532,15 +527,19 @@
   }
 
   .projects-section {
-    padding: 0px 48px 120px 48px;
+    padding: 0px 48px 150px 48px;
   }
 
   .projects-grid {
-    gap: 28px;
+    gap: 24px;
   }
 
   .project-title {
-    font-size: 18px;
+    font-size: 20px;
+  }
+
+  .project-description {
+    font-size: 14px;
   }
 
   .project-tag {
@@ -548,7 +547,7 @@
   }
 
   .testimonials-section {
-    padding: 120px 48px 120px 48px;
+    padding: 60px 48px 150px 48px;
   }
 
   .testimonials-grid {
@@ -616,16 +615,24 @@
   }
 
   .projects-section {
-    padding: 0px 64px 100px 64px;
+    padding: 0px 64px 120px 64px;
   }
 
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
+    gap: 24px;
+  }
+
+  .project-content {
+    padding: 20px 0 0 0;
   }
 
   .project-title {
-    font-size: 18px;
+    font-size: 20px;
+  }
+
+  .project-description {
+    font-size: 14px;
   }
 
   .project-tag {
@@ -633,7 +640,7 @@
   }
 
   .testimonials-section {
-    padding: 100px 64px 100px 64px;
+    padding: 60px 64px 120px 64px;
   }
 
   .testimonials-grid {
@@ -718,16 +725,24 @@
   }
 
   .projects-section {
-    padding: 0px 48px 80px 48px;
+    padding: 0px 48px 100px 48px;
   }
 
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 24px;
+  }
+
+  .project-content {
+    padding: 20px 0 0 0;
   }
 
   .project-title {
-    font-size: 18px;
+    font-size: 20px;
+  }
+
+  .project-description {
+    font-size: 15px;
   }
 
   .project-tag {
@@ -735,7 +750,7 @@
   }
 
   .testimonials-section {
-    padding: 80px 48px 80px 48px;
+    padding: 48px 48px 100px 48px;
   }
 
   .testimonials-grid {
@@ -851,19 +866,23 @@
 
   .projects-grid {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 20px;
   }
 
   .project-image {
-    border-radius: 6px;
+    border-radius: 12px;
   }
 
   .project-content {
-    padding: 12px 0 0 0;
+    padding: 16px 0 0 0;
   }
 
   .project-title {
-    font-size: 16px;
+    font-size: 18px;
+  }
+
+  .project-description {
+    font-size: 13px;
   }
 
   .project-tag {
@@ -871,7 +890,7 @@
   }
 
   .testimonials-section {
-    padding: 64px 24px 64px 24px;
+    padding: 40px 24px 80px 24px;
   }
 
   .testimonials-grid {
