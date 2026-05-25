@@ -154,8 +154,16 @@ const AboutMeNew = ({ theme, onThemeChange }) => {
                 </p>
               </div>
             </div>
-            <div className="about-hero-image">
-              <img src={aboutMe1} alt="Panth Shah" />
+            <div className="about-hero-collage">
+              <div className="about-collage-img about-collage-img--back">
+                <img src={aboutMe3} alt="" />
+              </div>
+              <div className="about-collage-img about-collage-img--mid">
+                <img src={aboutMe2} alt="" />
+              </div>
+              <div className="about-collage-img about-collage-img--front">
+                <img src={aboutMe1} alt="" />
+              </div>
             </div>
           </div>
         </section>

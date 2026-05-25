@@ -28,7 +28,7 @@
 }
 
 .about-section + .about-section {
-  margin-top: 56px;
+  margin-top: 40px;
 }
 
 /* ===== BOOT SEQUENCE ===== */
@@ -75,9 +75,9 @@
 
 .about-hero-grid {
   display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 56px;
-  align-items: start;
+  grid-template-columns: 1fr 320px;
+  gap: 48px;
+  align-items: center;
 }
 
 .about-hero-text {
@@ -114,21 +114,67 @@
   color: var(--about-ink);
 }
 
-.about-hero-image {
+.about-hero-collage {
+  position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  border: 1px solid var(--about-rule);
-  background: var(--about-paper);
-  border-radius: 6px;
+  height: 340px;
+  flex-shrink: 0;
 }
 
-.about-hero-image img {
+.about-collage-img {
+  position: absolute;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid var(--about-paper);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.13);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-collage-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
+
+/* Back card — bottom-left, rotated left */
+.about-collage-img--back {
+  width: 180px;
+  height: 220px;
+  bottom: 0;
+  left: 0;
+  transform: rotate(-6deg);
+  z-index: 1;
+}
+
+/* Mid card — top-right, slight tilt right */
+.about-collage-img--mid {
+  width: 165px;
+  height: 200px;
+  top: 0;
+  right: 10px;
+  transform: rotate(4deg);
+  z-index: 2;
+}
+
+/* Front card — center, straight up */
+.about-collage-img--front {
+  width: 175px;
+  height: 215px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-1.5deg);
+  z-index: 3;
+}
+
+.about-collage-img:hover {
+  z-index: 10;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.2);
+}
+
+.about-collage-img--back:hover  { transform: rotate(-6deg) scale(1.04); }
+.about-collage-img--mid:hover   { transform: rotate(4deg) scale(1.04); }
+.about-collage-img--front:hover { transform: translate(-50%, -50%) rotate(-1.5deg) scale(1.04); }
 
 /* ===== BLOCK (every $-prefixed section) ===== */
 .about-block-header {
@@ -460,10 +506,8 @@
     gap: 40px;
   }
 
-  .about-hero-image {
-    width: 100%;
-    max-width: 360px;
-    aspect-ratio: 4 / 5;
+  .about-hero-collage {
+    height: 280px;
   }
 
   .about-block-header {
@@ -505,10 +549,8 @@
     gap: 32px;
   }
 
-  .about-hero-image {
-    width: 100%;
-    max-width: 320px;
-    aspect-ratio: 4 / 5;
+  .about-hero-collage {
+    height: 260px;
   }
 
   .about-hero-headline {
@@ -603,10 +645,8 @@
     gap: 28px;
   }
 
-  .about-hero-image {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: 4 / 4.5;
+  .about-hero-collage {
+    height: 240px;
   }
 
   .about-hero-headline {
