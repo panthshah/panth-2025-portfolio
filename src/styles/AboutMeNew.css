@@ -479,3 +479,38 @@
     grid-row: span 1;
   }
 }
+
+/* ============================================================
+   FOOTER — match About content width (880px)
+   ============================================================ */
+.about-page .footer-section {
+  padding: 0 32px 160px 32px;
+}
+
+.about-page .footer-container {
+  max-width: 880px;
+}
+
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .about-page .footer-section {
+    padding: 0 32px 144px 32px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .about-page .footer-section {
+    padding: 0 64px 144px 64px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 481px) {
+  .about-page .footer-section {
+    padding: 0 48px 128px 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page .footer-section {
+    padding: 0 24px 112px 24px;
+  }
+}
