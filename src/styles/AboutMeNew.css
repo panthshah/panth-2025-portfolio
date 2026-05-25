@@ -1,420 +1,252 @@
-/* ===== ABOUT ME — TERMINAL VARIANT ===== */
-/* Theme tokens (defaults; --about-accent is set inline from theme) */
-.about-terminal {
-  --about-bg: #F7F7F4;
-  --about-paper: #FFFFFF;
-  --about-ink: #14130F;
-  --about-ink-2: #4A4738;
-  --about-muted: #8B8678;
-  --about-rule: rgba(20, 19, 15, 0.16);
-  --about-rule-dashed: rgba(20, 19, 15, 0.22);
-  --about-accent: #FFB13D;
-  --about-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-  --about-serif: 'Samsung Sharp Sans', system-ui, sans-serif;
-  --about-sans: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-}
+/* ============================================================
+   ABOUT ME — CLEAN MINIMAL
+   Max-width + padding mirrors the rest of the portfolio
+   ============================================================ */
 
-.about-new-page {
+.about-page {
   width: 100%;
   min-height: 100vh;
-  background-color: var(--about-bg);
+  background-color: #FAFAF8;
+  --accent: #FFB13D;
+  --ink: #14130F;
+  --ink-2: #4A4738;
+  --muted: #8B8678;
+  --rule: rgba(20, 19, 15, 0.07);
+  --sans: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --serif: 'Samsung Sharp Sans', system-ui, sans-serif;
 }
 
-/* Outer container — matches the navbar's max-width and horizontal padding so left/right edges align with the rest of the portfolio */
-.about-terminal-main {
-  max-width: 1400px;
+/* ── OUTER CONTAINER ──
+   Editorial reading width: narrower than the homepage's 1400px container
+   so long-form text + photo feels centered and breathable on wide screens. */
+.about-main {
+  max-width: 880px;
   margin: 0 auto;
-  padding: 128px 120px 160px 120px;
+  padding: 128px 32px 160px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
 }
 
-.about-section + .about-section {
-  margin-top: 40px;
-}
-
-/* ===== BOOT SEQUENCE ===== */
-.about-boot-section {
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--about-rule);
-}
-
-.about-boot {
-  font-family: var(--about-mono);
-  font-size: 13px;
-  line-height: 1.75;
-  letter-spacing: 0.01em;
-}
-
-.about-boot-line {
-  white-space: pre;
-}
-
-.about-boot-muted {
-  color: var(--about-muted);
-}
-
-.about-boot-accent {
-  color: var(--about-accent);
-}
-
-.about-boot-cursor {
-  color: var(--about-muted);
-  font-family: var(--about-mono);
-  animation: about-blink 1s steps(1, end) infinite;
-}
-
-@keyframes about-blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-/* ===== HERO ===== */
-.about-hero {
-  padding-top: 8px;
+/* ============================================================
+   HERO
+   ============================================================ */
+.about-heading {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: var(--ink);
+  margin: 0 0 48px 0;
 }
 
 .about-hero-grid {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: minmax(0, 1fr) 250px;
   gap: 48px;
-  align-items: center;
+  align-items: start;
 }
 
-.about-hero-text {
-  min-width: 0;
-}
-
-.about-hero-headline {
-  font-family: var(--about-serif);
-  font-size: clamp(40px, 5.5vw, 64px);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  font-weight: 700;
-  color: var(--about-ink);
-  margin: 0 0 28px 0;
-}
-
-.about-hero-intro {
+.about-bio {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
-.about-hero-intro p {
-  font-family: var(--about-sans);
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--about-ink-2);
+.about-bio p {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.625;
+  color: rgba(20, 19, 15, 0.6);
   margin: 0;
-  max-width: 58ch;
 }
 
-.about-hero-intro p:first-child {
-  font-size: 17px;
-  color: var(--about-ink);
+.about-stickers {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
 }
 
-.about-hero-collage {
-  position: relative;
+.about-sticker-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.about-sticker-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-sticker-img {
+  height: 54px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.about-sticker-img:hover {
+  transform: translateY(-2px) rotate(-1deg);
+}
+
+.about-hero-photo {
   width: 100%;
-  height: 340px;
-  flex-shrink: 0;
-}
-
-.about-collage-img {
-  position: absolute;
-  border-radius: 6px;
+  aspect-ratio: 3 / 4;
+  border-radius: 8px;
   overflow: hidden;
-  border: 2px solid var(--about-paper);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.13);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #eee;
 }
 
-.about-collage-img img {
+.about-hero-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* Back card — bottom-left, rotated left */
-.about-collage-img--back {
-  width: 180px;
-  height: 220px;
-  bottom: 0;
-  left: 0;
-  transform: rotate(-6deg);
-  z-index: 1;
-}
-
-/* Mid card — top-right, slight tilt right */
-.about-collage-img--mid {
-  width: 165px;
-  height: 200px;
-  top: 0;
-  right: 10px;
-  transform: rotate(4deg);
-  z-index: 2;
-}
-
-/* Front card — center, straight up */
-.about-collage-img--front {
-  width: 175px;
-  height: 215px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-1.5deg);
-  z-index: 3;
-}
-
-.about-collage-img:hover {
-  z-index: 10;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.2);
-}
-
-.about-collage-img--back:hover  { transform: rotate(-6deg) scale(1.04); }
-.about-collage-img--mid:hover   { transform: rotate(4deg) scale(1.04); }
-.about-collage-img--front:hover { transform: translate(-50%, -50%) rotate(-1.5deg) scale(1.04); }
-
-/* ===== BLOCK (every $-prefixed section) ===== */
-.about-block-header {
+/* ============================================================
+   SHARED SECTION STYLES
+   ============================================================ */
+.about-section {
   display: flex;
-  align-items: baseline;
-  gap: 14px;
-  margin-bottom: 24px;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.about-block-label {
-  margin: 0;
-  font-family: var(--about-mono);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--about-accent);
-  white-space: nowrap;
-}
-
-.about-block-desc {
-  font-family: var(--about-mono);
+.about-section-label {
+  font-family: var(--sans);
   font-size: 11px;
-  letter-spacing: 0.06em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--about-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: var(--muted);
+  margin: 0;
 }
 
-.about-block-rule {
-  flex: 1;
-  border-top: 1px dashed var(--about-rule-dashed);
-  margin-left: 4px;
+/* ============================================================
+   NOW TABLE
+   ============================================================ */
+.about-now {
+  display: flex;
+  flex-direction: column;
 }
 
-/* ===== $ NOW TABLE ===== */
-.about-now-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.about-now-table tr {
-  border-bottom: 1px dashed var(--about-rule-dashed);
+.about-now-row {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) 260px;
+  gap: 32px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
 }
 
 .about-now-key {
-  font-family: var(--about-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--about-muted);
-  padding: 14px 24px 14px 0;
-  width: 160px;
-  vertical-align: top;
-  white-space: nowrap;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--muted);
+  flex-shrink: 0;
 }
 
 .about-now-val {
-  font-family: var(--about-sans);
+  font-family: var(--sans);
   font-size: 15px;
-  line-height: 1.55;
-  color: var(--about-ink);
-  padding: 14px 0;
+  color: var(--ink);
+  line-height: 1.5;
 }
 
-/* ===== TIMELINE (experience + education) ===== */
-.about-timeline {
+.about-now-visual-wrap {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 72px;
 }
 
-.about-timeline-item {
-  padding: 18px 0;
-  border-bottom: 1px dashed var(--about-rule-dashed);
+.about-now-sticker {
+  display: block;
+  height: 58px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.2s ease;
 }
 
-.about-timeline-item:last-child {
-  border-bottom: 0;
+.about-now-sticker:hover {
+  transform: translateY(-2px) rotate(-1deg);
 }
 
-.about-timeline-header {
+.about-now-sticker--wide {
+  height: 76px;
+}
+
+.about-now-sticker--tall {
+  height: 72px;
+}
+
+.about-now-sticker--icon {
+  height: 64px;
+  width: auto;
+  border-radius: 4px;
+}
+
+.about-now-sticker--album {
+  height: 62px;
+}
+
+/* ============================================================
+   EDUCATION
+   ============================================================ */
+.about-edu-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 16px;
+  align-items: baseline;
+  gap: 24px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
   flex-wrap: wrap;
 }
 
-.about-timeline-left {
+.about-edu-left {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.about-timeline-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background: var(--about-paper);
-  border: 1px solid var(--about-rule);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  overflow: hidden;
-  color: var(--about-muted);
-}
-
-.about-timeline-icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.about-timeline-company {
-  font-family: var(--about-serif);
-  font-size: 16px;
+.about-edu-school {
+  font-family: var(--serif);
+  font-size: 17px;
   font-weight: 700;
-  color: var(--about-ink);
+  color: var(--ink);
   letter-spacing: -0.01em;
 }
 
-.about-timeline-divider {
-  font-family: var(--about-mono);
+.about-edu-degree {
+  font-family: var(--sans);
   font-size: 14px;
-  color: var(--about-rule-dashed);
+  color: var(--ink-2);
 }
 
-.about-timeline-role {
-  font-family: var(--about-sans);
-  font-size: 15px;
-  color: var(--about-ink-2);
-}
-
-.about-timeline-period {
-  font-family: var(--about-mono);
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  color: var(--about-muted);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.about-timeline-desc {
-  font-family: var(--about-sans);
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--about-muted);
-  margin: 8px 0 0 40px;
-}
-
-/* ===== TOOLS / CHIPS ===== */
-.about-tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.about-tool {
-  font-family: var(--about-mono);
-  font-size: 12px;
-  letter-spacing: 0.02em;
-  color: var(--about-ink-2);
-  background: transparent;
-  border: 1px solid var(--about-rule);
-  padding: 7px 12px;
-  border-radius: 4px;
-  white-space: nowrap;
-  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-}
-
-.about-tool:hover {
-  color: var(--about-accent);
-  border-color: var(--about-accent);
-}
-
-/* ===== HOBBIES ===== */
-.about-hobbies {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.about-hobby {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  padding: 18px 18px 18px 0;
-  border-top: 1px solid var(--about-rule);
-  cursor: default;
-  transition: background 0.15s ease, padding 0.2s ease;
-}
-
-.about-hobby:nth-child(odd) {
-  border-right: 1px solid var(--about-rule);
-  padding-right: 24px;
-}
-
-.about-hobby:nth-child(even) {
-  padding-left: 24px;
-}
-
-.about-hobby:hover {
-  background: color-mix(in oklab, var(--about-accent) 6%, transparent);
-}
-
-.about-hobby-icon {
-  font-size: 22px;
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-.about-hobby-body {
-  flex: 1;
-  min-width: 0;
-}
-
-.about-hobby-title {
-  font-family: var(--about-sans);
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--about-ink);
-}
-
-.about-hobby-note {
-  font-family: var(--about-sans);
+.about-edu-year {
+  font-family: var(--sans);
   font-size: 13px;
-  line-height: 1.55;
-  color: var(--about-ink-2);
-  margin-top: 4px;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-/* ===== BENTO PHOTO GRID ===== */
+/* ============================================================
+   BENTO PHOTO GRID
+   ============================================================ */
 .about-bento {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 180px;
+  grid-auto-rows: 200px;
   gap: 12px;
 }
 
@@ -422,8 +254,7 @@
   position: relative;
   border-radius: 6px;
   overflow: hidden;
-  background: var(--about-paper);
-  border: 1px solid var(--about-rule);
+  background: #e8e8e4;
 }
 
 .about-bento-item img {
@@ -431,74 +262,44 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.35s ease;
 }
 
-.about-bento-item:hover img {
-  transform: scale(1.04);
-}
-
-.about-bento-caption {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  padding: 16px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.62) 0%, transparent 60%);
-  font-family: var(--about-sans);
-  font-size: 13px;
-  font-weight: 500;
-  color: #fff;
-  letter-spacing: 0.01em;
-  line-height: 1.35;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  pointer-events: none;
-}
-
-.about-bento-item:hover .about-bento-caption {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.about-bento-item.about-bento-wide {
+.about-bento-item.ab-wide {
   grid-column: span 2;
 }
 
-.about-bento-item.about-bento-tall {
+.about-bento-item.ab-tall {
   grid-row: span 2;
 }
 
-/* ===== RESPONSIVE BREAKPOINTS (match the homepage system) ===== */
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
 
-/* 1200px - 1399px */
+/* 1200–1399px — keep narrow column */
 @media (max-width: 1399px) and (min-width: 1200px) {
-  .about-terminal-main {
-    padding: 128px 100px 160px 100px;
+  .about-main {
+    padding: 128px 32px 160px 32px;
   }
 }
 
-/* 1024px - 1199px */
+/* 1024–1199px */
 @media (max-width: 1199px) and (min-width: 1024px) {
-  .about-terminal-main {
-    padding: 128px 48px 144px 48px;
-  }
-
-  .about-hero-grid {
-    grid-template-columns: 1fr 240px;
-    gap: 48px;
+  .about-main {
+    padding: 128px 32px 144px 32px;
+    gap: 64px;
   }
 
   .about-bento {
-    grid-auto-rows: 160px;
+    grid-auto-rows: 170px;
   }
 }
 
-/* 768px - 1024px (Large Tablet) — hero stacks */
+/* 768–1024px — hero stacks */
 @media (max-width: 1024px) and (min-width: 768px) {
-  .about-terminal-main {
+  .about-main {
     padding: 112px 64px 144px 64px;
+    gap: 56px;
   }
 
   .about-hero-grid {
@@ -506,42 +307,26 @@
     gap: 40px;
   }
 
-  .about-hero-collage {
-    height: 280px;
+  .about-hero-photo {
+    max-width: 340px;
+    aspect-ratio: 4 / 3;
   }
 
-  .about-block-header {
-    gap: 12px;
-  }
-
-  .about-timeline-header {
+  .about-edu-row {
     flex-direction: column;
-    align-items: flex-start;
     gap: 6px;
   }
 
-  .about-timeline-desc {
-    margin-left: 0;
-  }
-
-  .about-now-key {
-    width: 130px;
-    padding-right: 16px;
-  }
-
   .about-bento {
-    grid-auto-rows: 150px;
+    grid-auto-rows: 160px;
   }
 }
 
-/* 481px - 768px (Tablet) */
+/* 481–768px */
 @media (max-width: 768px) and (min-width: 481px) {
-  .about-terminal-main {
+  .about-main {
     padding: 112px 48px 128px 48px;
-  }
-
-  .about-section + .about-section {
-    margin-top: 48px;
+    gap: 48px;
   }
 
   .about-hero-grid {
@@ -549,95 +334,53 @@
     gap: 32px;
   }
 
-  .about-hero-collage {
-    height: 260px;
+  .about-hero-photo {
+    max-width: 300px;
+    aspect-ratio: 4 / 3;
   }
 
-  .about-hero-headline {
-    margin-bottom: 22px;
-  }
-
-  .about-hero-intro p {
+  .about-bio p {
     font-size: 15px;
   }
 
-  .about-hero-intro p:first-child {
+  .about-bio p:first-child {
     font-size: 16px;
   }
 
-  .about-block-header {
-    flex-wrap: wrap;
-    gap: 8px;
-    row-gap: 4px;
-  }
-
-  .about-block-rule {
-    display: none;
-  }
-
-  .about-now-table tr {
-    display: flex;
-    flex-direction: column;
-    padding: 12px 0;
+  .about-now-row {
+    grid-template-columns: 100px minmax(0, 1fr) 200px;
+    gap: 16px;
   }
 
   .about-now-key {
-    width: auto;
-    padding: 0 0 4px 0;
+    font-size: 12px;
   }
 
   .about-now-val {
-    padding: 0;
-    font-size: 15px;
+    font-size: 14px;
   }
 
-  .about-timeline-header {
+  .about-edu-row {
     flex-direction: column;
-    align-items: flex-start;
     gap: 6px;
-  }
-
-  .about-timeline-desc {
-    margin-left: 0;
-    font-size: 13px;
-  }
-
-  .about-hobbies {
-    grid-template-columns: 1fr;
-  }
-
-  .about-hobby {
-    border-right: 0 !important;
-    padding: 16px 0 !important;
-  }
-
-  .about-hobby:nth-child(even) {
-    padding-left: 0;
   }
 
   .about-bento {
     grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 140px;
+    grid-auto-rows: 150px;
     gap: 10px;
   }
 
-  .about-bento-item.about-bento-tall {
+  .about-bento-item.ab-tall {
     grid-row: span 1;
   }
 }
 
-/* Below 480px (Mobile) */
+/* ≤480px — mobile */
 @media (max-width: 480px) {
-  .about-terminal-main {
+  .about-main {
     padding: 64px 24px 112px 24px;
-  }
-
-  .about-section + .about-section {
-    margin-top: 40px;
-  }
-
-  .about-boot {
-    font-size: 12px;
+    gap: 40px;
   }
 
   .about-hero-grid {
@@ -645,131 +388,94 @@
     gap: 28px;
   }
 
-  .about-hero-collage {
-    height: 240px;
+  .about-hero-photo {
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
   }
 
-  .about-hero-headline {
-    margin-bottom: 20px;
+  .about-heading {
+    margin-bottom: 24px;
   }
 
-  .about-hero-intro {
-    gap: 14px;
-  }
-
-  .about-hero-intro p {
+  .about-bio p {
     font-size: 14.5px;
-    line-height: 1.65;
+    line-height: 1.7;
   }
 
-  .about-hero-intro p:first-child {
-    font-size: 15.5px;
-  }
-
-  .about-block-header {
-    flex-wrap: wrap;
-    gap: 6px;
-    row-gap: 4px;
-    margin-bottom: 18px;
-  }
-
-  .about-block-label {
-    font-size: 12px;
-  }
-
-  .about-block-desc {
-    font-size: 10px;
-  }
-
-  .about-block-rule {
-    display: none;
-  }
-
-  .about-now-table tr {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 0;
-  }
-
-  .about-now-key {
-    width: auto;
-    padding: 0 0 4px 0;
-    font-size: 10px;
-  }
-
-  .about-now-val {
-    padding: 0;
-    font-size: 14px;
-  }
-
-  .about-timeline-item {
-    padding: 14px 0;
-  }
-
-  .about-timeline-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
-
-  .about-timeline-left {
-    gap: 10px;
-  }
-
-  .about-timeline-company {
+  .about-bio p:first-child {
     font-size: 15px;
   }
 
-  .about-timeline-role {
-    font-size: 14px;
+  .about-section {
+    gap: 18px;
+    padding-top: 24px;
   }
 
-  .about-timeline-period {
+  .about-now-row {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 4px 12px;
+    padding: 12px 0;
+  }
+
+  .about-now-key {
+    grid-column: 1;
+    grid-row: 1;
     font-size: 11px;
   }
 
-  .about-timeline-desc {
-    margin-left: 0;
-    font-size: 13px;
+  .about-now-val {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 14px;
   }
 
-  .about-tools {
+  .about-now-visual-wrap {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .about-now-sticker {
+    height: 48px;
+  }
+
+  .about-now-sticker--wide {
+    height: 56px;
+  }
+
+  .about-now-sticker--tall {
+    height: 52px;
+  }
+
+  .about-now-sticker--icon {
+    height: 50px;
+  }
+
+  .about-now-sticker--album {
+    height: 50px;
+  }
+
+  .about-sticker-img {
+    height: 46px;
+  }
+
+  .about-edu-row {
+    flex-direction: column;
     gap: 6px;
   }
 
-  .about-tool {
-    font-size: 11px;
-    padding: 6px 10px;
-  }
-
-  .about-hobbies {
-    grid-template-columns: 1fr;
-  }
-
-  .about-hobby {
-    border-right: 0 !important;
-    padding: 14px 0 !important;
-  }
-
-  .about-hobby:nth-child(even) {
-    padding-left: 0;
-  }
-
-  .about-hobby-title {
-    font-size: 14px;
-  }
-
-  .about-hobby-note {
-    font-size: 12.5px;
+  .about-edu-school {
+    font-size: 15px;
   }
 
   .about-bento {
     grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 110px;
+    grid-auto-rows: 120px;
     gap: 8px;
   }
 
-  .about-bento-item.about-bento-tall {
+  .about-bento-item.ab-tall {
     grid-row: span 1;
   }
 }

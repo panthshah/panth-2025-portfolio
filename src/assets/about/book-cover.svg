@@ -1,0 +1,6 @@
+<svg width="28" height="36" viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="2" y="2" width="24" height="32" rx="2" fill="#2C1810"/>
+  <rect x="4" y="4" width="20" height="28" rx="1" fill="#4A2C1A"/>
+  <path d="M14 8V30" stroke="#8B6914" stroke-width="1"/>
+  <text x="14" y="20" text-anchor="middle" fill="#D4AF37" font-family="Georgia, serif" font-size="6" font-weight="700">GRRM</text>
+</svg>

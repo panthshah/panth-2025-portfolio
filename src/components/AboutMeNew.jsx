@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Smiley, Buildings } from '@phosphor-icons/react';
+import { Heart, Smiley } from '@phosphor-icons/react';
 import Navbar from './Navbar';
 import CustomizeButton from './CustomizeButton';
 import ChatSidebar from './ChatSidebar';
@@ -16,109 +16,76 @@ import geminiIcon from '../assets/gemini 1.svg';
 import linkedInIcon from '../assets/LinkedIn1.png';
 import githubIcon from '../assets/github.png';
 import xIcon from '../assets/X.png';
+import nowSamsung from '../assets/about/samsung-logo.png';
+import nowMountainView from '../assets/about/now-mountain-view.png';
+import nowCharliePuth from '../assets/about/now-charlie-puth.png';
+import nowKnightBook from '../assets/about/now-knight-book.png';
+import stickerFigma from '../assets/about/sticker-figma.png';
+import stickerClaude from '../assets/about/sticker-claude.png';
+import stickerFigmaMake from '../assets/about/sticker-figma-make.png';
 import '../styles/LandingPage.css';
 import '../styles/AboutMeNew.css';
 
 const GeminiIcon = ({ size = 20, className }) => (
-  <img
-    src={geminiIcon}
-    alt="Gemini"
-    style={{ width: '20px', height: '18px' }}
-    className={className}
-  />
+  <img src={geminiIcon} alt="Gemini" style={{ width: '20px', height: '18px' }} className={className} />
 );
 
 const THEME_COLORS = {
-  'Peachy Orange': {
-    navBg: '#FFFAF2',
-    navPills: '#FFEED4',
-    companyName: '#FFB13D',
-  },
-  'Lavender Dream': {
-    navBg: '#FBF1F9',
-    navPills: '#F8D2FC',
-    companyName: '#865D95',
-  },
-  'Blush Petal': {
-    navBg: '#F9DAED',
-    navPills: '#FDF0F8',
-    companyName: '#FB97D4',
-  },
-  'Sky': {
-    navBg: '#BEE3FF',
-    navPills: '#D8F1FF',
-    companyName: '#1A7FD6',
-  },
-  'Pastel Red': {
-    navBg: '#FFDADF',
-    navPills: '#FFF6F8',
-    companyName: '#FF7084',
-  },
+  'Peachy Orange': { navBg: '#FFFAF2', navPills: '#FFEED4', companyName: '#FFB13D' },
+  'Lavender Dream': { navBg: '#FBF1F9', navPills: '#F8D2FC', companyName: '#865D95' },
+  'Blush Petal': { navBg: '#F9DAED', navPills: '#FDF0F8', companyName: '#FB97D4' },
+  'Sky': { navBg: '#BEE3FF', navPills: '#D8F1FF', companyName: '#1A7FD6' },
+  'Pastel Red': { navBg: '#FFDADF', navPills: '#FFF6F8', companyName: '#FF7084' },
 };
-
-const tools = [
-  'Figma', 'Framer', 'Protopie', 'React', 'CSS', 'Cursor',
-  'User Research', 'Design Systems', 'Accessibility', 'Interaction Design',
-];
-
-const hobbies = [
-  { icon: '🍳', title: 'Cooking', note: 'Ramen and hash browns — my two constants. I will find a reason to make either on any given day.' },
-  { icon: '📷', title: 'Photography', note: 'Just picked up a new Sony. Still figuring out what I\'m doing, but I\'m out there shooting anyway.' },
-  { icon: '☕', title: 'Coffee', note: 'Pour-over at home, Blue Bottle on weekends. Slow ritual, fast cooling.' },
-  { icon: '🎬', title: 'Movies', note: 'Currently on my second watch of Jack Ryan: The Ghost War. Big fan of anything with a good plot and fast pacing.' },
-];
 
 const nowItems = [
-  { k: 'Currently', v: 'Samsung Electronics — UX Designer' },
-  { k: 'Based in',  v: 'Mountain View, California' },
-  { k: 'Open to',   v: 'Full-time roles across the United States.' },
-  { k: 'Reading',   v: 'The Knight of Seven Kingdoms — George R.R. Martin' },
-  { k: 'Listening', v: 'Frank Ocean and Charlie Puth' },
+  {
+    k: 'Currently',
+    v: 'Samsung Electronics — UX Designer',
+    visual: <img src={nowSamsung} alt="Samsung" className="about-now-sticker about-now-sticker--icon" />,
+  },
+  {
+    k: 'Based in',
+    v: 'Mountain View, California',
+    visual: <img src={nowMountainView} alt="Mountain View, California" className="about-now-sticker about-now-sticker--wide" />,
+  },
+  {
+    k: 'Reading',
+    v: 'The Knight of Seven Kingdoms — George R.R. Martin',
+    visual: <img src={nowKnightBook} alt="A Knight of the Seven Kingdoms" className="about-now-sticker about-now-sticker--tall" />,
+  },
+  {
+    k: 'Listening',
+    v: 'Frank Ocean and Charlie Puth',
+    visual: <img src={nowCharliePuth} alt="Charlie Puth — CHARLIE" className="about-now-sticker about-now-sticker--album" />,
+  },
 ];
 
-const bootLines = [
-  { t: 'booting about-me.sh…',                d: 200, c: 'muted' },
-  { t: 'mounting /experience       [OK]',     d: 220, c: 'muted' },
-  { t: 'loading personality.json   [OK]',     d: 220, c: 'muted' },
-  { t: 'syncing /hobbies & /photos [OK]',     d: 220, c: 'muted' },
-  { t: 'ready.',                              d: 250, c: 'accent' },
+const bentoPhotos = [
+  { src: aboutMe8, caption: 'I love to cook',                    cls: 'ab-wide' },
+  { src: aboutMe7, caption: 'This is what makes me go at work',  cls: 'ab-tall' },
+  { src: aboutMe6, caption: 'Shot on iCamera by Nothing',        cls: '' },
+  { src: aboutMe5, caption: 'People that helped me grow',        cls: '' },
+  { src: aboutMe4, caption: 'Evenings are my fav part of the day', cls: '' },
+  { src: aboutMe3, caption: 'Boston will always be home',        cls: 'ab-wide' },
+  { src: aboutMe2, caption: 'Halloween 2025',                    cls: '' },
 ];
-
-const BootBlock = () => {
-  const [n, setN] = useState(0);
-  useEffect(() => {
-    if (n >= bootLines.length) return;
-    const id = setTimeout(() => setN((v) => v + 1), bootLines[n].d);
-    return () => clearTimeout(id);
-  }, [n]);
-
-  return (
-    <div className="about-boot">
-      {bootLines.slice(0, n).map((l, i) => (
-        <div key={i} className={`about-boot-line about-boot-${l.c}`}>{l.t}</div>
-      ))}
-      {n < bootLines.length && <div className="about-boot-cursor">▍</div>}
-    </div>
-  );
-};
 
 const AboutMeNew = ({ theme, onThemeChange }) => {
   const navigate = useNavigate();
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   const themeColors = useMemo(() => {
-    const themeName = theme?.name || 'Peachy Orange';
-    return THEME_COLORS[themeName] || THEME_COLORS['Peachy Orange'];
+    const name = theme?.name || 'Peachy Orange';
+    return THEME_COLORS[name] || THEME_COLORS['Peachy Orange'];
   }, [theme]);
 
   const accent = themeColors.companyName;
 
   return (
-    <div className="about-new-page about-terminal" style={{ '--about-accent': accent }}>
+    <div className="about-page" style={{ '--accent': accent }}>
       <Navbar
         theme={theme}
         currentPage="about"
@@ -129,153 +96,101 @@ const AboutMeNew = ({ theme, onThemeChange }) => {
         GeminiIcon={GeminiIcon}
       />
 
-      <main className="about-terminal-main">
-        {/* Boot sequence */}
-        <section className="about-section about-boot-section">
-          <BootBlock />
-        </section>
+      <main className="about-main">
 
-        {/* Hero */}
-        <section className="about-section about-hero">
+        {/* ── HERO ── */}
+        <section className="about-hero">
+          <h1 className="about-heading">
+            Hi, I'm Panth<span style={{ color: accent }}>.</span>
+          </h1>
           <div className="about-hero-grid">
-            <div className="about-hero-text">
-              <h1 className="about-hero-headline">
-                Hi, I'm Panth<span style={{ color: accent }}>.</span>
-              </h1>
-              <div className="about-hero-intro">
-                <p>
-                  I'm Panth, a Product Designer currently designing eCommerce experiences at Samsung Electronics in Mountain View, California.
-                </p>
-                <p>
-                  My path has taken me from Ahmedabad to Boston to the Bay Area, and each place has shaped how I see people, products, and the small decisions that make an experience feel effortless. I'm especially drawn to complex digital journeys — the kind where clarity, timing, and trust can make all the difference.
-                </p>
-                <p>
-                  Outside of work, I'm usually watching movies, cooking something for my Instagram, saying yes to almost any kind of game, or meeting new people in the most unexpected ways — from coffee shops and conferences to LinkedIn DMs that turn into real conversations.
-                </p>
+            <div className="about-bio">
+              <p>
+                I'm Panth, a Product Designer currently designing eCommerce experiences at Samsung Electronics in Mountain View, California.
+              </p>
+              <p>
+                My path has taken me from Ahmedabad to Boston to the Bay Area, and each place has shaped how I see people, products, and the small decisions that make an experience feel effortless. I'm especially drawn to complex digital journeys — the kind where clarity, timing, and trust can make all the difference.
+              </p>
+              <p>
+                Outside of work, I'm usually watching movies, cooking something for my Instagram, saying yes to almost any kind of game, or meeting new people in the most unexpected ways — from coffee shops and conferences to LinkedIn DMs that turn into real conversations.
+              </p>
+              <div className="about-stickers">
+                <span className="about-sticker-label">Tools I lean on</span>
+                <div className="about-sticker-row">
+                  <img src={stickerFigmaMake} alt="Figma Make" className="about-sticker-img" />
+                  <img src={stickerClaude} alt="Claude" className="about-sticker-img" />
+                  <img src={stickerFigma} alt="Figma" className="about-sticker-img" />
+                </div>
               </div>
             </div>
-            <div className="about-hero-collage">
-              <div className="about-collage-img about-collage-img--back">
-                <img src={aboutMe3} alt="" />
-              </div>
-              <div className="about-collage-img about-collage-img--mid">
-                <img src={aboutMe2} alt="" />
-              </div>
-              <div className="about-collage-img about-collage-img--front">
-                <img src={aboutMe1} alt="" />
-              </div>
+            <div className="about-hero-photo">
+              <img src={aboutMe1} alt="Panth Shah" />
             </div>
           </div>
         </section>
 
-        {/* $ now */}
-        <Block label="$ now" desc="what i'm up to right now">
-          <table className="about-now-table">
-            <tbody>
-              {nowItems.map((row, i) => (
-                <tr key={i}>
-                  <td className="about-now-key">{row.k}</td>
-                  <td className="about-now-val">{row.v}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Block>
-
-        {/* $ ls education/ */}
-        <Block label="$ ls education/" desc="formal training">
-          <div className="about-timeline">
-            <div className="about-timeline-item">
-              <div className="about-timeline-header">
-                <div className="about-timeline-left">
-                  <div className="about-timeline-icon">
-                    <Buildings size={18} weight="regular" />
-                  </div>
-                  <span className="about-timeline-company">Northeastern University</span>
-                  <span className="about-timeline-divider">|</span>
-                  <span className="about-timeline-role">Master of Science, CS &amp; Design</span>
-                </div>
-                <span className="about-timeline-period">2022 — 2024</span>
+        {/* ── NOW ── */}
+        <section className="about-section">
+          <h2 className="about-section-label">Now</h2>
+          <div className="about-now">
+            {nowItems.map((row, i) => (
+              <div key={i} className="about-now-row">
+                <span className="about-now-key">{row.k}</span>
+                <span className="about-now-val">{row.v}</span>
+                <div className="about-now-visual-wrap">{row.visual}</div>
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── EDUCATION ── */}
+        <section className="about-section">
+          <h2 className="about-section-label">Education</h2>
+          <div className="about-edu-row">
+            <div className="about-edu-left">
+              <span className="about-edu-school">Northeastern University</span>
+              <span className="about-edu-degree">Master of Science, Computer Science &amp; Design</span>
             </div>
+            <span className="about-edu-year">2022 — 2024</span>
           </div>
-        </Block>
+        </section>
 
-        {/* $ ls tools/ */}
-        <Block label="$ ls tools/" desc="things i use to make things">
-          <div className="about-tools">
-            {tools.map((tool) => (
-              <span key={tool} className="about-tool">{tool}</span>
-            ))}
-          </div>
-        </Block>
-
-        {/* $ ls hobbies/ */}
-        <Block label="$ ls hobbies/" desc="things i do when nobody's paying me">
-          <div className="about-hobbies">
-            {hobbies.map((h, i) => (
-              <div key={i} className="about-hobby">
-                <div className="about-hobby-icon">{h.icon}</div>
-                <div className="about-hobby-body">
-                  <div className="about-hobby-title">{h.title}</div>
-                  <div className="about-hobby-note">{h.note}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Block>
-
-        {/* $ ls photos/ */}
-        <Block label="$ ls photos/" desc="frames from the everyday">
+        {/* ── PHOTOS ── */}
+        <section className="about-section">
+          <h2 className="about-section-label">Photos</h2>
           <div className="about-bento">
-            {[
-              { src: aboutMe8, caption: 'I love to cook', cls: 'about-bento-wide' },
-              { src: aboutMe7, caption: 'This is what makes me go at the office', cls: 'about-bento-tall' },
-              { src: aboutMe6, caption: 'Shot on iCamera by Nothing', cls: '' },
-              { src: aboutMe5, caption: 'People that helped me grow', cls: '' },
-              { src: aboutMe4, caption: 'Evenings are my fav part of the day', cls: '' },
-              { src: aboutMe3, caption: 'Boston will always be home', cls: 'about-bento-wide' },
-              { src: aboutMe2, caption: 'Halloween 2025', cls: '' },
-            ].map(({ src, caption, cls }, i) => (
+            {bentoPhotos.map(({ src, caption, cls }, i) => (
               <div key={i} className={`about-bento-item ${cls}`}>
                 <img src={src} alt={caption} />
-                <div className="about-bento-caption">{caption}</div>
               </div>
             ))}
           </div>
-        </Block>
+        </section>
+
       </main>
 
-      {/* Footer — untouched */}
+      {/* ── FOOTER ── */}
       <footer className="footer-section">
         <div className="footer-container">
           <div className="floating-elements">
             {[...Array(5)].map((_, i) => {
-              const isSmileyIcon = Math.random() > 0.5;
-              const delay = i * 0.3;
-              const leftPosition = 5 + Math.random() * 30;
+              const isSmiley = Math.random() > 0.5;
               return (
-                <div key={`left-${i}`} className="floating-emoji" style={{ left: `${leftPosition}%`, animationDelay: `${delay}s`, color: themeColors.companyName }}>
-                  {isSmileyIcon ? <Smiley size={55 + Math.random() * 20} weight="regular" /> : <Heart size={22 + Math.random() * 12} weight="fill" />}
+                <div key={`l-${i}`} className="floating-emoji" style={{ left: `${5 + Math.random() * 30}%`, animationDelay: `${i * 0.3}s`, color: themeColors.companyName }}>
+                  {isSmiley ? <Smiley size={55 + Math.random() * 20} weight="regular" /> : <Heart size={22 + Math.random() * 12} weight="fill" />}
                 </div>
               );
             })}
-            {[...Array(3)].map((_, i) => {
-              const delay = (i + 2) * 0.3;
-              const leftPosition = 45 + Math.random() * 10;
-              return (
-                <div key={`center-${i}`} className="floating-emoji" style={{ left: `${leftPosition}%`, animationDelay: `${delay}s`, color: themeColors.companyName }}>
-                  <Heart size={18 + Math.random() * 8} weight="fill" />
-                </div>
-              );
-            })}
+            {[...Array(3)].map((_, i) => (
+              <div key={`c-${i}`} className="floating-emoji" style={{ left: `${45 + Math.random() * 10}%`, animationDelay: `${(i + 2) * 0.3}s`, color: themeColors.companyName }}>
+                <Heart size={18 + Math.random() * 8} weight="fill" />
+              </div>
+            ))}
             {[...Array(5)].map((_, i) => {
-              const isSmileyIcon = Math.random() > 0.5;
-              const delay = (i + 3) * 0.3;
-              const leftPosition = 65 + Math.random() * 30;
+              const isSmiley = Math.random() > 0.5;
               return (
-                <div key={`right-${i}`} className="floating-emoji" style={{ left: `${leftPosition}%`, animationDelay: `${delay}s`, color: themeColors.companyName }}>
-                  {isSmileyIcon ? <Smiley size={55 + Math.random() * 20} weight="regular" /> : <Heart size={22 + Math.random() * 12} weight="fill" />}
+                <div key={`r-${i}`} className="floating-emoji" style={{ left: `${65 + Math.random() * 30}%`, animationDelay: `${(i + 3) * 0.3}s`, color: themeColors.companyName }}>
+                  {isSmiley ? <Smiley size={55 + Math.random() * 20} weight="regular" /> : <Heart size={22 + Math.random() * 12} weight="fill" />}
                 </div>
               );
             })}
@@ -298,25 +213,10 @@ const AboutMeNew = ({ theme, onThemeChange }) => {
         </div>
       </footer>
 
-      <ChatSidebar
-        isOpen={isChatOpen}
-        onClose={() => setIsChatOpen(false)}
-        themeColors={themeColors}
-      />
+      <ChatSidebar isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} themeColors={themeColors} />
       <CustomizeButton theme={theme} onThemeChange={onThemeChange} />
     </div>
   );
 };
-
-const Block = ({ label, desc, children }) => (
-  <section className="about-section about-block">
-    <div className="about-block-header">
-      <h2 className="about-block-label">{label}</h2>
-      <span className="about-block-desc">{desc}</span>
-      <span className="about-block-rule" />
-    </div>
-    <div className="about-block-body">{children}</div>
-  </section>
-);
 
 export default AboutMeNew;
