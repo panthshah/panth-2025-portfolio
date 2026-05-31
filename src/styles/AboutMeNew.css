@@ -20,12 +20,22 @@
    Editorial reading width: narrower than the homepage's 1400px container
    so long-form text + photo feels centered and breathable on wide screens. */
 .about-main {
-  max-width: 880px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 128px 32px 160px 32px;
+  padding: 128px 120px 160px 120px;
   display: flex;
   flex-direction: column;
   gap: 80px;
+}
+
+.about-hero,
+.about-section {
+  max-width: 1120px;
+  width: 100%;
+}
+
+.about-hero {
+  max-width: none;
 }
 
 /* ============================================================
@@ -33,40 +43,76 @@
    ============================================================ */
 .about-heading {
   font-family: var(--serif);
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 500;
   letter-spacing: -0.025em;
   line-height: 1;
   color: var(--ink);
-  margin: 0 0 48px 0;
+  margin: 0;
 }
 
 .about-hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 250px;
-  gap: 48px;
+  grid-template-columns: minmax(360px, 520px) minmax(0, 1fr);
+  justify-content: space-between;
+  gap: 56px;
   align-items: start;
 }
 
 .about-bio {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
+  max-width: 720px;
 }
 
 .about-bio p {
   font-family: var(--sans);
   font-size: 14px;
-  line-height: 1.625;
+  line-height: 1.55;
   color: rgba(20, 19, 15, 0.6);
   margin: 0;
+}
+
+.about-hero-now {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.about-hero-now-row {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 20px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.about-hero-now-row:last-child {
+  border-bottom: none;
+}
+
+.about-hero-now-key {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.about-hero-now-val {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--ink);
 }
 
 .about-stickers {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 6px;
 }
 
 .about-sticker-label {
@@ -97,12 +143,25 @@
   transform: translateY(-2px) rotate(-1deg);
 }
 
+.about-hero-collage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-height: 520px;
+  height: clamp(520px, 42vw, 680px);
+  width: 100%;
+}
+
 .about-hero-photo {
   width: 100%;
-  aspect-ratio: 3 / 4;
   border-radius: 8px;
   overflow: hidden;
   background: #eee;
+}
+
+.about-hero-photo--primary {
+  grid-row: 1 / span 2;
 }
 
 .about-hero-photo img {
@@ -141,8 +200,8 @@
 
 .about-now-row {
   display: grid;
-  grid-template-columns: 120px minmax(0, 1fr) 260px;
-  gap: 32px;
+  grid-template-columns: 160px minmax(0, 1fr) 220px;
+  gap: 40px;
   align-items: center;
   padding: 16px 0;
   border-bottom: 1px solid var(--rule);
@@ -241,58 +300,340 @@
 }
 
 /* ============================================================
-   BENTO PHOTO GRID
+   SCRAPBOOK
    ============================================================ */
-.about-bento {
+.about-scrapbook {
+  max-width: none;
+  gap: 24px;
+}
+
+.about-scrapbook-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.about-scrapbook-date {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+}
+
+.about-scrapbook-spread {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 200px;
+  grid-template-columns: minmax(360px, 0.9fr) minmax(0, 1.1fr);
+  gap: 28px;
+  width: 100%;
+}
+
+.scrapbook-week,
+.scrapbook-board {
+  position: relative;
+  min-height: 720px;
+  border: 1px solid rgba(20, 19, 15, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fbfaf4;
+  background-image:
+    linear-gradient(rgba(20, 19, 15, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 19, 15, 0.045) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.scrapbook-week {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrapbook-sticker-page {
+  overflow: hidden;
+}
+
+.scrapbook-sticker-collage {
+  position: relative;
+  flex: 1;
+  min-height: 720px;
+}
+
+.scrapbook-sticker-img {
+  position: absolute;
+  display: block;
+  height: auto;
+  filter: drop-shadow(0 14px 18px rgba(20, 19, 15, 0.16));
+  user-select: none;
+}
+
+.scrapbook-sticker-img--hero {
+  top: 58px;
+  left: 13%;
+  width: clamp(170px, 35%, 200px);
+  transform: rotate(-7deg);
+}
+
+.scrapbook-sticker-img--tools {
+  top: 70px;
+  right: 10%;
+  width: clamp(150px, 31%, 180px);
+  transform: rotate(5deg);
+}
+
+.scrapbook-sticker-img--wide:nth-of-type(3) {
+  left: 13%;
+  top: 390px;
+  width: clamp(170px, 35%, 200px);
+  transform: rotate(3deg);
+}
+
+.scrapbook-sticker-img--wide:nth-of-type(4) {
+  right: 15%;
+  top: 456px;
+  width: clamp(140px, 28%, 160px);
+  transform: rotate(-5deg);
+}
+
+.scrapbook-days {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  flex: 1;
+}
+
+.scrapbook-day {
+  min-height: 210px;
+  padding: 18px 18px 20px 18px;
+  border-right: 1px solid rgba(20, 19, 15, 0.12);
+  border-bottom: 1px solid rgba(20, 19, 15, 0.12);
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.scrapbook-day:nth-child(2n) {
+  border-right: none;
+}
+
+.scrapbook-day:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+.scrapbook-day-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.scrapbook-day h3 {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--ink);
+  margin: 0 0 12px 0;
+}
+
+.scrapbook-day ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.scrapbook-day li {
+  position: relative;
+  padding-left: 14px;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+
+.scrapbook-day li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.58em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.scrapbook-board {
+  padding: 28px;
+}
+
+.scrapbook-pin {
+  position: absolute;
+  z-index: 3;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff8f86, #cf342e 68%);
+  box-shadow: 0 5px 12px rgba(20, 19, 15, 0.22);
+}
+
+.scrapbook-pin--top {
+  top: 18px;
+  left: 50%;
+}
+
+.scrapbook-board-note {
+  position: relative;
+  z-index: 2;
+  max-width: 360px;
+  margin: 14px 0 24px 18px;
+  padding: 16px 18px;
+  border-radius: 6px;
+  background: rgba(255, 238, 212, 0.82);
+  transform: rotate(-1.5deg);
+  box-shadow: 0 10px 26px rgba(20, 19, 15, 0.08);
+}
+
+.scrapbook-board-note span {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--serif);
+  font-size: 24px;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.scrapbook-board-note p {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.scrapbook-photo-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: 118px;
   gap: 12px;
 }
 
-.about-bento-item {
+.scrapbook-photo {
   position: relative;
+  grid-column: span 2;
+  margin: 0;
   border-radius: 6px;
   overflow: hidden;
   background: #e8e8e4;
+  box-shadow: 0 12px 28px rgba(20, 19, 15, 0.1);
 }
 
-.about-bento-item img {
+.scrapbook-photo--wide {
+  grid-column: span 3;
+}
+
+.scrapbook-photo--tall {
+  grid-column: span 3;
+  grid-row: span 2;
+}
+
+.scrapbook-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.about-bento-item.ab-wide {
-  grid-column: span 2;
+.scrapbook-doodle {
+  position: absolute;
+  z-index: 0;
+  border: 3px solid var(--accent);
+  opacity: 0.62;
+  pointer-events: none;
 }
 
-.about-bento-item.ab-tall {
-  grid-row: span 2;
+.scrapbook-doodle--one {
+  right: 64px;
+  bottom: 122px;
+  width: 92px;
+  height: 54px;
+  border-color: transparent transparent var(--accent) var(--accent);
+  border-radius: 0 0 0 80px;
+  transform: rotate(-28deg);
+}
+
+.scrapbook-doodle--two {
+  left: 44px;
+  top: 166px;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  transform: rotate(12deg);
 }
 
 /* ============================================================
    RESPONSIVE
    ============================================================ */
 
-/* 1200–1399px — keep narrow column */
+/* 1200–1399px — match nav's asymmetric content inset */
 @media (max-width: 1399px) and (min-width: 1200px) {
   .about-main {
-    padding: 128px 32px 160px 32px;
+    padding: 128px 32px 160px 100px;
   }
 }
 
 /* 1024–1199px */
 @media (max-width: 1199px) and (min-width: 1024px) {
   .about-main {
-    padding: 128px 32px 144px 32px;
+    padding: 128px 48px 144px 48px;
     gap: 64px;
   }
 
-  .about-bento {
-    grid-auto-rows: 170px;
+  .about-hero-grid {
+    grid-template-columns: minmax(340px, 0.85fr) minmax(0, 1fr);
+    gap: 40px;
   }
+
+  .about-hero-collage {
+    min-height: 460px;
+    height: 48vw;
+  }
+
+  .about-scrapbook-spread {
+    gap: 20px;
+  }
+
+  .scrapbook-week,
+  .scrapbook-board {
+    min-height: 640px;
+  }
+
+  .scrapbook-day {
+    min-height: 184px;
+    padding: 16px;
+  }
+
+  .scrapbook-sticker-collage {
+    min-height: 580px;
+  }
+
+  .scrapbook-sticker-img--wide:nth-of-type(3) {
+    top: 354px;
+  }
+
+  .scrapbook-sticker-img--wide:nth-of-type(4) {
+    top: 420px;
+  }
+
+  .scrapbook-photo-grid {
+    grid-auto-rows: 102px;
+  }
+
 }
 
 /* 768–1024px — hero stacks */
@@ -307,9 +648,18 @@
     gap: 40px;
   }
 
-  .about-hero-photo {
-    max-width: 340px;
-    aspect-ratio: 4 / 3;
+  .about-hero-collage {
+    min-height: 0;
+    height: auto;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+
+  .about-hero-photo--primary {
+    min-height: 420px;
+  }
+
+  .about-hero-photo--secondary {
+    min-height: 204px;
   }
 
   .about-edu-row {
@@ -317,8 +667,61 @@
     gap: 6px;
   }
 
-  .about-bento {
-    grid-auto-rows: 160px;
+  .about-scrapbook-spread {
+    grid-template-columns: 1fr;
+  }
+
+  .scrapbook-week,
+  .scrapbook-board {
+    min-height: auto;
+  }
+
+  .scrapbook-days {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: rgba(20, 19, 15, 0.12);
+  }
+
+  .scrapbook-sticker-collage {
+    min-height: 520px;
+  }
+
+  .scrapbook-sticker-img--hero {
+    left: 13%;
+    width: clamp(170px, 31%, 210px);
+  }
+
+  .scrapbook-sticker-img--tools {
+    right: 12%;
+    width: clamp(150px, 29%, 190px);
+  }
+
+  .scrapbook-sticker-img--wide:nth-of-type(3) {
+    left: 14%;
+    top: 302px;
+    width: clamp(170px, 31%, 210px);
+  }
+
+  .scrapbook-sticker-img--wide:nth-of-type(4) {
+    right: 15%;
+    top: 340px;
+    width: clamp(140px, 26%, 180px);
+  }
+
+  .scrapbook-day,
+  .scrapbook-day:nth-child(2n),
+  .scrapbook-day:nth-last-child(-n + 2) {
+    min-height: 180px;
+    border: none;
+    background: #fbfaf4;
+  }
+
+  .scrapbook-board {
+    min-height: 620px;
+  }
+
+  .scrapbook-photo-grid {
+    grid-auto-rows: 112px;
   }
 }
 
@@ -334,8 +737,19 @@
     gap: 32px;
   }
 
-  .about-hero-photo {
-    max-width: 300px;
+  .about-hero-collage {
+    min-height: 0;
+    height: auto;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .about-hero-photo--primary {
+    grid-column: 1 / span 2;
+    grid-row: auto;
+    aspect-ratio: 16 / 10;
+  }
+
+  .about-hero-photo--secondary {
     aspect-ratio: 4 / 3;
   }
 
@@ -365,15 +779,87 @@
     gap: 6px;
   }
 
-  .about-bento {
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 150px;
-    gap: 10px;
+  .about-scrapbook-header {
+    align-items: flex-start;
   }
 
-  .about-bento-item.ab-tall {
-    grid-row: span 1;
+  .about-scrapbook-date {
+    max-width: 260px;
   }
+
+  .about-scrapbook-spread {
+    grid-template-columns: 1fr;
+  }
+
+  .scrapbook-week,
+  .scrapbook-board {
+    min-height: auto;
+  }
+
+  .scrapbook-days {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: rgba(20, 19, 15, 0.12);
+  }
+
+  .scrapbook-sticker-collage {
+    min-height: 500px;
+  }
+
+  .scrapbook-sticker-img--hero {
+    left: 11%;
+    width: clamp(160px, 32%, 200px);
+  }
+
+  .scrapbook-sticker-img--tools {
+    right: 10%;
+    width: clamp(145px, 29%, 185px);
+  }
+
+  .scrapbook-sticker-img--wide:nth-of-type(3) {
+    left: 11%;
+    top: 312px;
+    width: clamp(160px, 32%, 200px);
+  }
+
+  .scrapbook-sticker-img--wide:nth-of-type(4) {
+    right: 12%;
+    top: 350px;
+    width: clamp(135px, 27%, 170px);
+  }
+
+  .scrapbook-day,
+  .scrapbook-day:nth-child(2n),
+  .scrapbook-day:nth-last-child(-n + 2) {
+    min-height: 172px;
+    border: none;
+    background: #fbfaf4;
+  }
+
+  .scrapbook-board {
+    min-height: 640px;
+    padding: 20px;
+  }
+
+  .scrapbook-board-note {
+    margin: 8px 0 20px 0;
+  }
+
+  .scrapbook-photo-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 120px;
+  }
+
+  .scrapbook-photo,
+  .scrapbook-photo--wide,
+  .scrapbook-photo--tall {
+    grid-column: span 2;
+  }
+
+  .scrapbook-photo--tall {
+    grid-row: span 2;
+  }
+
 }
 
 /* ≤480px — mobile */
@@ -388,13 +874,22 @@
     gap: 28px;
   }
 
-  .about-hero-photo {
-    max-width: 100%;
+  .about-hero-collage {
+    min-height: 0;
+    height: auto;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .about-hero-photo--primary,
+  .about-hero-photo--secondary {
+    grid-column: auto;
+    grid-row: auto;
     aspect-ratio: 4 / 3;
   }
 
   .about-heading {
-    margin-bottom: 24px;
+    margin: 0;
   }
 
   .about-bio p {
@@ -469,31 +964,132 @@
     font-size: 15px;
   }
 
-  .about-bento {
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 120px;
+  .about-scrapbook-header {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 8px;
   }
 
-  .about-bento-item.ab-tall {
-    grid-row: span 1;
+  .about-scrapbook-date {
+    text-align: left;
   }
+
+  .about-scrapbook-spread {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .scrapbook-week,
+  .scrapbook-board {
+    min-height: auto;
+  }
+
+  .scrapbook-sticker-collage {
+    min-height: 560px;
+  }
+
+  .scrapbook-sticker-img--hero {
+    top: 38px;
+    left: 8%;
+    width: min(46%, 190px);
+  }
+
+  .scrapbook-sticker-img--tools {
+    top: 160px;
+    right: 7%;
+    width: min(42%, 175px);
+  }
+
+  .scrapbook-sticker-img--wide:nth-of-type(3) {
+    left: 9%;
+    top: 342px;
+    width: min(46%, 190px);
+  }
+
+  .scrapbook-sticker-img--wide:nth-of-type(4) {
+    right: 9%;
+    top: 422px;
+    width: min(40%, 165px);
+  }
+
+  .scrapbook-days {
+    grid-template-columns: 1fr;
+  }
+
+  .scrapbook-day,
+  .scrapbook-day:nth-child(2n),
+  .scrapbook-day:nth-last-child(-n + 2) {
+    min-height: 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(20, 19, 15, 0.12);
+    background: rgba(255, 255, 255, 0.34);
+  }
+
+  .scrapbook-day:last-child {
+    border-bottom: none;
+  }
+
+  .scrapbook-board {
+    padding: 14px;
+  }
+
+  .scrapbook-pin,
+  .scrapbook-doodle {
+    display: none;
+  }
+
+  .scrapbook-board-note {
+    max-width: none;
+    margin: 0 0 14px 0;
+    transform: none;
+  }
+
+  .scrapbook-photo-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: 10px;
+  }
+
+  .scrapbook-photo,
+  .scrapbook-photo--wide,
+  .scrapbook-photo--tall {
+    grid-column: auto;
+    grid-row: auto;
+    aspect-ratio: 4 / 3;
+  }
+
 }
 
 /* ============================================================
    FOOTER — match About content width (880px)
    ============================================================ */
 .about-page .footer-section {
-  padding: 0 32px 160px 32px;
+  padding: 0 120px 160px 120px;
 }
 
 .about-page .footer-container {
-  max-width: 880px;
+  max-width: 1400px;
+  align-items: flex-start;
+}
+
+.about-page .footer-content {
+  max-width: 1120px;
+  width: 100%;
+}
+
+@media (max-width: 1399px) and (min-width: 1200px) {
+  .about-page .footer-section {
+    padding: 0 32px 160px 100px;
+  }
 }
 
 @media (max-width: 1199px) and (min-width: 1024px) {
+  .about-main {
+    padding: 128px 48px 144px 48px;
+  }
+
   .about-page .footer-section {
-    padding: 0 32px 144px 32px;
+    padding: 0 48px 144px 48px;
   }
 }
 

@@ -23,6 +23,10 @@ import nowKnightBook from '../assets/about/now-knight-book.png';
 import stickerFigma from '../assets/about/sticker-figma.png';
 import stickerClaude from '../assets/about/sticker-claude.png';
 import stickerFigmaMake from '../assets/about/sticker-figma-make.png';
+import stickerPromptFirst from '../assets/about/sticker-prompt-first.png';
+import stickerDesignTools from '../assets/about/sticker-design-tools.png';
+import stickerRealArt from '../assets/about/sticker-real-art.png';
+import stickerShipPray from '../assets/about/sticker-ship-pray.png';
 import '../styles/LandingPage.css';
 import '../styles/AboutMeNew.css';
 
@@ -59,16 +63,27 @@ const nowItems = [
     v: 'Frank Ocean and Charlie Puth',
     visual: <img src={nowCharliePuth} alt="Charlie Puth — CHARLIE" className="about-now-sticker about-now-sticker--album" />,
   },
+  {
+    k: 'Education',
+    v: 'Northeastern University, CS and Design',
+    visual: null,
+  },
 ];
 
-const bentoPhotos = [
-  { src: aboutMe8, caption: 'I love to cook',                    cls: 'ab-wide' },
-  { src: aboutMe7, caption: 'This is what makes me go at work',  cls: 'ab-tall' },
-  { src: aboutMe6, caption: 'Shot on iCamera by Nothing',        cls: '' },
-  { src: aboutMe5, caption: 'People that helped me grow',        cls: '' },
-  { src: aboutMe4, caption: 'Evenings are my fav part of the day', cls: '' },
-  { src: aboutMe3, caption: 'Boston will always be home',        cls: 'ab-wide' },
-  { src: aboutMe2, caption: 'Halloween 2025',                    cls: '' },
+const scrapbookStickers = [
+  { src: stickerPromptFirst, alt: 'Prompt first, think later sticker', cls: 'scrapbook-sticker-img--hero' },
+  { src: stickerDesignTools, alt: 'Design tool stickers', cls: 'scrapbook-sticker-img--tools' },
+  { src: stickerRealArt, alt: 'Real art not AI sticker', cls: 'scrapbook-sticker-img--wide' },
+  { src: stickerShipPray, alt: 'Ship it and pray sticker', cls: 'scrapbook-sticker-img--wide' },
+];
+
+const scrapbookPhotos = [
+  { src: aboutMe8, caption: 'I love to cook', cls: 'scrap-photo--wide' },
+  { src: aboutMe7, caption: 'What keeps me going at work', cls: 'scrap-photo--tall' },
+  { src: aboutMe6, caption: 'Shot on iCamera by Nothing', cls: '' },
+  { src: aboutMe5, caption: 'People that helped me grow', cls: 'scrap-photo--wide' },
+  { src: aboutMe4, caption: 'Evenings are my favorite part of the day', cls: '' },
+  { src: aboutMe3, caption: 'Boston will always be home', cls: 'scrap-photo--wide' },
 ];
 
 const AboutMeNew = ({ theme, onThemeChange }) => {
@@ -100,11 +115,11 @@ const AboutMeNew = ({ theme, onThemeChange }) => {
 
         {/* ── HERO ── */}
         <section className="about-hero">
-          <h1 className="about-heading">
-            Hi, I'm Panth<span style={{ color: accent }}>.</span>
-          </h1>
           <div className="about-hero-grid">
             <div className="about-bio">
+              <h1 className="about-heading">
+                Hi, I'm Panth<span style={{ color: accent }}>.</span>
+              </h1>
               <p>
                 I'm Panth, a Product Designer currently designing eCommerce experiences at Samsung Electronics in Mountain View, California.
               </p>
@@ -114,6 +129,14 @@ const AboutMeNew = ({ theme, onThemeChange }) => {
               <p>
                 Outside of work, I'm usually watching movies, cooking something for my Instagram, saying yes to almost any kind of game, or meeting new people in the most unexpected ways — from coffee shops and conferences to LinkedIn DMs that turn into real conversations.
               </p>
+              <div className="about-hero-now" aria-label="Current details">
+                {nowItems.map((row, i) => (
+                  <div key={i} className="about-hero-now-row">
+                    <span className="about-hero-now-key">{row.k}</span>
+                    <span className="about-hero-now-val">{row.v}</span>
+                  </div>
+                ))}
+              </div>
               <div className="about-stickers">
                 <span className="about-sticker-label">Tools I lean on</span>
                 <div className="about-sticker-row">
@@ -123,47 +146,51 @@ const AboutMeNew = ({ theme, onThemeChange }) => {
                 </div>
               </div>
             </div>
-            <div className="about-hero-photo">
-              <img src={aboutMe1} alt="Panth Shah" />
+            <div className="about-hero-collage" aria-label="Photos from Panth's life">
+              <div className="about-hero-photo about-hero-photo--primary">
+                <img src={aboutMe1} alt="Panth Shah" />
+              </div>
+              <div className="about-hero-photo about-hero-photo--secondary">
+                <img src={aboutMe8} alt="Cooking moment" />
+              </div>
+              <div className="about-hero-photo about-hero-photo--secondary">
+                <img src={aboutMe3} alt="Boston memory" />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ── NOW ── */}
-        <section className="about-section">
-          <h2 className="about-section-label">Now</h2>
-          <div className="about-now">
-            {nowItems.map((row, i) => (
-              <div key={i} className="about-now-row">
-                <span className="about-now-key">{row.k}</span>
-                <span className="about-now-val">{row.v}</span>
-                <div className="about-now-visual-wrap">{row.visual}</div>
-              </div>
-            ))}
+        {/* ── SCRAPBOOK ── */}
+        <section className="about-section about-scrapbook">
+          <div className="about-scrapbook-header">
+            <h2 className="about-section-label">Outside the screen</h2>
+            <span className="about-scrapbook-date">Notes, food, friends, places, and small rituals</span>
           </div>
-        </section>
-
-        {/* ── EDUCATION ── */}
-        <section className="about-section">
-          <h2 className="about-section-label">Education</h2>
-          <div className="about-edu-row">
-            <div className="about-edu-left">
-              <span className="about-edu-school">Northeastern University</span>
-              <span className="about-edu-degree">Master of Science, Computer Science &amp; Design</span>
+          <div className="about-scrapbook-spread">
+            <div className="scrapbook-week scrapbook-sticker-page" aria-label="Design sticker collage">
+              <div className="scrapbook-sticker-collage">
+                {scrapbookStickers.map((sticker) => (
+                  <img key={sticker.alt} src={sticker.src} alt={sticker.alt} className={`scrapbook-sticker-img ${sticker.cls}`} />
+                ))}
+              </div>
             </div>
-            <span className="about-edu-year">2022 — 2024</span>
-          </div>
-        </section>
 
-        {/* ── PHOTOS ── */}
-        <section className="about-section">
-          <h2 className="about-section-label">Photos</h2>
-          <div className="about-bento">
-            {bentoPhotos.map(({ src, caption, cls }, i) => (
-              <div key={i} className={`about-bento-item ${cls}`}>
-                <img src={src} alt={caption} />
+            <div className="scrapbook-board" aria-label="Personal photo scrapbook">
+              <div className="scrapbook-pin scrapbook-pin--top" />
+              <div className="scrapbook-board-note scrapbook-board-note--intro">
+                <span>things I keep</span>
+                <p>food, places, evenings, and the people who make the work feel lighter.</p>
               </div>
-            ))}
+              <div className="scrapbook-photo-grid">
+                {scrapbookPhotos.map(({ src, caption, cls }) => (
+                  <figure key={caption} className={`scrapbook-photo ${cls}`}>
+                    <img src={src} alt={caption} />
+                  </figure>
+                ))}
+              </div>
+              <div className="scrapbook-doodle scrapbook-doodle--one" />
+              <div className="scrapbook-doodle scrapbook-doodle--two" />
+            </div>
           </div>
         </section>
 
