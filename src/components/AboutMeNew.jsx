@@ -1,10 +1,13 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Smiley } from '@phosphor-icons/react';
+import { Heart, Smiley, ArrowClockwise, Info, Check } from '@phosphor-icons/react';
 import Navbar from './Navbar';
 import CustomizeButton from './CustomizeButton';
 import ChatSidebar from './ChatSidebar';
+import TetrisGame from './TetrisGame';
 import aboutMe1 from '../assets/AboutMe /About Me 1.png';
+import heroHike from '../assets/AboutMe /hero-hike.png';
+import heroGame from '../assets/AboutMe /hero-game.png';
 import aboutMe2 from '../assets/AboutMe /About Me 2.png';
 import aboutMe3 from '../assets/AboutMe /About Me 3.png';
 import aboutMe4 from '../assets/AboutMe /About Me 4.png';
@@ -20,9 +23,6 @@ import nowSamsung from '../assets/about/samsung-logo.png';
 import nowMountainView from '../assets/about/now-mountain-view.png';
 import nowCharliePuth from '../assets/about/now-charlie-puth.png';
 import nowKnightBook from '../assets/about/now-knight-book.png';
-import stickerFigma from '../assets/about/sticker-figma.png';
-import stickerClaude from '../assets/about/sticker-claude.png';
-import stickerFigmaMake from '../assets/about/sticker-figma-make.png';
 import stickerPromptFirst from '../assets/about/sticker-prompt-first.png';
 import stickerDesignTools from '../assets/about/sticker-design-tools.png';
 import stickerRealArt from '../assets/about/sticker-real-art.png';
@@ -77,18 +77,19 @@ const scrapbookStickers = [
   { src: stickerShipPray, alt: 'Ship it and pray sticker', cls: 'scrapbook-sticker-img--wide' },
 ];
 
-const scrapbookPhotos = [
-  { src: aboutMe8, caption: 'I love to cook', cls: 'scrap-photo--wide' },
-  { src: aboutMe7, caption: 'What keeps me going at work', cls: 'scrap-photo--tall' },
-  { src: aboutMe6, caption: 'Shot on iCamera by Nothing', cls: '' },
-  { src: aboutMe5, caption: 'People that helped me grow', cls: 'scrap-photo--wide' },
-  { src: aboutMe4, caption: 'Evenings are my favorite part of the day', cls: '' },
-  { src: aboutMe3, caption: 'Boston will always be home', cls: 'scrap-photo--wide' },
-];
+// reCAPTCHA-style photo grid — 9 tiles of real moments.
+const captchaTiles = [aboutMe1, aboutMe2, aboutMe3, aboutMe4, aboutMe5, aboutMe6, aboutMe7, aboutMe8, aboutMe1];
 
 const AboutMeNew = ({ theme, onThemeChange }) => {
   const navigate = useNavigate();
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [captchaSelected, setCaptchaSelected] = useState([1, 3, 8]);
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+
+  const toggleCaptchaTile = (i) => {
+    setCaptchaVerified(false);
+    setCaptchaSelected((prev) => (prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]));
+  };
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -137,24 +138,16 @@ const AboutMeNew = ({ theme, onThemeChange }) => {
                   </div>
                 ))}
               </div>
-              <div className="about-stickers">
-                <span className="about-sticker-label">Tools I lean on</span>
-                <div className="about-sticker-row">
-                  <img src={stickerFigmaMake} alt="Figma Make" className="about-sticker-img" />
-                  <img src={stickerClaude} alt="Claude" className="about-sticker-img" />
-                  <img src={stickerFigma} alt="Figma" className="about-sticker-img" />
-                </div>
-              </div>
             </div>
             <div className="about-hero-collage" aria-label="Photos from Panth's life">
               <div className="about-hero-photo about-hero-photo--primary">
-                <img src={aboutMe1} alt="Panth Shah" />
+                <img src={heroHike} alt="Panth Shah" />
               </div>
               <div className="about-hero-photo about-hero-photo--secondary">
                 <img src={aboutMe8} alt="Cooking moment" />
               </div>
               <div className="about-hero-photo about-hero-photo--secondary">
-                <img src={aboutMe3} alt="Boston memory" />
+                <img src={heroGame} alt="Catching a game at sunset" />
               </div>
             </div>
           </div>
@@ -175,22 +168,50 @@ const AboutMeNew = ({ theme, onThemeChange }) => {
               </div>
             </div>
 
-            <div className="scrapbook-board" aria-label="Personal photo scrapbook">
-              <div className="scrapbook-pin scrapbook-pin--top" />
-              <div className="scrapbook-board-note scrapbook-board-note--intro">
-                <span>things I keep</span>
-                <p>food, places, evenings, and the people who make the work feel lighter.</p>
+            <div className="captcha-card" aria-label="Select all images about today">
+              <p className="captcha-head-line">Select all images about</p>
+              <span className="captcha-head-big">TODAY</span>
+              <p className="captcha-head-sub">
+                {captchaVerified ? "nice — you're definitely human (probably)" : 'Click verify once there are none left'}
+              </p>
+
+              <div className="captcha-panel">
+                <div className="captcha-grid">
+                  {captchaTiles.map((src, i) => (
+                    <button
+                      type="button"
+                      key={i}
+                      className={`captcha-tile ${captchaSelected.includes(i) ? 'is-selected' : ''}`}
+                      onClick={() => toggleCaptchaTile(i)}
+                      aria-pressed={captchaSelected.includes(i)}
+                      aria-label={`Photo ${i + 1}`}
+                    >
+                      <img src={src} alt="" />
+                      <span className="captcha-check"><Check size={16} weight="bold" /></span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="captcha-foot">
+                  <div className="captcha-foot-icons">
+                    <button type="button" aria-label="Refresh" onClick={() => { setCaptchaSelected([]); setCaptchaVerified(false); }}>
+                      <ArrowClockwise size={22} />
+                    </button>
+                    <button type="button" aria-label="Info"><Info size={22} /></button>
+                    <button type="button" aria-label="Like"><Heart size={22} weight="fill" /></button>
+                  </div>
+                  <button
+                    type="button"
+                    className={`captcha-verify ${captchaVerified ? 'is-verified' : ''}`}
+                    onClick={() => setCaptchaVerified(true)}
+                  >
+                    {captchaVerified ? 'Verified' : 'Verify'}
+                  </button>
+                </div>
               </div>
-              <div className="scrapbook-photo-grid">
-                {scrapbookPhotos.map(({ src, caption, cls }) => (
-                  <figure key={caption} className={`scrapbook-photo ${cls}`}>
-                    <img src={src} alt={caption} />
-                  </figure>
-                ))}
-              </div>
-              <div className="scrapbook-doodle scrapbook-doodle--one" />
-              <div className="scrapbook-doodle scrapbook-doodle--two" />
             </div>
+
+            <TetrisGame accent={accent} />
           </div>
         </section>
 
