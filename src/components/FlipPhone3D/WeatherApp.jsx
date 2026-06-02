@@ -96,7 +96,7 @@ const WeatherApp = ({ onClose, currentWeather, currentLocation, background }) =>
       zIndex: 50,
       overflow: 'hidden',
       color: '#fff',
-      fontFamily: '"Samsung One", -apple-system, sans-serif'
+      fontFamily: '"Geist", -apple-system, sans-serif'
     }}>
       {/* Header / Back Button */}
       <div style={{ 

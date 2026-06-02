@@ -17,9 +17,9 @@
 }
 
 .tetris-title {
-  font-family: 'Caveat', cursive;
-  font-size: 28px;
-  font-weight: 700;
+  font-family: var(--font-body, 'Geist', system-ui, sans-serif);
+  font-size: 22px;
+  font-weight: 600;
   line-height: 1;
   color: #fdfdf7;
 }
@@ -87,9 +87,9 @@
 
 .tetris-overlay-text {
   margin: 0;
-  font-family: 'Caveat', cursive;
-  font-size: 26px;
-  font-weight: 700;
+  font-family: var(--font-body, 'Geist', system-ui, sans-serif);
+  font-size: 18px;
+  font-weight: 500;
   color: #fdfdf7;
 }
 

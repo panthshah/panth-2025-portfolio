@@ -10,10 +10,10 @@
   --accent: #FFB13D;
   --ink: #14130F;
   --ink-2: #4A4738;
-  --muted: #8B8678;
+  --muted: #6E6A5E;
   --rule: rgba(20, 19, 15, 0.07);
-  --sans: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --serif: 'Samsung Sharp Sans', system-ui, sans-serif;
+  --sans: var(--font-body);
+  --display: var(--font-heading);
 }
 
 /* ── OUTER CONTAINER ──
@@ -42,13 +42,13 @@
    HERO
    ============================================================ */
 .about-heading {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 32px;
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
   color: var(--ink);
-  margin: 0;
+  margin: 0 0 28px;
 }
 
 .about-hero-grid {
@@ -62,22 +62,26 @@
 .about-bio {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
   max-width: 720px;
 }
 
 .about-bio p {
   font-family: var(--sans);
   font-size: 16px;
-  line-height: 1.55;
-  color: rgba(20, 19, 15, 0.6);
+  line-height: 1.6;
+  color: var(--ink-2);
   margin: 0;
+}
+
+.about-bio p + p {
+  margin-top: 16px;
 }
 
 .about-hero-now {
   display: flex;
   flex-direction: column;
-  margin-top: 6px;
+  margin-top: 28px;
 }
 
 .about-hero-now-row {
@@ -95,14 +99,16 @@
 
 .about-hero-now-key {
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   color: var(--muted);
 }
 
 .about-hero-now-val {
   font-family: var(--sans);
-  font-size: 13px;
-  line-height: 1.35;
+  font-size: 15px;
+  line-height: 1.45;
   color: var(--ink);
 }
 
@@ -115,9 +121,9 @@
 
 .about-sticker-label {
   font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -180,9 +186,9 @@
 
 .about-section-label {
   font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
   margin: 0;
@@ -276,7 +282,7 @@
 }
 
 .about-edu-school {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 17px;
   font-weight: 700;
   color: var(--ink);
@@ -315,7 +321,7 @@
 
 .about-scrapbook-date {
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 13px;
   color: var(--muted);
   text-align: right;
 }
@@ -429,7 +435,7 @@
 }
 
 .scrapbook-day h3 {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 19px;
   font-weight: 500;
   line-height: 1.15;
@@ -805,10 +811,6 @@
     font-size: 15px;
   }
 
-  .about-bio p:first-child {
-    font-size: 16px;
-  }
-
   .about-now-row {
     grid-template-columns: 100px minmax(0, 1fr) 200px;
     gap: 16px;
@@ -937,16 +939,12 @@
   }
 
   .about-heading {
-    margin: 0;
+    margin-bottom: 24px;
   }
 
   .about-bio p {
-    font-size: 14.5px;
-    line-height: 1.7;
-  }
-
-  .about-bio p:first-child {
     font-size: 15px;
+    line-height: 1.65;
   }
 
   .about-section {
@@ -964,7 +962,7 @@
   .about-now-key {
     grid-column: 1;
     grid-row: 1;
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .about-now-val {
