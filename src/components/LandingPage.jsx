@@ -1,12 +1,12 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, Copy, Heart, Smiley, Clock, Check } from '@phosphor-icons/react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight, Copy, Heart, Smiley, Clock, Check, GridFour, Rows } from '@phosphor-icons/react';
 import Navbar from './Navbar';
 import FlipPhone3D from './FlipPhone3D';
 import ChatSidebar from './ChatSidebar';
 import CustomizeButton from './CustomizeButton';
 import project1Image from '../assets/foundermatch-thumbnail.png';
-import project2Image from '../assets/Projectcase1.png';
 import samsungVideo from '../assets/thumbnail1.mp4';
 import project3Image from '../assets/northeastern-thumbnail.png';
 import geminiIcon from '../assets/gemini 1.svg';
@@ -68,11 +68,85 @@ const THEME_COLORS = {
   }
 };
 
+const projects = [
+  {
+    route: '/samsung',
+    media: samsungVideo,
+    mediaType: 'video',
+    alt: 'Samsung Product Finder compare experience',
+    tag: '2025 · Samsung Electronics',
+    description: "Redesigning the compare experience for Samsung.com's Product Finder"
+  },
+  {
+    route: '/foundermatch',
+    media: project1Image,
+    mediaType: 'image',
+    alt: 'FounderMatch',
+    tag: '2024-25 · Founderway',
+    description: 'A co-founder matching platform that drove 200+ sign-ups on launch day'
+  },
+  {
+    route: '/northeastern',
+    media: project3Image,
+    mediaType: 'image',
+    alt: 'Accessibility at Northeastern',
+    tag: '2023-24 · Northeastern University',
+    description: 'Auditing accessibility across 10+ university websites for 30,000+ students'
+  }
+];
+
+const ProjectMedia = ({ project }) => project.mediaType === 'video' ? (
+  <video src={project.media} autoPlay loop muted playsInline />
+) : (
+  <img src={project.media} alt={project.alt} />
+);
+
+const MotionArticle = motion.article;
+const MotionDiv = motion.div;
+
+const FocusProjectCard = ({ project, index, isLast, isBehind, onSelect }) => {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <div className={`focus-project-item${isLast ? ' is-last' : ''}`}>
+      <MotionArticle
+        className="focus-project-card"
+        animate={reduceMotion ? undefined : {
+          scale: isBehind ? Math.max(0.94, 0.975 - (index * 0.01)) : 1,
+          y: isBehind ? index * -6 : 0
+        }}
+        transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+        onClick={onSelect}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onSelect();
+          }
+        }}
+        role="link"
+        tabIndex={0}
+      >
+        <div className="focus-project-content">
+          <p className="focus-project-description">{project.description}</p>
+          <span className="project-tag">{project.tag}</span>
+          <ArrowUpRight className="focus-project-arrow" size={24} weight="regular" aria-hidden="true" />
+        </div>
+        <div className="focus-project-image">
+          <ProjectMedia project={project} />
+        </div>
+      </MotionArticle>
+    </div>
+  );
+};
+
 const LandingPage = ({ theme, onThemeChange }) => {
   const navigate = useNavigate();
+  const reduceMotion = useReducedMotion();
   const [activeTab, setActiveTab] = useState('chat');
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [projectsView, setProjectsView] = useState('focus');
+  const [activeFocusIndex, setActiveFocusIndex] = useState(0);
 
   const themeColors = useMemo(() => {
     const themeName = theme?.name || 'Peachy Orange';
@@ -108,6 +182,38 @@ const LandingPage = ({ theme, onThemeChange }) => {
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (projectsView !== 'focus') return undefined;
+
+    let frame;
+    const updateActiveCard = () => {
+      frame = undefined;
+      const cards = Array.from(document.querySelectorAll('.focus-project-item'));
+      const stackTop = window.innerWidth <= 1024 ? 72 : 88;
+      const activationLine = stackTop + 170;
+      let nextIndex = 0;
+
+      cards.forEach((card, index) => {
+        if (card.getBoundingClientRect().top <= activationLine) nextIndex = index;
+      });
+
+      setActiveFocusIndex((current) => current === nextIndex ? current : nextIndex);
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(updateActiveCard);
+    };
+
+    updateActiveCard();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [projectsView]);
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
@@ -228,37 +334,69 @@ const LandingPage = ({ theme, onThemeChange }) => {
 
       {/* Projects Section */}
       <section className="projects-section">
-        <div className="projects-grid">
-          <div className="project-card" onClick={() => navigate('/samsung')}>
-            <div className="project-image">
-              <video src={samsungVideo} autoPlay loop muted playsInline />
-            </div>
-            <div className="project-content">
-              <span className="project-tag">2025 · Samsung Electronics</span>
-              <p className="project-description">Redesigning the compare experience for Samsung.com's Product Finder</p>
-            </div>
-          </div>
-
-          <div className="project-card" onClick={() => navigate('/foundermatch')}>
-            <div className="project-image">
-              <img src={project1Image} alt="FounderMatch" />
-            </div>
-            <div className="project-content">
-              <span className="project-tag">2024-25 · Founderway</span>
-              <p className="project-description">A co-founder matching platform that drove 200+ sign-ups on launch day</p>
-            </div>
-          </div>
-
-          <div className="project-card" onClick={() => navigate('/northeastern')}>
-            <div className="project-image">
-              <img src={project3Image} alt="Accessibility at Northeastern" />
-            </div>
-            <div className="project-content">
-              <span className="project-tag">2023-24 · Northeastern University</span>
-              <p className="project-description">Auditing accessibility across 10+ university websites for 30,000+ students</p>
-            </div>
-          </div>
+        <div className="projects-view-controls" role="group" aria-label="Case study view">
+          <button
+            className={`projects-view-button${projectsView === 'focus' ? ' is-active' : ''}`}
+            type="button"
+            aria-label="Focus view"
+            aria-pressed={projectsView === 'focus'}
+            onClick={() => setProjectsView('focus')}
+          >
+            <Rows size={17} weight={projectsView === 'focus' ? 'fill' : 'regular'} />
+          </button>
+          <button
+            className={`projects-view-button${projectsView === 'grid' ? ' is-active' : ''}`}
+            type="button"
+            aria-label="Grid view"
+            aria-pressed={projectsView === 'grid'}
+            onClick={() => setProjectsView('grid')}
+          >
+            <GridFour size={17} weight={projectsView === 'grid' ? 'fill' : 'regular'} />
+          </button>
         </div>
+
+        <AnimatePresence mode="wait" initial={false}>
+          {projectsView === 'grid' ? (
+            <MotionDiv
+              className="projects-grid"
+              key="grid"
+              initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
+              transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {projects.map((project) => (
+                <div className="project-card" key={project.route} onClick={() => navigate(project.route)}>
+                  <div className="project-image"><ProjectMedia project={project} /></div>
+                  <div className="project-content">
+                    <span className="project-tag">{project.tag}</span>
+                    <p className="project-description">{project.description}</p>
+                  </div>
+                </div>
+              ))}
+            </MotionDiv>
+          ) : (
+            <MotionDiv
+              className="projects-focus"
+              key="focus"
+              initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
+              transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {projects.map((project, index) => (
+                <FocusProjectCard
+                  key={project.route}
+                  project={project}
+                  index={index}
+                  isLast={index === projects.length - 1}
+                  isBehind={index < activeFocusIndex}
+                  onSelect={() => navigate(project.route)}
+                />
+              ))}
+            </MotionDiv>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* Testimonials Section */}
@@ -478,4 +616,3 @@ const LandingPage = ({ theme, onThemeChange }) => {
 };
 
 export default LandingPage;
-
