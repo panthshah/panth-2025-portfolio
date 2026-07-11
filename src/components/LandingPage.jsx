@@ -132,8 +132,8 @@ const FocusProjectCard = ({ project, index, isLast, isBehind, onSelect }) => {
         <div className="focus-project-content">
           <h3 className="focus-project-title">{project.title}</h3>
           <p className="focus-project-summary">{project.description}</p>
-          <span className="focus-project-meta">{project.tag}</span>
           <span className="focus-project-link">Read case study</span>
+          <span className="focus-project-meta">{project.tag}</span>
         </div>
         <div className="focus-project-image">
           <ProjectMedia project={project} />
