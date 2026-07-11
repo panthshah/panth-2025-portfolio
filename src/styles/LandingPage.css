@@ -308,6 +308,8 @@
   margin: 0 auto;
 }
 
+.focus-project-spacer { height: clamp(240px, 32vh, 320px); }
+
 .focus-project-item {
   position: sticky;
   top: 88px;
@@ -367,25 +369,53 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 20px;
+  gap: 12px;
   background: #fff;
 }
 
-.focus-project-description {
+.focus-project-title {
   margin: 0;
   max-width: 100%;
   font-family: 'Samsung Sharp Sans', system-ui, sans-serif;
   font-size: 24px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.25;
   letter-spacing: -0.02em;
   color: #0b0b0b;
 }
 
-.focus-project-arrow {
-  position: absolute;
-  left: clamp(28px, 3.4vw, 54px);
-  bottom: clamp(28px, 3.4vw, 54px);
+.focus-project-summary {
+  margin: 0;
+  max-width: 24ch;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: #555552;
+}
+
+.focus-project-meta {
+  margin-top: auto;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: #888888;
+}
+
+.focus-project-link {
+  width: max-content;
+  margin-top: 2px;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #111111;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 @media (max-width: 1024px) {
@@ -399,7 +429,7 @@
     grid-template-columns: minmax(260px, 0.55fr) minmax(0, 1fr);
   }
 
-  .focus-project-description { font-size: 28px; }
+  .focus-project-summary { font-size: 17px; }
 }
 
 @media (max-width: 767px) {
@@ -410,6 +440,8 @@
     flex-direction: column;
     gap: 24px;
   }
+
+  .focus-project-spacer { display: none; }
 
   .focus-project-item,
   .focus-project-item.is-last {
@@ -449,17 +481,11 @@
     padding: 24px;
   }
 
-  .focus-project-description {
-    max-width: 14ch;
-    font-size: 24px;
-    line-height: 1.25;
+  .focus-project-summary {
+    max-width: 30ch;
+    font-size: 17px;
   }
 
-  .focus-project-arrow {
-    left: auto;
-    right: 24px;
-    bottom: 24px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -468,7 +494,7 @@
     padding: 20px;
   }
 
-  .focus-project-description { font-size: 22px; }
+  .focus-project-summary { font-size: 16px; }
 
   .focus-project-image {
     width: calc(100% - 20px);
@@ -476,10 +502,6 @@
     border-radius: 4px;
   }
 
-  .focus-project-arrow {
-    right: 20px;
-    bottom: 20px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -503,6 +525,8 @@
   }
 
   .projects-view-button { transition: none; }
+
+  .focus-project-spacer { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) and (min-width: 768px) {

@@ -74,6 +74,7 @@ const projects = [
     media: samsungVideo,
     mediaType: 'video',
     alt: 'Samsung Product Finder compare experience',
+    title: 'Smarter Product Comparisons',
     tag: '2025 · Samsung Electronics',
     description: "Redesigning the compare experience for Samsung.com's Product Finder"
   },
@@ -82,6 +83,7 @@ const projects = [
     media: project1Image,
     mediaType: 'image',
     alt: 'FounderMatch',
+    title: 'Better Co-founder Matching',
     tag: '2024-25 · Founderway',
     description: 'A co-founder matching platform that drove 200+ sign-ups on launch day'
   },
@@ -90,6 +92,7 @@ const projects = [
     media: project3Image,
     mediaType: 'image',
     alt: 'Accessibility at Northeastern',
+    title: 'Designing for Access',
     tag: '2023-24 · Northeastern University',
     description: 'Auditing accessibility across 10+ university websites for 30,000+ students'
   }
@@ -127,9 +130,10 @@ const FocusProjectCard = ({ project, index, isLast, isBehind, onSelect }) => {
         tabIndex={0}
       >
         <div className="focus-project-content">
-          <p className="focus-project-description">{project.description}</p>
-          <span className="project-tag">{project.tag}</span>
-          <ArrowUpRight className="focus-project-arrow" size={24} weight="regular" aria-hidden="true" />
+          <h3 className="focus-project-title">{project.title}</h3>
+          <p className="focus-project-summary">{project.description}</p>
+          <span className="focus-project-meta">{project.tag}</span>
+          <span className="focus-project-link">Read case study</span>
         </div>
         <div className="focus-project-image">
           <ProjectMedia project={project} />
@@ -394,6 +398,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
                   onSelect={() => navigate(project.route)}
                 />
               ))}
+              <div className="focus-project-spacer" aria-hidden="true" />
             </MotionDiv>
           )}
         </AnimatePresence>
