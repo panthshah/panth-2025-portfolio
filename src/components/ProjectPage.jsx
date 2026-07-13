@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import CustomizeButton from './CustomizeButton';
 import ChatSidebar from './ChatSidebar';
+import { CaseStudyHeader, CaseStudyLayout } from './CaseStudyTemplate';
 import geminiIcon from '../assets/gemini 1.svg';
 import image1 from '../assets/Foundermatch1.png';
 import image2 from '../assets/Foundermatch2.png';
@@ -23,10 +24,29 @@ const GeminiIcon = ({ size = 20, className }) => (
   <img 
     src={geminiIcon} 
     alt="Gemini" 
-    style={{ width: '20px', height: '18px' }} 
+    style={{ width: `${size}px`, height: `${size - 2}px` }}
     className={className}
   />
 );
+
+const SIDEBAR_SECTIONS = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'problem', label: 'Problem' },
+  { id: 'discovery', label: 'Discovery' },
+  { id: 'pain-points', label: 'Pain Points' },
+  { id: 'competitive', label: 'Competitive Research' },
+  { id: 'process', label: 'Design Process' },
+  { id: 'solution', label: 'Solution' },
+  { id: 'testing', label: 'Testing' },
+  { id: 'impact', label: 'Impact' },
+];
+
+const OVERVIEW = [
+  { label: 'Timeline', items: ['Jan 2024 – May 2024'] },
+  { label: 'Team', items: ['1 Designer', '1 Developer', '2 AI Engineers'] },
+  { label: 'Tools', items: ['Figma', 'FigJam', 'Mural'] },
+  { label: 'Disciplines', items: ['MVP', 'Business Plan', 'UX Design'] },
+];
 
 const ProjectPage = ({ theme, onThemeChange }) => {
   const navigate = useNavigate();
@@ -64,53 +84,15 @@ const ProjectPage = ({ theme, onThemeChange }) => {
         GeminiIcon={GeminiIcon}
       />
 
-      <div className="project-page-content">
-        {/* Project Introduction */}
-        <p className="project-intro">
-          Founder Match is an AI-powered app that connects entrepreneurs with their ideal co-founders to help startups grow
-        </p>
-
-        {/* Project Hero Image */}
-        <div className="project-hero-image">
-          <img src={image1} alt="Founder Match Hero" />
-        </div>
-
-        {/* Overview Section */}
-        <div className="project-overview">
-          <div className="overview-column">
-            <h3 className="overview-heading">Timeline</h3>
-            <div className="overview-items">
-              <p className="overview-text">Jan 2024 - May 2024</p>
-            </div>
-          </div>
-          <div className="overview-column">
-            <h3 className="overview-heading">Team</h3>
-            <div className="overview-items">
-              <p className="overview-text">1 Designer</p>
-              <p className="overview-text">1 Developer</p>
-              <p className="overview-text">2 AI Engineers</p>
-            </div>
-          </div>
-          <div className="overview-column">
-            <h3 className="overview-heading">Tools</h3>
-            <div className="overview-items">
-              <p className="overview-text">Figma</p>
-              <p className="overview-text">Figma Jam</p>
-              <p className="overview-text">Mural</p>
-            </div>
-          </div>
-          <div className="overview-column">
-            <h3 className="overview-heading">Disciplines</h3>
-            <div className="overview-items">
-              <p className="overview-text">MVP</p>
-              <p className="overview-text">Business Plan</p>
-              <p className="overview-text">UX Design</p>
-            </div>
-          </div>
-        </div>
+      <CaseStudyLayout sections={SIDEBAR_SECTIONS}>
+        <CaseStudyHeader
+          title="Founder Match connects entrepreneurs with compatible co-founders"
+          overview={OVERVIEW}
+          media={<img src={image1} alt="Founder Match product experience" />}
+        />
 
         {/* Problem Section */}
-        <section className="case-study-section">
+        <section id="problem" className="case-study-section">
           <h2 className="section-title">PROBLEM</h2>
           <div className="problem-box">
             <p className="problem-text">
@@ -130,7 +112,7 @@ const ProjectPage = ({ theme, onThemeChange }) => {
         </section>
 
         {/* Discovery Section */}
-        <section className="case-study-section">
+        <section id="discovery" className="case-study-section">
           <h2 className="section-title">DISCOVERY</h2>
           <h3 className="discovery-subtitle">Researching Founder Perspectives on Co-founder Selection</h3>
           <p className="section-description">
@@ -154,7 +136,7 @@ const ProjectPage = ({ theme, onThemeChange }) => {
         </section>
 
         {/* Pain Points Section */}
-        <section className="case-study-section">
+        <section id="pain-points" className="case-study-section">
           <h2 className="section-title">PAINPOINTS</h2>
           <p className="section-description">
             After talking to more founders and mapping all the survey insights we ended up focusing on three important pain points
@@ -210,7 +192,7 @@ const ProjectPage = ({ theme, onThemeChange }) => {
         </section>
 
         {/* Competitive Research Section */}
-        <section className="case-study-section">
+        <section id="competitive" className="case-study-section">
           <h2 className="section-title">COMPETITIVE RESEARCH</h2>
           <h3 className="subsection-heading">
             I studied co-founder matching platforms like YC Combinator and CoFoundersLab, evaluating their matching process, user experience, and focus on vision alignment
@@ -221,7 +203,7 @@ const ProjectPage = ({ theme, onThemeChange }) => {
         </section>
 
         {/* Whiteboarding Section */}
-        <section className="case-study-section">
+        <section id="process" className="case-study-section">
           <h2 className="section-title">WHITEBOARDING</h2>
           <h3 className="subsection-heading">Starting With a Team Brainstorm</h3>
           <p className="section-description">
@@ -266,7 +248,7 @@ const ProjectPage = ({ theme, onThemeChange }) => {
         </section>
 
         {/* Event Based Matching Section */}
-        <section className="case-study-section">
+        <section id="solution" className="case-study-section">
           <h3 className="subsection-heading">Introducing Event Based Matching</h3>
           <div className="video-container">
             <video autoPlay loop muted playsInline>
@@ -296,7 +278,7 @@ const ProjectPage = ({ theme, onThemeChange }) => {
         </section>
 
         {/* Early Testing Section */}
-        <section className="case-study-section">
+        <section id="testing" className="case-study-section">
           <h2 className="section-title">EARLY TESTING</h2>
           <h3 className="subsection-heading">
             We did task- based testing with some of the founders and gathered several actionable insights
@@ -310,7 +292,7 @@ const ProjectPage = ({ theme, onThemeChange }) => {
         </section>
 
         {/* Reflection and Impact Section */}
-        <section className="case-study-section">
+        <section id="impact" className="case-study-section">
           <h2 className="section-title">REFLECTION AND IMPACT</h2>
           <h3 className="subsection-heading">
             Foundermatch [ MVP ] was shipped in April 2024 and was well received by the users.
@@ -327,7 +309,7 @@ const ProjectPage = ({ theme, onThemeChange }) => {
             </div>
           </div>
         </section>
-      </div>
+      </CaseStudyLayout>
 
       <CustomizeButton theme={theme} onThemeChange={onThemeChange} />
       <ChatSidebar isOpen={isChatOpen} onClose={handleChatClose} theme={theme} />
@@ -336,4 +318,3 @@ const ProjectPage = ({ theme, onThemeChange }) => {
 };
 
 export default ProjectPage;
-

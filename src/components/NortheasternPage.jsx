@@ -4,6 +4,7 @@ import { ArrowUpRight } from '@phosphor-icons/react';
 import Navbar from './Navbar';
 import CustomizeButton from './CustomizeButton';
 import ChatSidebar from './ChatSidebar';
+import { CaseStudyHeader, CaseStudyLayout } from './CaseStudyTemplate';
 import geminiIcon from '../assets/gemini 1.svg';
 import heroImage from '../assets/Northeastern.png';
 import '../styles/ProjectPage.css';
@@ -12,10 +13,24 @@ const GeminiIcon = ({ size = 20, className }) => (
   <img 
     src={geminiIcon} 
     alt="Gemini" 
-    style={{ width: '20px', height: '18px' }} 
+    style={{ width: `${size}px`, height: `${size - 2}px` }}
     className={className}
   />
 );
+
+const SIDEBAR_SECTIONS = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'accessibility-stack', label: 'Accessibility Stack' },
+  { id: 'methods', label: 'Tools & Methods' },
+  { id: 'learnings', label: 'Key Learnings' },
+];
+
+const OVERVIEW = [
+  { label: 'Timeline', items: ['Sep 2024 – Dec 2024'] },
+  { label: 'Team', items: ['4 Designers', 'Digital Accessibility Team'] },
+  { label: 'Tools', items: ['WAVE', 'ARIA Patterns', 'Bookmarklets'] },
+  { label: 'Disciplines', items: ['Accessibility', 'WCAG 2.1', 'UX Auditing'] },
+];
 
 const NortheasternPage = ({ theme, onThemeChange }) => {
   const navigate = useNavigate();
@@ -48,49 +63,12 @@ const NortheasternPage = ({ theme, onThemeChange }) => {
         GeminiIcon={GeminiIcon}
       />
 
-      <div className="project-page-content">
-        {/* Project Introduction */}
-        <p className="project-intro">
-          Accessibility audits across the Northeastern websites
-        </p>
-
-        {/* Project Hero Image */}
-        <div className="project-hero-image" style={{ maxHeight: '400px' }}>
-          <img src={heroImage} alt="Accessibility at Northeastern" style={{ objectFit: 'cover', objectPosition: 'center top' }} />
-        </div>
-
-        {/* Overview Grid */}
-        <div className="project-overview">
-          <div className="overview-column">
-            <h3 className="overview-heading">Timeline</h3>
-            <div className="overview-items">
-              <p className="overview-text">Sep 2024 - Dec 2024</p>
-            </div>
-          </div>
-          <div className="overview-column">
-            <h3 className="overview-heading">Team</h3>
-            <div className="overview-items">
-              <p className="overview-text">4 Designers</p>
-              <p className="overview-text">Digital Accessibility Team</p>
-            </div>
-          </div>
-          <div className="overview-column">
-            <h3 className="overview-heading">Tools</h3>
-            <div className="overview-items">
-              <p className="overview-text">WAVE</p>
-              <p className="overview-text">ARIA Patterns</p>
-              <p className="overview-text">Bookmarklets</p>
-            </div>
-          </div>
-          <div className="overview-column">
-            <h3 className="overview-heading">Disciplines</h3>
-            <div className="overview-items">
-              <p className="overview-text">Accessibility</p>
-              <p className="overview-text">WCAG 2.1</p>
-              <p className="overview-text">UX Auditing</p>
-            </div>
-          </div>
-        </div>
+      <CaseStudyLayout sections={SIDEBAR_SECTIONS}>
+        <CaseStudyHeader
+          title="Auditing accessibility across Northeastern University websites"
+          overview={OVERVIEW}
+          media={<img src={heroImage} alt="Accessibility at Northeastern" className="case-study-hero-cover" />}
+        />
 
         {/* Overview Section */}
         <section className="case-study-section">
@@ -112,12 +90,12 @@ const NortheasternPage = ({ theme, onThemeChange }) => {
         </section>
 
         {/* Accessibility Stack */}
-        <section className="case-study-section">
+        <section id="accessibility-stack" className="case-study-section">
           <h2 className="section-title">ACCESSIBILITY STACK</h2>
           <p className="section-description">
             We audited key accessibility areas across seven university websites, focusing on critical, serious, and cumulative issues.
           </p>
-          <div className="insights-grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', marginTop: '32px' }}>
+          <div className="insights-grid accessibility-stack-grid">
             <div className="insight-card">
               <p className="insight-text"><strong>Keyboard Navigation</strong></p>
               <p className="insight-text">Ensured all focusable elements were accessible with visible focus indicators.</p>
@@ -154,9 +132,9 @@ const NortheasternPage = ({ theme, onThemeChange }) => {
         </section>
 
         {/* Tools & Methods */}
-        <section className="case-study-section">
+        <section id="methods" className="case-study-section">
           <h2 className="section-title">TOOLS & METHODS</h2>
-          <div className="insights-grid" style={{ marginTop: '24px' }}>
+          <div className="insights-grid tools-methods-grid">
             <div className="insight-card">
               <p className="insight-text"><strong>WAVE Evaluation Tool</strong></p>
               <p className="insight-text">Checked for accessibility errors like missing labels and improper color contrast.</p>
@@ -173,7 +151,7 @@ const NortheasternPage = ({ theme, onThemeChange }) => {
         </section>
 
         {/* Key Learnings */}
-        <section className="case-study-section">
+        <section id="learnings" className="case-study-section">
           <h2 className="section-title">KEY LEARNINGS</h2>
           <div className="insights-grid">
             <div className="insight-card">
@@ -193,7 +171,7 @@ const NortheasternPage = ({ theme, onThemeChange }) => {
             </div>
           </div>
         </section>
-      </div>
+      </CaseStudyLayout>
 
       <CustomizeButton theme={theme} onThemeChange={onThemeChange} />
       <ChatSidebar isOpen={isChatOpen} onClose={handleChatClose} theme={theme} />

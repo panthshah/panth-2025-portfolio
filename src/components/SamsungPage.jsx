@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import CustomizeButton from './CustomizeButton';
 import ChatSidebar from './ChatSidebar';
+import { CaseStudyHeader, CaseStudyLayout } from './CaseStudyTemplate';
 import geminiIcon from '../assets/gemini 1.svg';
 import samsungHeroVideo from '../assets/samsung-case-study/product-comparison-hero.mp4';
 import auditCompare from '../assets/audit-compare-models.png';
@@ -31,6 +32,13 @@ const SIDEBAR_SECTIONS = [
   { id: 'final-direction', label: 'Final Direction' },
 ];
 
+const OVERVIEW = [
+  { label: 'Timeline', items: ['May 2025 – Present'] },
+  { label: 'My Role', items: ['UX Design', 'Research & Strategy', 'Cross-functional Collaboration'] },
+  { label: 'Team', items: ['Design, Product, Data, Engineering & Business'] },
+  { label: 'Tools', items: ['Figma & Sketch', 'UserTesting.com', 'Confluence & Jira'] },
+];
+
 const SamsungPage = ({ theme, onThemeChange }) => {
   const navigate = useNavigate();
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -40,8 +48,6 @@ const SamsungPage = ({ theme, onThemeChange }) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const [activeSection, setActiveSection] = useState('overview');
-
   const handleChatOpen = () => setIsChatOpen(true);
   const handleChatClose = () => setIsChatOpen(false);
 
@@ -50,28 +56,6 @@ const SamsungPage = ({ theme, onThemeChange }) => {
     if (tabId === 'playground') {
       navigate('/home');
     }
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const offsets = SIDEBAR_SECTIONS.map(s => {
-        const el = document.getElementById(s.id);
-        if (!el) return { id: s.id, top: Infinity };
-        return { id: s.id, top: el.getBoundingClientRect().top };
-      });
-      const active = offsets.reduce((closest, curr) =>
-        curr.top <= 200 && curr.top > closest.top ? curr : closest,
-        { id: offsets[0].id, top: -Infinity }
-      );
-      setActiveSection(active.id);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -86,33 +70,12 @@ const SamsungPage = ({ theme, onThemeChange }) => {
         GeminiIcon={GeminiIcon}
       />
 
-      <div className="project-page-content case-study-layout">
-        {/* Sticky Sidebar Navigation */}
-        <aside className="case-study-sidebar">
-          <nav className="case-study-sidebar-nav">
-            {SIDEBAR_SECTIONS.map(s => (
-              <button
-                key={s.id}
-                type="button"
-                className={`case-study-sidebar-link ${activeSection === s.id ? 'active' : ''}`}
-                onClick={() => scrollToSection(s.id)}
-              >
-                {s.label}
-              </button>
-            ))}
-          </nav>
-        </aside>
-
-        {/* Main Content */}
-        <div className="case-study-body">
-          {/* Overview — title, hero, metadata, description */}
-          <section id="overview" className="case-study-section case-study-section-first">
-            <h1 className="case-study-title">
-              Making Product Comparison Actually Work on Samsung.com
-            </h1>
-
-            <div className="project-hero-image">
-              <video
+      <CaseStudyLayout sections={SIDEBAR_SECTIONS}>
+        <CaseStudyHeader
+          title="Making Product Comparison Actually Work on Samsung.com"
+          overview={OVERVIEW}
+          media={(
+            <video
                 src={samsungHeroVideo}
                 autoPlay
                 loop
@@ -120,45 +83,14 @@ const SamsungPage = ({ theme, onThemeChange }) => {
                 playsInline
                 preload="metadata"
                 aria-label="Samsung Product Finder comparison experience"
-              />
-            </div>
-
-            <div className="project-overview">
-              <div className="overview-column">
-                <p className="overview-heading">Timeline</p>
-                <div className="overview-items">
-                  <p className="overview-text">May 2025 – Present</p>
-                </div>
-              </div>
-              <div className="overview-column">
-                <p className="overview-heading">My Role</p>
-                <div className="overview-items">
-                  <p className="overview-text">UX Design</p>
-                  <p className="overview-text">Research &amp; Strategy</p>
-                  <p className="overview-text">Cross-functional Collaboration</p>
-                </div>
-              </div>
-              <div className="overview-column">
-                <p className="overview-heading">Team</p>
-                <div className="overview-items">
-                  <p className="overview-text">Design, Product, Data, Engineering &amp; Business</p>
-                </div>
-              </div>
-              <div className="overview-column">
-                <p className="overview-heading">Tools</p>
-                <div className="overview-items">
-                  <p className="overview-text">Figma &amp; Sketch</p>
-                  <p className="overview-text">UserTesting.com</p>
-                  <p className="overview-text">Confluence &amp; Jira</p>
-                </div>
-              </div>
-            </div>
-
+            />
+          )}
+        >
             <h2 className="section-title">OVERVIEW</h2>
             <p className="section-description">
               Samsung.com's Product Finder helps U.S. shoppers filter and compare products. I led a research-driven redesign of the comparison experience in partnership with product, data, and engineering.
             </p>
-          </section>
+        </CaseStudyHeader>
 
           {/* Problem */}
           <section id="problem" className="case-study-section">
@@ -327,6 +259,25 @@ const SamsungPage = ({ theme, onThemeChange }) => {
               </table>
             </div>
 
+            <div className="mobile-competitor-summary" aria-label="Competitive research scores">
+              <article>
+                <div><h4>Home Depot</h4><strong>5 / 6</strong></div>
+                <p>Strong overall; responsive layout was the only criterion not met.</p>
+              </article>
+              <article>
+                <div><h4>Best Buy</h4><strong>5 / 6</strong></div>
+                <p>Strong overall; scannability was the only criterion not met.</p>
+              </article>
+              <article>
+                <div><h4>Lowe&apos;s</h4><strong>2 / 6</strong></div>
+                <p>Met categorization and key-specification criteria, but missed the remaining four.</p>
+              </article>
+              <article className="mobile-competitor-summary-samsung">
+                <div><h4>Samsung</h4><strong>0 / 6</strong></div>
+                <p>The audited experience did not meet any of the six comparison criteria.</p>
+              </article>
+            </div>
+
             <div className="comp-takeaway">
               <p className="comp-takeaway-label">KEY TAKEAWAY</p>
               <p className="comp-takeaway-text">
@@ -371,7 +322,6 @@ const SamsungPage = ({ theme, onThemeChange }) => {
             </figure>
 
             <div className="ia-diagram ia-diagram-mobile" role="group" aria-label="Product categories and their key comparison specifications">
-              <div className="ia-root">Product categories</div>
               <div className="ia-branches">
                 {[
                   ['Refrigerator', ['Dimensions', 'Storage', 'Water & Ice', 'Design', 'Cooling']],
@@ -384,7 +334,6 @@ const SamsungPage = ({ theme, onThemeChange }) => {
                   <article className={`ia-branch ${index === 0 ? 'ia-branch-focus' : ''}`} key={category}>
                     <div className="ia-branch-heading">
                       <h4>{category}</h4>
-                      {index === 0 && <span>Primary design focus</span>}
                     </div>
                     <ul>
                       {specs.map(spec => <li key={spec}>{spec}</li>)}
@@ -454,8 +403,7 @@ const SamsungPage = ({ theme, onThemeChange }) => {
             </p>
           </section>
 
-        </div>
-      </div>
+      </CaseStudyLayout>
 
       <CustomizeButton theme={theme} onThemeChange={onThemeChange} />
       <ChatSidebar isOpen={isChatOpen} onClose={handleChatClose} theme={theme} />
