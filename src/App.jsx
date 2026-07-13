@@ -20,9 +20,11 @@ const DEFAULT_THEME = {
 
 function AppContent() {
   const [selectedTheme, setSelectedTheme] = useState(DEFAULT_THEME);
-  const [showSplash, setShowSplash] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+  const [showSplash, setShowSplash] = useState(
+    () => location.pathname === '/' || location.pathname === '/home'
+  );
 
   // Pre-compile shaders on app start
   useEffect(() => {
