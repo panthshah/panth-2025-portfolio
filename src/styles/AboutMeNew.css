@@ -20,12 +20,11 @@
    Editorial reading width: narrower than the homepage's 1400px container
    so long-form text + photo feels centered and breathable on wide screens. */
 .about-main {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 128px 120px 160px 120px;
+  padding-top: 128px;
+  padding-bottom: 160px;
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 160px;
 }
 
 .about-hero,
@@ -66,7 +65,8 @@
   max-width: 720px;
 }
 
-.about-bio p {
+.about-bio p,
+.about-gallery-description {
   font-family: var(--sans);
   font-size: 16px;
   line-height: 1.6;
@@ -631,21 +631,124 @@
 }
 
 /* ============================================================
+   PHOTO FILMSTRIP
+   ============================================================ */
+.about-gallery {
+  max-width: none;
+  min-width: 0;
+}
+
+.about-gallery-intro {
+  max-width: 720px;
+}
+
+.about-gallery-heading {
+  margin-bottom: 16px;
+}
+
+.about-gallery-viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+.about-filmstrip {
+  display: flex;
+  width: max-content;
+  height: clamp(220px, 17vw, 260px);
+  gap: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+.about-filmstrip-sequence {
+  display: flex;
+  flex: 0 0 auto;
+  height: 100%;
+  gap: 12px;
+  padding-right: 12px;
+}
+
+.about-gallery-photo {
+  flex: 0 0 auto;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline-offset: -1px;
+}
+
+.about-gallery-photo--narrow {
+  aspect-ratio: 3 / 4;
+}
+
+.about-gallery-photo--medium {
+  aspect-ratio: 4 / 3;
+}
+
+.about-gallery-photo--medium-wide {
+  aspect-ratio: 3 / 2;
+}
+
+.about-gallery-photo--anchor {
+  aspect-ratio: 3.15 / 1;
+}
+
+.about-gallery-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes about-filmstrip-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .about-filmstrip {
+    animation: about-filmstrip-marquee 72s linear infinite;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
+  .about-gallery-viewport:hover .about-filmstrip {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-filmstrip {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 
-/* 1200–1399px — match nav's asymmetric content inset */
+/* 1200–1399px */
 @media (max-width: 1399px) and (min-width: 1200px) {
   .about-main {
-    padding: 128px 32px 160px 100px;
+    padding-top: 128px;
+    padding-bottom: 160px;
   }
 }
 
 /* 1024–1199px */
 @media (max-width: 1199px) and (min-width: 1024px) {
   .about-main {
-    padding: 128px 48px 144px 48px;
-    gap: 64px;
+    padding-top: 128px;
+    padding-bottom: 144px;
+    gap: 144px;
   }
 
   .about-hero-grid {
@@ -693,8 +796,9 @@
 /* 768–1024px — hero stacks */
 @media (max-width: 1024px) and (min-width: 768px) {
   .about-main {
-    padding: 112px 64px 144px 64px;
-    gap: 56px;
+    padding-top: 112px;
+    padding-bottom: 144px;
+    gap: 144px;
   }
 
   .about-hero-grid {
@@ -782,8 +886,9 @@
 /* 481–768px */
 @media (max-width: 768px) and (min-width: 481px) {
   .about-main {
-    padding: 112px 48px 128px 48px;
-    gap: 48px;
+    padding-top: 112px;
+    padding-bottom: 128px;
+    gap: 128px;
   }
 
   .about-hero-grid {
@@ -807,8 +912,31 @@
     aspect-ratio: 4 / 3;
   }
 
-  .about-bio p {
+  .about-bio p,
+  .about-gallery-description {
     font-size: 15px;
+  }
+
+  .about-gallery-viewport {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .about-gallery-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .about-filmstrip {
+    height: 200px;
+    gap: 0;
+    transform: none;
+  }
+
+  .about-filmstrip-sequence {
+    gap: 12px;
+    padding-right: 12px;
   }
 
   .about-now-row {
@@ -915,8 +1043,9 @@
 /* ≤480px — mobile */
 @media (max-width: 480px) {
   .about-main {
-    padding: 64px 24px 112px 24px;
-    gap: 40px;
+    padding-top: 64px;
+    padding-bottom: 112px;
+    gap: 112px;
   }
 
   .about-hero-grid {
@@ -942,14 +1071,37 @@
     margin-bottom: 24px;
   }
 
-  .about-bio p {
+  .about-bio p,
+  .about-gallery-description {
     font-size: 15px;
     line-height: 1.65;
   }
 
+  .about-gallery-viewport {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .about-gallery-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .about-filmstrip {
+    height: 160px;
+    gap: 0;
+    transform: none;
+  }
+
+  .about-filmstrip-sequence {
+    gap: 8px;
+    padding-right: 8px;
+  }
+
   .about-section {
     gap: 18px;
-    padding-top: 24px;
+    padding-top: 0;
   }
 
   .about-now-row {
@@ -1130,10 +1282,6 @@
 }
 
 @media (max-width: 1199px) and (min-width: 1024px) {
-  .about-main {
-    padding: 128px 48px 144px 48px;
-  }
-
   .about-page .footer-section {
     padding: 0 48px 144px 48px;
   }

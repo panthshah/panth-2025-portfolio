@@ -9,13 +9,12 @@
 }
 
 .navbar-container {
-  max-width: 1400px;
-  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 48px;
-  padding: 8px 120px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 /* Logo/Name Button */
@@ -220,33 +219,8 @@
 
 /* ===== RESPONSIVE MEDIA QUERIES ===== */
 
-/* 1200px to 1399px */
-@media (max-width: 1399px) and (min-width: 1200px) {
-  .navbar-container{
-    padding: 8px 32px 8px 100px;
-  }
-}
-
-/* 1024px to 1199px */
-@media (max-width: 1199px) and (min-width: 1024px) {
-  .navbar-container {
-    padding: 8px 48px;
-  }
-}
-
-/* 768px to 1024px */
-@media (max-width: 1024px) and (min-width: 768px) {
-  .navbar-container{
-    padding: 8px 48px;
-  }
-}
-
 /* 481px to 768px - Tablets */
 @media (max-width: 768px) and (min-width: 481px) {
-  .navbar-container {
-    padding: 8px 48px;
-  }
-
   .navbar-menu {
     gap: 8px;
   }
@@ -275,7 +249,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
     height: auto;
   }
 
@@ -313,4 +288,3 @@
     right: 0;
   }
 }
-

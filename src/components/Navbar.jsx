@@ -60,7 +60,7 @@ const Navbar = ({
 
   return (
     <nav className="navbar" style={{ backgroundColor: themeColors.navBg }}>
-      <div className="navbar-container">
+      <div className="navbar-container site-container">
         {/* Logo/Name */}
         <div className="navbar-logo">
           <button 
@@ -189,4 +189,3 @@ const Navbar = ({
 };
 
 export default Navbar;
-

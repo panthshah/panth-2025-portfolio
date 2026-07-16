@@ -11,9 +11,8 @@
 } */
 
 .hero-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 128px 120px 160px 120px;
+  padding-top: 128px;
+  padding-bottom: 160px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -726,7 +725,8 @@
 /* For screens 1200px to 1400px - Scale down phone, keep side-by-side */
 @media (max-width: 1399px) and (min-width: 1200px) {
   .hero-container {
-    padding: 128px 100px 160px 100px;
+    padding-top: 128px;
+    padding-bottom: 160px;
   }
 
   .hero-visual {
@@ -779,7 +779,8 @@
 /* For screens 1024px to 1200px - Tablet, keep side-by-side but smaller */
 @media (max-width: 1199px) and (min-width: 1024px) {
   .hero-container {
-    padding: 128px 48px 144px 48px;
+    padding-top: 128px;
+    padding-bottom: 144px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -857,7 +858,8 @@
   .hero-container {
     flex-direction: column;
     gap: 120px;
-    padding: 112px 64px 144px 64px;
+    padding-top: 112px;
+    padding-bottom: 144px;
     align-items: center;
   }
 
@@ -961,7 +963,8 @@
   .hero-container {
     flex-direction: column;
     gap: 120px;
-    padding: 112px 48px 128px 48px;
+    padding-top: 112px;
+    padding-bottom: 128px;
     align-items: center;
   }
 
@@ -1088,7 +1091,8 @@
   .hero-container {
     flex-direction: column;
     gap: 64px;
-    padding: 64px 24px 112px 24px;
+    padding-top: 64px;
+    padding-bottom: 112px;
     align-items: center;
   }
 

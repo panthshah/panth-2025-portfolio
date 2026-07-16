@@ -248,7 +248,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
 
       {/* Hero Section */}
       <section className="hero-section">
-        <div className="hero-container">
+        <div className="hero-container site-container">
           {/* Left Side - Content */}
           <div className="hero-content">
             <h1 className="hero-headline"> 

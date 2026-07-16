@@ -1,36 +1,29 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart, Smiley, ArrowClockwise, Info, Check } from '@phosphor-icons/react';
+import { Heart, Smiley } from '@phosphor-icons/react';
 import Navbar from './Navbar';
 import CustomizeButton from './CustomizeButton';
 import ChatSidebar from './ChatSidebar';
-import TetrisGame from './TetrisGame';
-import aboutMe1 from '../assets/AboutMe /About Me 1.png';
 import heroHike from '../assets/AboutMe /hero-hike.png';
 import heroGame from '../assets/AboutMe /hero-game.png';
-import aboutMe2 from '../assets/AboutMe /About Me 2.png';
-import aboutMe3 from '../assets/AboutMe /About Me 3.png';
-import aboutMe4 from '../assets/AboutMe /About Me 4.png';
-import aboutMe5 from '../assets/AboutMe /About Me 5.png';
-import aboutMe6 from '../assets/AboutMe /About Me 6.png';
-import aboutMe7 from '../assets/AboutMe /About Me 7.png';
 import aboutMe8 from '../assets/AboutMe /About Me 8.png';
+import galleryGoldenGate from '../assets/AboutMe/gallery/golden-gate.png';
+import galleryOneWorldTrade from '../assets/AboutMe/gallery/one-world-trade.png';
+import galleryManhattanBuildings from '../assets/AboutMe/gallery/manhattan-buildings.png';
+import galleryManhattanSkyline from '../assets/AboutMe/gallery/manhattan-skyline.png';
+import galleryPanthNewYork from '../assets/AboutMe/gallery/panth-new-york.png';
+import galleryRainyFoodTruck from '../assets/AboutMe/gallery/rainy-food-truck.png';
+import galleryRainyMidtown from '../assets/AboutMe/gallery/rainy-midtown.png';
+import galleryConcertStage from '../assets/AboutMe/gallery/concert-stage.png';
+import gallerySanFranciscoSunset from '../assets/AboutMe/gallery/san-francisco-sunset.png';
 import geminiIcon from '../assets/gemini 1.svg';
 import linkedInIcon from '../assets/LinkedIn1.png';
 import githubIcon from '../assets/github.png';
 import xIcon from '../assets/X.png';
-import nowSamsung from '../assets/about/samsung-logo.png';
-import nowMountainView from '../assets/about/now-mountain-view.png';
-import nowCharliePuth from '../assets/about/now-charlie-puth.png';
-import nowKnightBook from '../assets/about/now-knight-book.png';
-import stickerPromptFirst from '../assets/about/sticker-prompt-first.png';
-import stickerDesignTools from '../assets/about/sticker-design-tools.png';
-import stickerRealArt from '../assets/about/sticker-real-art.png';
-import stickerShipPray from '../assets/about/sticker-ship-pray.png';
 import '../styles/LandingPage.css';
 import '../styles/AboutMeNew.css';
 
-const GeminiIcon = ({ size = 20, className }) => (
+const GeminiIcon = ({ className }) => (
   <img src={geminiIcon} alt="Gemini" style={{ width: '20px', height: '18px' }} className={className} />
 );
 
@@ -44,24 +37,8 @@ const THEME_COLORS = {
 
 const nowItems = [
   {
-    k: 'Currently',
-    v: 'Samsung Electronics — UX Designer',
-    visual: <img src={nowSamsung} alt="Samsung" className="about-now-sticker about-now-sticker--icon" />,
-  },
-  {
     k: 'Based in',
     v: 'Mountain View, California',
-    visual: <img src={nowMountainView} alt="Mountain View, California" className="about-now-sticker about-now-sticker--wide" />,
-  },
-  {
-    k: 'Reading',
-    v: 'The Knight of Seven Kingdoms — George R.R. Martin',
-    visual: <img src={nowKnightBook} alt="A Knight of the Seven Kingdoms" className="about-now-sticker about-now-sticker--tall" />,
-  },
-  {
-    k: 'Listening',
-    v: 'Frank Ocean and Charlie Puth',
-    visual: <img src={nowCharliePuth} alt="Charlie Puth — CHARLIE" className="about-now-sticker about-now-sticker--album" />,
   },
   {
     k: 'Education',
@@ -70,26 +47,21 @@ const nowItems = [
   },
 ];
 
-const scrapbookStickers = [
-  { src: stickerPromptFirst, alt: 'Prompt first, think later sticker', cls: 'scrapbook-sticker-img--hero' },
-  { src: stickerDesignTools, alt: 'Design tool stickers', cls: 'scrapbook-sticker-img--tools' },
-  { src: stickerRealArt, alt: 'Real art not AI sticker', cls: 'scrapbook-sticker-img--wide' },
-  { src: stickerShipPray, alt: 'Ship it and pray sticker', cls: 'scrapbook-sticker-img--wide' },
+const galleryPhotos = [
+  { src: galleryGoldenGate, alt: 'Golden Gate Bridge at dusk', size: 'narrow' },
+  { src: galleryOneWorldTrade, alt: 'One World Trade Center against a blue sky', size: 'narrow' },
+  { src: galleryManhattanBuildings, alt: 'A cluster of Manhattan buildings', size: 'medium' },
+  { src: galleryManhattanSkyline, alt: 'Lower Manhattan skyline', size: 'medium-wide' },
+  { src: galleryPanthNewYork, alt: 'Panth by the New York waterfront', size: 'narrow' },
+  { src: galleryRainyFoodTruck, alt: 'A rainy day beside an ice cream truck', size: 'narrow' },
+  { src: galleryRainyMidtown, alt: 'A traffic officer working in the rain', size: 'narrow' },
+  { src: galleryConcertStage, alt: 'A concert performance on a checkered stage', size: 'medium' },
+  { src: gallerySanFranciscoSunset, alt: 'San Francisco homes glowing at sunset', size: 'anchor' },
 ];
-
-// reCAPTCHA-style photo grid — 9 tiles of real moments.
-const captchaTiles = [aboutMe1, aboutMe2, aboutMe3, aboutMe4, aboutMe5, aboutMe6, aboutMe7, aboutMe8, aboutMe1];
 
 const AboutMeNew = ({ theme, onThemeChange }) => {
   const navigate = useNavigate();
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [captchaSelected, setCaptchaSelected] = useState([1, 3, 8]);
-  const [captchaVerified, setCaptchaVerified] = useState(false);
-
-  const toggleCaptchaTile = (i) => {
-    setCaptchaVerified(false);
-    setCaptchaSelected((prev) => (prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]));
-  };
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -112,7 +84,7 @@ const AboutMeNew = ({ theme, onThemeChange }) => {
         GeminiIcon={GeminiIcon}
       />
 
-      <main className="about-main">
+      <main className="about-main site-container">
 
         {/* ── HERO ── */}
         <section className="about-hero">
@@ -122,13 +94,13 @@ const AboutMeNew = ({ theme, onThemeChange }) => {
                 Hi, I'm Panth<span style={{ color: accent }}>.</span>
               </h1>
               <p>
-                I'm Panth, a Product Designer currently designing eCommerce experiences at Samsung Electronics in Mountain View, California.
+                I'm Panth. I design eCommerce experiences at Samsung Electronics in Mountain View.
               </p>
               <p>
-                My path has taken me from Ahmedabad to Boston to the Bay Area, and each place has shaped how I see people, products, and the small decisions that make an experience feel effortless. I'm especially drawn to complex digital journeys — the kind where clarity, timing, and trust can make all the difference.
+                I grew up in Ahmedabad, studied in Boston, and ended up in the Bay Area. Every move taught me something new about how people actually use things. I care most about the messy, complex flows, checkout, onboarding, the stuff nobody notices when it works.
               </p>
               <p>
-                Outside of work, I'm usually watching movies, cooking something for my Instagram, saying yes to almost any kind of game, or meeting new people in the most unexpected ways — from coffee shops and conferences to LinkedIn DMs that turn into real conversations.
+                Outside of work? I take way too many photos. I'll say yes to almost any game, and I've made real friends from cold LinkedIn DMs. Embarrassing to admit, but it works.
               </p>
               <div className="about-hero-now" aria-label="Current details">
                 {nowItems.map((row, i) => (
@@ -153,65 +125,35 @@ const AboutMeNew = ({ theme, onThemeChange }) => {
           </div>
         </section>
 
-        {/* ── SCRAPBOOK ── */}
-        <section className="about-section about-scrapbook">
-          <div className="about-scrapbook-header">
-            <h2 className="about-section-label">Outside the screen</h2>
-            <span className="about-scrapbook-date">Notes, food, friends, places, and small rituals</span>
+        {/* ── PHOTO FILMSTRIP ── */}
+        <section className="about-section about-gallery" aria-label="Personal photo gallery">
+          <div className="about-gallery-intro">
+            <h2 className="about-heading about-gallery-heading">I carry a camera everywhere</h2>
+            <p className="about-gallery-description">
+              Photos and little videos from wherever I end up. No theme, just things that caught my eye.
+            </p>
           </div>
-          <div className="about-scrapbook-spread">
-            <div className="scrapbook-week scrapbook-sticker-page" aria-label="Design sticker collage">
-              <div className="scrapbook-sticker-collage">
-                {scrapbookStickers.map((sticker) => (
-                  <img key={sticker.alt} src={sticker.src} alt={sticker.alt} className={`scrapbook-sticker-img ${sticker.cls}`} />
-                ))}
-              </div>
-            </div>
-
-            <div className="captcha-card" aria-label="Select all images about today">
-              <p className="captcha-head-line">Select all images about</p>
-              <span className="captcha-head-big">TODAY</span>
-              <p className="captcha-head-sub">
-                {captchaVerified ? "nice — you're definitely human (probably)" : 'Click verify once there are none left'}
-              </p>
-
-              <div className="captcha-panel">
-                <div className="captcha-grid">
-                  {captchaTiles.map((src, i) => (
-                    <button
-                      type="button"
-                      key={i}
-                      className={`captcha-tile ${captchaSelected.includes(i) ? 'is-selected' : ''}`}
-                      onClick={() => toggleCaptchaTile(i)}
-                      aria-pressed={captchaSelected.includes(i)}
-                      aria-label={`Photo ${i + 1}`}
-                    >
-                      <img src={src} alt="" />
-                      <span className="captcha-check"><Check size={16} weight="bold" /></span>
-                    </button>
+          <div className="about-gallery-viewport">
+            <div className="about-filmstrip">
+              {[0, 1].map((sequenceIndex) => (
+                <div
+                  key={sequenceIndex}
+                  className="about-filmstrip-sequence"
+                  aria-hidden={sequenceIndex === 1 ? 'true' : undefined}
+                >
+                  {galleryPhotos.map(({ src, alt, size }) => (
+                    <figure key={src} className={`about-gallery-photo about-gallery-photo--${size}`}>
+                      <img
+                        src={src}
+                        alt={sequenceIndex === 0 ? alt : ''}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </figure>
                   ))}
                 </div>
-
-                <div className="captcha-foot">
-                  <div className="captcha-foot-icons">
-                    <button type="button" aria-label="Refresh" onClick={() => { setCaptchaSelected([]); setCaptchaVerified(false); }}>
-                      <ArrowClockwise size={22} />
-                    </button>
-                    <button type="button" aria-label="Info"><Info size={22} /></button>
-                    <button type="button" aria-label="Like"><Heart size={22} weight="fill" /></button>
-                  </div>
-                  <button
-                    type="button"
-                    className={`captcha-verify ${captchaVerified ? 'is-verified' : ''}`}
-                    onClick={() => setCaptchaVerified(true)}
-                  >
-                    {captchaVerified ? 'Verified' : 'Verify'}
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
-
-            <TetrisGame accent={accent} />
           </div>
         </section>
 
