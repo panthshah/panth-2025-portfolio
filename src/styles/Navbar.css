@@ -35,10 +35,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 24px;
+  gap: 8px;
+  padding: 0;
   height: 36px;
   line-height: 1;
   white-space: nowrap;
+}
+
+.logo-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .logo-text:hover {
@@ -233,7 +241,6 @@
 
   .logo-text {
     font-size: 13px;
-    padding: 6px 10px;
   }
 }
 
@@ -261,7 +268,6 @@
 
   .navbar-logo .logo-text {
     font-size: 12px;
-    padding: 6px 8px;
   }
 
   .navbar-menu {

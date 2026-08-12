@@ -1,13 +1,14 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Copy, Heart, Smiley, Clock, Check, GridFour, Rows } from '@phosphor-icons/react';
+import { Copy, Heart, Smiley, Clock, Check, GridFour, Rows } from '@phosphor-icons/react';
 import Navbar from './Navbar';
 import FlipPhone3D from './FlipPhone3D';
 import ChatSidebar from './ChatSidebar';
 import CustomizeButton from './CustomizeButton';
 import project1Image from '../assets/foundermatch-thumbnail.png';
 import samsungVideo from '../assets/thumbnail1.mp4';
+import samsungDesignPreviewVideo from '../assets/samsung-design-auto-scroll-preview.mov';
 import project3Image from '../assets/northeastern-thumbnail.png';
 import geminiIcon from '../assets/gemini 1.svg';
 import zeenatAvatar from '../assets/Testimonial/Zeenat.jpeg';
@@ -23,6 +24,7 @@ import cursorDog from '../assets/custom cursor/cursor-doggo.png';
 import linkedInIcon from '../assets/LinkedIn1.png';
 import githubIcon from '../assets/github.png';
 import xIcon from '../assets/X.png';
+import samsungInternetIcon from '../assets/samsung-internet-icon.png';
 import '../styles/LandingPage.css';
 
 // Custom Gemini Icon Component
@@ -39,7 +41,7 @@ const THEME_COLORS = {
   'Peachy Orange': {
     navBg: '#FFFAF2',
     navPills: '#FFEED4',
-    companyName: '#FFB13D',
+    companyName: '#B25700',
     aboutMeStroke: '#FFB13D'
   },
   'Lavender Dream': {
@@ -149,6 +151,7 @@ const LandingPage = ({ theme, onThemeChange }) => {
   const [activeTab, setActiveTab] = useState('chat');
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [isContactEmailCopied, setIsContactEmailCopied] = useState(false);
   const [projectsView, setProjectsView] = useState('focus');
   const [activeFocusIndex, setActiveFocusIndex] = useState(0);
 
@@ -233,6 +236,16 @@ const LandingPage = ({ theme, onThemeChange }) => {
     }
   };
 
+  const handleContactEmailCopy = async () => {
+    try {
+      await navigator.clipboard.writeText('panthshahdesigns@gmail.com');
+      setIsContactEmailCopied(true);
+      window.setTimeout(() => setIsContactEmailCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  };
+
   return (
     <div className="landing-page">
       {/* Navigation Bar */}
@@ -252,81 +265,88 @@ const LandingPage = ({ theme, onThemeChange }) => {
           {/* Left Side - Content */}
           <div className="hero-content">
             <h1 className="hero-headline"> 
-              Meet Panth, a data driven designer shaping experiences for B2B and B2C Enterprises
+              Hi, I am Panth, a data driven designer shaping experiences for B2B and B2C Enterprises
             </h1>
             
             <p className="hero-description">
-            I design thoughtful, scalable product experiences at{' '}
+            Currently at{' '}
             <span className="link-preview-wrapper">
               <a 
-                href="https://www.samsung.com" 
+                href="https://design.samsung.com/global/main/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="link-preview-link"
                 onMouseEnter={(e) => {
                   const preview = e.currentTarget.nextElementSibling;
-                  if (preview) preview.style.display = 'block';
+                  if (preview) {
+                    preview.style.display = 'block';
+                    preview.querySelector('video')?.play().catch(() => {});
+                  }
                 }}
                 onMouseLeave={(e) => {
                   const preview = e.currentTarget.nextElementSibling;
-                  if (preview) preview.style.display = 'none';
+                  if (preview) {
+                    preview.style.display = 'none';
+                    const previewVideo = preview.querySelector('video');
+                    if (previewVideo) {
+                      previewVideo.pause();
+                      previewVideo.currentTime = 0;
+                    }
+                  }
                 }}
               >
                 Samsung Electronics America
+                <img className="company-phone-icon" src={samsungInternetIcon} alt="" aria-hidden="true" />
               </a>
-              <div className="link-preview-box">
-                <iframe 
-                  src="https://www.samsung.com" 
-                  title="Samsung Preview"
-                  className="link-preview-iframe"
+              <span className="link-preview-box" aria-hidden="true">
+                <video
+                  src={samsungDesignPreviewVideo}
+                  className="link-preview-video"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  tabIndex={-1}
                 />
-              </div>
+              </span>
             </span>
-            {' '}across Digital Appliances and Visual Displays 
+            <br />
+            previously at Founderway and Northeastern University.
             </p>
             
-            <p className="hero-current">
-              Previously at Founderway and Northeastern University
-            </p>
-            
-            <div className="hero-buttons">
-              <a 
-                href="https://www.linkedin.com/in/panthshah19/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary"
-                style={{
-                  textDecoration: 'none',
-                  backgroundColor: 'transparent',
-                  border: `1.5px solid ${themeColors.aboutMeStroke}`,
-                  color: '#000000',
-                  borderRadius: '24px',
-                  padding: '0 20px',
-                  height: '40px'
-                }}
-              >
-                LinkedIn
-                <ArrowUpRight size={14} weight="bold" />
-              </a>
-              <a 
-                href="https://x.com/panthshah_"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary"
-                style={{
-                  textDecoration: 'none',
-                  backgroundColor: 'transparent',
-                  border: `1.5px solid ${themeColors.aboutMeStroke}`,
-                  color: '#000000',
-                  borderRadius: '24px',
-                  padding: '0 20px',
-                  height: '40px'
-                }}
-              >
-                Twitter
-                <ArrowUpRight size={14} weight="bold" />
-              </a>
+            <div
+              className="hero-contact"
+              style={{ '--hero-social-accent': themeColors.companyName }}
+            >
+              <p className="hero-buttons">
+                Curious to know more? Let’s{' '}
+                <span className="hero-email-wrap">
+                  <button
+                    type="button"
+                    className="hero-email-trigger"
+                    onClick={handleContactEmailCopy}
+                    aria-describedby="hero-email-tooltip"
+                  >
+                    get in touch
+                  </button>
+                  <span id="hero-email-tooltip" className="hero-email-tooltip" role="tooltip">
+                    {isContactEmailCopied ? 'Email copied!' : 'panthshahdesigns@gmail.com · click to copy'}
+                  </span>
+                </span>.
+              </p>
+
+              <ul className="hero-socials" aria-label="Social links">
+                <li><a href="https://www.linkedin.com/in/panthshah19/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a href="https://github.com/panthshah" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                <li><a href="https://x.com/panthshah_" target="_blank" rel="noopener noreferrer">X/Twitter</a></li>
+              </ul>
+
+              <span className="sr-only" role="status" aria-live="polite">
+                {isContactEmailCopied ? 'Email address copied to clipboard.' : ''}
+              </span>
             </div>
+
           </div>
 
           {/* Right Side - 3D Phone */}

@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, GameController, File, List, X } from '@phosphor-icons/react';
 import '../styles/Navbar.css';
+import siteLogo from '../assets/favicon.png';
 
 const Navbar = ({ 
   theme, 
@@ -66,11 +67,11 @@ const Navbar = ({
           <button 
             className="logo-text" 
             style={{ 
-              backgroundColor: themeColors.navPills,
               color: '#000000'
             }}
             onClick={onLogoClick}
           >
+            <img className="logo-icon" src={siteLogo} alt="" aria-hidden="true" />
             Panth Shah
           </button>
         </div>
